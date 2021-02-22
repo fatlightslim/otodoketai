@@ -14,3 +14,35 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/** マーキーさせたい部分 */
+.marquee {
+  overflow: hidden; /* スクロールバーが出ないように */
+  position: relative; /* マーキーの内容部分の位置の基準になるように */
+}
+ /* マーキーの内容部分の高さ確保 */
+.marquee::after {
+  content: "";
+  white-space: nowrap;
+  display: inline-block;
+}
+/* マーキーさせたい部分(内側) */
+.marquee > .marquee-inner {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-duration: 40s;
+  animation-iteration-count: infinite;
+}
+/* マウスオーバーでマーキーストップ */
+.marquee > .marquee-inner:hover {
+  animation-play-state: paused;
+  cursor: default;
+}
+/** マーキーアニメーション */
+@keyframes marquee {
+    0% { left: 100%; transform: translate(0); }
+  100% { left: 0; transform: translate(-100%); }
+}
