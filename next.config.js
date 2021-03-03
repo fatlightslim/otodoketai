@@ -2,7 +2,12 @@ module.exports = {
   // module.exports = {
   pageExtensions: ["js", "jsx", "mdx"],
   images: {
-    domains: ["yomiuri-ycs.com"],
+    domains: [
+      "yomiuri-ycs.com",
+      "images.ctfassets.net",
+      "scontent-lax3-1.cdninstagram.com",
+      "scontent-lax3-2.cdninstagram.com"
+    ],
   },
   // i18n: {
   //   locales: ["ja", "en", "kr"],
@@ -13,31 +18,19 @@ module.exports = {
     // ...
   ],
   env: {
-    shopify: {
-      domain: "fatlightslim.myshopify.com",
-      storefrontAccessToken: "1916a03edc91d97ee7ee99f5ab8add14",
-    },
-    products: {
-      sp3000: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzU1OTM5MzgxNjU5MTY=",
-      sp150: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzU1OTM5OTg2NTU2NDQ=",
-      ts: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzU1OTM5OTkzNzY1NDA=",
-      sp6500: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzYxMTA2NDgxMDcxNjQ=",
-      fc6500: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzYxMTA2NzM2NjYyMDQ=",
-      sf4000: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzYxOTE0NzQ1NzM0Njg="
-
-    },
-    customKey: "my-value",
+    CONTENTFUL_ACCESS_TOKEN: "BdEMwh4qdi1fRZz-PnlRjJ3yfPnVDO0_0vYVhRfTq-A",
+    CONTENTFUL_SPACE_ID: "4qw6fucv5wfe",
     company: {
-      ja: "合同会社SBO",
-      en: "SBO LLC",
-      person: "TUNG HAN SHEN",
-      tel: "092-980-4282",
-      address: "〒812-0883 福岡市博多区南本町2-1-9",
+      ja: "株式会社ワイシーエス",
+      en: "YCS HD Inc.",
+      person: "館坂 民和",
+      tel: "047-459-0084",
+      address: "千葉県八千代市高津６７８－２ グリーンハイランドⅠ",
     },
     site: {
-      name: "FATLightSLIM",
+      name: "お届け隊",
       url: "http://fatlightslim.com/",
-      email: "hello@fatlightslim.com",
+      email: "t.officework@ycs-hd.com",
       twitter: "@fatlightslim",
     },
   },

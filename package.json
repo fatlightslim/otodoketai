@@ -8,11 +8,27 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^0.3.1",
+    "@sendgrid/mail": "^7.4.2",
+    "@stripe/stripe-js": "^1.13.1",
+    "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/typography": "^0.4.0",
+    "contentful": "^8.1.8",
+    "instagram-web-api": "^2.2.2",
+    "ityped": "^1.0.3",
+    "micro": "^9.3.4",
+    "micro-cors": "^0.1.1",
+    "mongodb": "^3.6.4",
     "next": "10.0.7",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-hook-form": "^6.15.4",
+    "react-ticker": "^1.2.2",
+    "react-use-cart": "^1.11.1",
+    "read-more-react": "^1.0.10",
+    "stripe": "^8.137.0",
+    "swr": "^0.4.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.4",

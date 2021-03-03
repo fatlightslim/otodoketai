@@ -1,0 +1,100 @@
+import Link from "next/link"
+import Image from "next/image"
+import { getImageFields } from "../utils/contentful"
+
+const shuffle = ([...array]) => {
+  for (let i = array.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+  return array
+}
+
+export default function List({ data, copies }) {
+  return (
+    <div className="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
+      <div>
+        {/* <div className="absolute inset-0">
+          <div className="bg-white h-1/3 sm:h-2/3" />
+        </div> */}
+        <div className="relative max-w-7xl mx-auto">
+          <div className="text-center">
+            <h2 className="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
+              人気のお店がゾクゾク出店中
+            </h2>
+            <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+              たまには、いいよね？
+              <span id="copy" className="h-3"/>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto py-8 px-4  sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase"></h2>
+          <p className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight"></p>
+          {/* <p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">Start building for free, then add a site plan to go live. Account plans unlock additional features.</p> */}
+        </div>
+      </div>
+      <div className=" max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+        {data.items.map((v) => {
+          const { fields, sys } = v
+          const { image, address, name, slug, hook } = fields
+          // console.log(image)
+          return (
+            <div
+              key={sys.id}
+              className="flex flex-col rounded-lg shadow-lg overflow-hidden"
+            >
+              <div className="flex-shrink-0">
+                <div className="h-48 w-full overflow-hidden">
+                  <Image {...getImageFields(image)} />
+                </div>
+              </div>
+              <div className="flex-1 bg-white p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600">
+                    <a href="#" className="hover:underline">
+                      {address}
+                    </a>
+                  </p>
+                  <Link href={`/shops/${slug}`}>
+                    <a className="block mt-2">
+                      <p className="text-xl font-semibold text-gray-900">
+                        {name}
+                      </p>
+                      <p className="mt-3 text-base text-gray-500">{hook}</p>
+                    </a>
+                  </Link>
+                </div>
+                <div className="mt-6 flex items-center">
+                  <div className="flex-shrink-0">
+                    <a href="#">
+                      <span className="sr-only">味村店長</span>
+                      <img
+                        className="h-10 w-10 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=EqnZfs2epz&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-900">
+                      <a href="#" className="hover:underline">
+                        YC東金中央・味村
+                      </a>
+                    </p>
+                    <div className="flex space-x-1 text-sm text-gray-500">
+                      {hook}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
