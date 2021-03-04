@@ -66,7 +66,7 @@ export default function Nav({ setCartOpen, data }) {
           leaveTo="opacity-0 -translate-y-1 hidden"
         >
           <Menu data={data} />
-          <Actions />
+          {/* <Actions /> */}
         </Transition>
       </div>
     </div>
