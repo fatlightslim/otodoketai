@@ -3,7 +3,7 @@ import ReadMoreReact from 'read-more-react';
 import Image from "next/image"
 
 export default function InstagramFeed({ instagramPosts }) {
-  console.log(instagramPosts);
+  // console.log(instagramPosts);
   return (
     <>
       {/* <h2>

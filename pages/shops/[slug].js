@@ -13,7 +13,7 @@ export default function Shop(props) {
 
   return (
     <Layout {...props}>
-      <div className="min-h-screen bg-white py-4">
+      <div className="min-h-screen bg-gray-50 py-4">
         <main>
           <div>
             {/* Hero card */}

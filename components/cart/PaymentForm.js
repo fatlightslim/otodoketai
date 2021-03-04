@@ -47,6 +47,7 @@ export default function PaymentForm(props) {
         subTotal: cartTotal,
         tax: 0,
         total: cartTotal + totalItems * 100,
+        pay: "online"
       },
       line_items: items.map((v) => {
         const { title, price, image } = v.fields

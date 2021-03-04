@@ -1,8 +1,9 @@
 import Logo from "../Logo"
-import {  CartSvg } from "../Svg"
+import { CartSvg } from "../Svg"
 import { Transition } from "@headlessui/react"
 import { useState } from "react"
 import CartDetail from "./CartDetail"
+import { useCart } from "react-use-cart";
 
 const Chev = ({ isOpen }) => (
   <svg
@@ -24,9 +25,11 @@ const Chev = ({ isOpen }) => (
 )
 
 export default function CartBar(props) {
-  const { cartTotal, coupon } = props
+  const { coupon } = props
+  const { cartTotal, totalItems } = useCart()
   const [isOpen, setIsOpen] = useState(false)
   const discount = coupon.amount_off || 0
+  const delivery = totalItems * 100
 
   return (
     <>
@@ -49,7 +52,7 @@ export default function CartBar(props) {
               <Chev isOpen={isOpen} />
             </button>
             <span className="font-medium flex-grow text-right">
-              &yen;{(cartTotal - discount).toLocaleString()}
+              &yen;{(cartTotal + delivery - discount).toLocaleString()}
             </span>
           </div>
         </div>

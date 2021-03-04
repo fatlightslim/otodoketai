@@ -54,8 +54,8 @@ export default function Cart(props) {
   const Card = () => (
     <div className="bg-gray-50 overflow-hidden shadow rounded-lg mx-4 relative mb-4">
       <div className="px-2 py-4 text-xs font-medium text-center">
-        <p className="text-lg">7日間の返品保証をお約束します。</p>
-        万が一ご満足いただけない場合は全額返金させていただきます。
+        <p className="text-lg">配送料について</p>
+        商品一点につき100円の配送料を徴収させていただきます。あらかじめご了承ください。
       </div>
     </div>
   )
@@ -87,7 +87,7 @@ export default function Cart(props) {
                 <Body />
               </div>
               <Actions />
-              {/* <Card /> */}
+              <Card />
             </div>
           </Transition>
         </section>

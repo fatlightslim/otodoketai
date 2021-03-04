@@ -6,9 +6,9 @@ import Marquee from "../components/Marquee"
 import List from "../components/List"
 import Testimonial from "../components/Testimonial"
 import Layout from "../components/Layout"
-// import InstagramFeed from "../components/InstagramFeed"
-// const Instagram = require("instagram-web-api")
-// const { username, password } = process.env
+import InstagramFeed from "../components/InstagramFeed"
+const Instagram = require("instagram-web-api")
+const { username, password } = process.env
 
 export default function Home(props) {
   // console.log(props)
@@ -43,42 +43,42 @@ export default function Home(props) {
             height={102}
           />
         </div>
-        {/* <InstagramFeed {...props} /> */}
+        <InstagramFeed {...props} />
       </main>
     </Layout>
   )
 }
 
-// export async function getStaticProps(params) {
-//   const client = new Instagram({ username, password })
-//   await client.login()
-//   // const profile = await client.getProfile()
-//   const instagram = await client.getPhotosByUsername({
-//     username,
-//   })
-//   let posts = []
-//   if (instagram["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
-//     // if we receive timeline data back
-//     //  update the posts to be equal
-//     // to the edges that were returned from the instagram API response
-//     posts = instagram["user"]["edge_owner_to_timeline_media"]["edges"]
-//   }
-
-//   return {
-//     props: {
-//       data: await getDataFromContentful("shop"),
-//       instagramPosts: posts,
-//     }, // will be passed to the page component as props
-//   }
-// }
-
 export async function getStaticProps(params) {
+  const client = new Instagram({ username, password })
+  await client.login()
+  // const profile = await client.getProfile()
+  const instagram = await client.getPhotosByUsername({
+    username,
+  })
+  let posts = []
+  if (instagram["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
+    // if we receive timeline data back
+    //  update the posts to be equal
+    // to the edges that were returned from the instagram API response
+    posts = instagram["user"]["edge_owner_to_timeline_media"]["edges"]
+  }
+
   return {
     props: {
       data: await getDataFromContentful("shop"),
+      instagramPosts: posts,
     }, // will be passed to the page component as props
   }
 }
+
+// export async function getStaticProps(params) {
+//   return {
+//     props: {
+//       data: await getDataFromContentful("shop"),
+//     }, // will be passed to the page component as props
+//   }
+// }
 
 const Landing = () => (
   <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200 antialiased">

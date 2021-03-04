@@ -30,12 +30,13 @@ export default function Confirm({ setForm, form, coupon, setCartOpen }) {
         subTotal: cartTotal,
         tax: 0,
         total: cartTotal + delivery - coupon_off,
+        pay: "cod"
       },
       url: window.location.origin
     }).then((value) => {
       router.push({
         pathname: "/order/success",
-        query: { _id: value._id, price: cartTotal + fee - coupon_off },
+        query: { _id: value._id, price: cartTotal + delivery - coupon_off },
       })
       setLoading(false)
       // setForm({ key: "ORDER", value: {}})

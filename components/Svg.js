@@ -73,7 +73,6 @@ export const Question = ({ ...props }) => (
 
 export const Home = ({ ...props }) => (
   <svg
-    // className="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500"
     {...props}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
