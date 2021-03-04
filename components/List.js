@@ -40,7 +40,7 @@ export default function List({ data, copies }) {
       <div className=" max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
         {data.items.map((v) => {
           const { fields, sys } = v
-          const { image, address, name, slug, hook } = fields
+          const { image, address, name, slug, hook, comment } = fields
           // console.log(image)
           return (
             <div
@@ -68,13 +68,13 @@ export default function List({ data, copies }) {
                     </a>
                   </Link>
                 </div>
-                <div className="mt-6 flex items-center">
+                {comment && <div className="mt-6 flex items-center">
                   <div className="flex-shrink-0">
                     <a href="#">
                       <span className="sr-only">味村店長</span>
                       <img
                         className="h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=EqnZfs2epz&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src="/img/ajimura.jpg"
                         alt=""
                       />
                     </a>
@@ -86,10 +86,10 @@ export default function List({ data, copies }) {
                       </a>
                     </p>
                     <div className="flex space-x-1 text-sm text-gray-500">
-                      {hook}
+                      {comment}
                     </div>
                   </div>
-                </div>
+                </div>}
               </div>
             </div>
           )

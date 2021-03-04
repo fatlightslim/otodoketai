@@ -40,7 +40,7 @@ export default function Testimonial(props) {
         <div className="relative">
           {/* <img className="mx-auto h-8" src="https://tailwindui.com/img/logos/workcation-logo-indigo-600-mark-gray-800-and-indigo-600-text.svg" alt="Workcation" /> */}
           <blockquote className="mt-10">
-            <div className="max-w-3xl mx-auto text-center text-2xl leading-9 font-medium text-gray-900">
+            <div className="max-w-3xl mx-auto text-center text-2xl leading-9 font-medium text-gray-900 antialiased">
               <p>
                 {/* “” */}
                 {/* “東金・九十九里エリアの皆様に地元の美味しい料理や食材をお届けしたい”そんな想いから、わたしたちはお届け隊を始めました。 */}
@@ -57,7 +57,8 @@ export default function Testimonial(props) {
                   {/* <img className=" h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=EqnZfs2epz&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" /> */}
                   <img
                     className="mx-auto h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=EqnZfs2epz&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=EqnZfs2epz&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src="/img/ajimura.jpg"
                     alt=""
                   />
                 </div>
