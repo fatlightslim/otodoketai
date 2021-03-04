@@ -14,6 +14,7 @@ export default async function handler(req, res) {
     customer_email,
     client_reference_id,
     line_items,
+    locale: "ja",
     mode: "payment",
     success_url: url + "/order/success?session_id={CHECKOUT_SESSION_ID}",
     cancel_url: url,

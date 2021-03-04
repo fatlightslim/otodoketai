@@ -10,7 +10,7 @@ function Menu({ isMobile }) {
         className={
           isMobile
             ? "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group rounded-md py-2 px-4 flex items-center text-base font-medium"
-            : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 group border-l-4 py-2 px-3 flex items-center text-sm font-medium"
+            : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 group border-l-4 py-2 px-3 flex items-center text-sm"
         }
       >
         <v.icon />
@@ -21,15 +21,28 @@ function Menu({ isMobile }) {
 }
 const menu = [
   {
-    name: "Home",
+    name: "Dashboard",
     icon: () => (
       <Home className="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500" />
     ),
   },
   {
-    name: "Search",
+    name: "Orders",
     icon: () => (
-      <ExCircle className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" />
+      <svg
+        className="mr-3 h-6 w-6 text-purple-400 group-hover:text-gray-500"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={3}
+          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+        />
+      </svg>
     ),
   },
   {
@@ -56,7 +69,7 @@ const menu = [
     name: "setting",
     icon: () => (
       <svg
-        className="text-purple-500 mr-3 h-6 w-6"
+        className="text-gray-500 mr-3 h-6 w-6"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

@@ -63,7 +63,7 @@ function buildEmail(data, s) {
   return {
     to: customer.email,
     bcc: "yokosuka@gmail.com",
-    from: process.env.EMAIL,
+    from: `お届け隊<${process.env.EMAIL}>`,
     // subject: templates[s].subject, // BUG. not working
     templateId: templates[s].template,
     dynamicTemplateData: getTemplateData(data),

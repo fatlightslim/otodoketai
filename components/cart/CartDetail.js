@@ -65,7 +65,7 @@ const Total = ({ pay, coupon, labels }) => {
 const Summary = ({ items }) => (
   <div className="max-w-7xl mx-auto grid gap-y-6 px-4 py-6 ">
     {items.map((v) => {
-      const { name, image, price } = v.fields
+      const { title, image, price } = v.fields
       return (
         <div
           key={v.sys.id}
@@ -73,13 +73,13 @@ const Summary = ({ items }) => (
         >
           <div className="flex ">
             <div className="flex-shrink-0">
-              <div className="inline-flex items-center justify-center h-10 w-10 rounded-md bg-white text-white sm:h-12 sm:w-12">
+              {image && <div className="inline-flex items-center justify-center h-10 w-10 rounded-md bg-white text-white sm:h-12 sm:w-12">
                 <Image {...getImageFields(image)} />
-              </div>
+              </div>}
             </div>
             <div className="ml-4">
               <div>
-                <p className="text-sm font-medium text-gray-900">{name}</p>
+                <p className="text-sm font-medium text-gray-900">{title}</p>
                 <p className="mt-1 text-xs text-gray-500">
                   &yen;{price.toLocaleString()} x {v.quantity}
                 </p>

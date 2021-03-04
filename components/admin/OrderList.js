@@ -4,9 +4,10 @@ import { ClipboardCheck } from "../../components/Svg"
 const labels = {
   sent_order_confirm: "配送待ち",
   cod: "配送待ち",
+  draft: "Draft"
 }
 
-const List = ({ customer, log, _id }) => {
+const List = ({ customer, log, _id, charge }) => {
   return (
     <li>
       <Link href={`/admin/orders/${_id}`}>
@@ -24,7 +25,7 @@ const List = ({ customer, log, _id }) => {
             </div>
             <div className="mt-2 sm:flex sm:justify-between">
               <div className="sm:flex">
-                <p className="flex items-center text-sm text-gray-500 uppercase font-bold">
+                <p className="flex items-center text-sm text-gray-500 uppercase ">
                   <ClipboardCheck className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 " />
                   #{_id.substr(18)}
                 </p>
@@ -43,7 +44,7 @@ const List = ({ customer, log, _id }) => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  {customer.pref}, {customer.addr1}
+                  {customer.pref} {customer.addr1}
                 </p>
               </div>
               <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
@@ -67,6 +68,7 @@ const List = ({ customer, log, _id }) => {
                 </p>
               </div>
             </div>
+
           </div>
         </a>
       </Link>

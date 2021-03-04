@@ -128,7 +128,7 @@ export default function Confirm({ setForm, form, coupon, setCartOpen }) {
             disabled={loading}
           >
             注文を確定する
-            {loading ? <Spin /> : <Lock />}
+            {loading ? <Spin className="animate-spin ml-2 h-5 w-5 text-white" /> : <Lock />}
           </button>
         </div>
 

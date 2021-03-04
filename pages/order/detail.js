@@ -224,8 +224,3 @@ function Items({ items, charge }) {
     </ul>
   )
 }
-
-// function Total({charge}) {
-//  return (
-//  )
-// }

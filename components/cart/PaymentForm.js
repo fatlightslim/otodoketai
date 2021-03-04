@@ -23,6 +23,7 @@ export default function PaymentForm(props) {
   const { labels, setForm, form, pay, setPay } = props
   const [loading, setLoading] = useState(false)
   const { items, cartTotal, totalItems } = useCart()
+  const delivery = totalItems * 100
 
   const handleClick = async () => {
     setLoading(true)
@@ -32,6 +33,7 @@ export default function PaymentForm(props) {
   }
 
   const createStripeSession = async () => {
+    items.push({fields: {title: "配送料", price: 100}, sys: {id: "delivery"}, quantity: totalItems})
     // Get Stripe.js instance
     const stripe = await stripePromise
 
@@ -41,12 +43,12 @@ export default function PaymentForm(props) {
       client_reference_id: form.value._id,
       customer_email: form.value.customer.email,
       metadata: {
-        delivery: totalItems * 100,
+        delivery,
         discount: 0,
         deliveryFee: 0,
         subTotal: cartTotal,
         tax: 0,
-        total: cartTotal + totalItems * 100,
+        total: cartTotal + delivery,
         pay: "online"
       },
       line_items: items.map((v) => {
@@ -56,7 +58,7 @@ export default function PaymentForm(props) {
             currency: "jpy",
             product_data: {
               name: title,
-              images: ["https:" + image.fields.file.url],
+              images: image ? ["https:" + image.fields.file.url] : [],
             },
             unit_amount: price,
           },
@@ -175,7 +177,7 @@ export default function PaymentForm(props) {
           onClick={() => handleClick()}
           className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
         >
-          {loading && <Spin />}
+          {loading && <Spin className="animate-spin -ml-4 h-5 w-5 text-white" />}
           {labels[1]["label"] === pay ? "注文確認画面" : "決済情報確認"}
           <ChevRight />
         </button>
