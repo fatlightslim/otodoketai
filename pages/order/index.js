@@ -51,11 +51,11 @@ export default function Payment(props) {
   }
 
   return items.length > 0 && (
-    <>
+    <div className="pb-8">
       <CartBar {...locals} />
       <Breadcrumb {...locals} />
       <Conditional {...locals} />
-    </>
+    </div>
   ) 
 }
 

@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { fetchPostJSON, cleanUp } from "../../utils/api-helpers"
-import { useForm } from "react-hook-form"
-import React, { useEffect } from "react"
+import { useForm, Controller } from "react-hook-form"
+import React, { useEffect, useState } from "react"
 import { ExCircle, ChevRight } from "../Svg"
 import CartDetail from "./CartDetail"
-import { useCart } from "react-use-cart";
-
+import { useCart } from "react-use-cart"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 function isEmpty(obj) {
   return !Object.keys(obj).length
@@ -14,7 +15,8 @@ function isEmpty(obj) {
 export default function OrderForm(props) {
   const { setForm, form, items } = props
   const { handleSubmit, errors, control, register, setValue } = useForm()
-const { cartTotal, totalItems } = useCart();
+  const { cartTotal, totalItems } = useCart()
+  const [startDate, setStartDate] = useState(new Date())
 
   useEffect(() => {
     const { customer } = form.value
@@ -32,7 +34,7 @@ const { cartTotal, totalItems } = useCart();
       items: cleanUp(items),
       status: "draft",
       charge: {
-        delivery: totalItems * 100,
+        delivery: 150,
         discount: 0,
         deliveryFee: 0,
         subTotal: cartTotal,
@@ -155,6 +157,26 @@ const { cartTotal, totalItems } = useCart();
                 label="電話番号"
                 round="rounded-b-md"
                 ref={register({ required: true })}
+              />
+            </div>
+          </fieldset>
+          <fieldset className="mt-6">
+            <legend
+              className="block text-sm font-medium text-gray-700"
+              children="お届け日(月曜日の配達をお休みとなります)"
+            />
+            <div className="mt-1 rounded-md shadow-sm -space-y-px">
+              <Controller
+                name={"date"}
+                control={control}
+                defaultValue={new Date()}
+                render={({ onChange, value }) => (
+                  <DatePicker
+                    className={`rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
+                    selected={value}
+                    onChange={onChange}
+                  />
+                )}
               />
             </div>
           </fieldset>

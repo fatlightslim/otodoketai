@@ -19,7 +19,8 @@ const Total = ({ pay, coupon, labels }) => {
   const { cartTotal, totalItems } = useCart()
   const fee = calcFee(cartTotal)
   const discount = coupon.amount_off || 0
-  const delivery = totalItems * 100
+  // const delivery = totalItems * 100
+  const delivery = 150
   return (
     <div className="max-w-7xl mx-auto px-4">
       <div className="text-left py-4 mt-4 px-2 text-xs leading-5">

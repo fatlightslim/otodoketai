@@ -23,7 +23,7 @@ export default function PaymentForm(props) {
   const { labels, setForm, form, pay, setPay } = props
   const [loading, setLoading] = useState(false)
   const { items, cartTotal, totalItems } = useCart()
-  const delivery = totalItems * 100
+  const delivery = 150
 
   const handleClick = async () => {
     setLoading(true)
@@ -33,7 +33,7 @@ export default function PaymentForm(props) {
   }
 
   const createStripeSession = async () => {
-    items.push({fields: {title: "配送料", price: 100}, sys: {id: "delivery"}, quantity: totalItems})
+    items.push({fields: {title: "配送料", price: 150}, sys: {id: "delivery"}, quantity: 1})
     // Get Stripe.js instance
     const stripe = await stripePromise
 

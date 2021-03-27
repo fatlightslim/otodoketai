@@ -11,7 +11,7 @@ export default function Confirm({ setForm, form, coupon, setCartOpen }) {
   const [loading, setLoading] = useState(false)
   const fee = calcFee(cartTotal)
   const coupon_off = coupon.amount_off || 0
-  const delivery = totalItems * 100
+  const delivery = 150
 
   const onSubmit = () => {
     const { _id, customer } = form.value

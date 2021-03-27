@@ -29,7 +29,7 @@ export default function CartBar(props) {
   const { cartTotal, totalItems } = useCart()
   const [isOpen, setIsOpen] = useState(false)
   const discount = coupon.amount_off || 0
-  const delivery = totalItems * 100
+  const delivery = 150
 
   return (
     <>

@@ -46,7 +46,13 @@ export default function Menu({ menu, setCartOpen }) {
             >
               <div className="flex-1 flex flex-col p-8">
                 <div className="w-32 h-32 flex-shrink-0 mx-auto ">
-                  <Image {...getImageFields(image)} className="rounded-md" />
+                  {/* <Image {...getImageFields(image)} className="rounded-md" /> */}
+
+                          {image && image.fields ? <Image
+                            {...getImageFields(image)}
+                            className="rounded-md"
+                          /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />
+                        }
                 </div>
                 <h3 className="mt-6 text-gray-900 text-sm font-medium">
                   {title}

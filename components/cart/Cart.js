@@ -55,7 +55,7 @@ export default function Cart(props) {
     <div className="bg-gray-50 overflow-hidden shadow rounded-lg mx-4 relative mb-4">
       <div className="px-4 py-4 text-xs font-medium text-center">
         <p className="text-lg">配送料について</p>
-        商品一点につき100円の配送料を徴収させていただきます。<br />あらかじめご了承ください。
+        配送料として150円を徴収させていただきます。<br />あらかじめご了承ください。
       </div>
     </div>
   )
