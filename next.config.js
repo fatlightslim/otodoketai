@@ -19,17 +19,7 @@ module.exports = {
       "scontent-lax3-2.cdninstagram.com"
     ],
   },
-  // i18n: {
-  //   locales: ["ja", "en", "kr"],
-  //   defaultLocale: "ja",
-  // },
-  plugins: [
-    require("@tailwindcss/typography"),
-    // ...
-  ],
   env: {
-    CONTENTFUL_ACCESS_TOKEN: "BdEMwh4qdi1fRZz-PnlRjJ3yfPnVDO0_0vYVhRfTq-A",
-    CONTENTFUL_SPACE_ID: "4qw6fucv5wfe",
     company: {
       ja: "株式会社ワイシーエス",
       en: "YCS HD Inc.",

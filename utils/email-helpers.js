@@ -2,12 +2,14 @@ import { connectToDatabase } from "./mongodb"
 import { ObjectId } from "mongodb"
 const sgMail = require("@sendgrid/mail")
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const headerImage = "http://cdn.mcauto-images-production.sendgrid.net/9257f8dcd27cf709/ae5db8df-9aa0-4e15-b8b8-98de5fe7df9a/2467x1535.png"
 
 function getTemplateData(data) {
   const _id = data._id.toString() // NOTICE: returned _id is not String but Object
   const { customer, items, charge, payment, subject, url } = data
   const { addr1, addr2, zip, pref } = customer
   const address = zip + " " + pref + addr1 + addr2
+
 
   return {
     // tracking_code,
@@ -29,12 +31,12 @@ function getTemplateData(data) {
         title,
         price,
         quantity,
-        image: "https:" + image.fields.file.url,
+        image: image ? "https:" + image.fields.file.url : headerImage,
       }
     }),
     price_detail: [{ title: "配送料", amount: charge.delivery }],
-    headerImage:
-      "http://cdn.mcauto-images-production.sendgrid.net/9257f8dcd27cf709/ae5db8df-9aa0-4e15-b8b8-98de5fe7df9a/2467x1535.png",
+    headerImage
+      
   }
 }
 
@@ -61,8 +63,13 @@ function buildEmail(data, s) {
   data.subject = templates[s].subject 
 
   return {
-    to: customer.email,
-    bcc: "yokosuka@gmail.com",
+    personalizations: [
+      {
+        subject: templates[s].subject,
+        to: [{ email: customer.email }],
+        bcc: [{ email: "fatlightslim@gmail.com" }],
+      },
+    ],
     from: `お届け隊<${process.env.EMAIL}>`,
     // subject: templates[s].subject, // BUG. not working
     templateId: templates[s].template,
@@ -107,6 +114,8 @@ export async function sendMail(data, status, url) {
           }
         )
       })
-      .catch((e) => reject(e))
+      .catch((e) => {
+        reject(e)
+      })
   })
 }

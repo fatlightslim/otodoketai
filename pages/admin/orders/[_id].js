@@ -1,16 +1,26 @@
 import Layout from "../../../components/admin/AdminLayout"
 import { getImageFields } from "../../../utils/contentful"
 import Image from "next/image"
-import { SolidCheck } from "../../../components/Svg"
+import { useState, useRef, Component } from "react"
+import ReactToPrint from "react-to-print"
 
 const labels = {
   sent_order_confirm: "配送待ち",
+  sent_tracking: "配送中",
   cod: "配送待ち",
-  draft: "Draft",
+  draft: "未確定",
+  name: "名前",
+  addr: "住所",
+  email: "メール",
+  tel: "TEL",
+  pay: "決済方法",
+  date: "配達日",
+  time: "配達時間",
 }
 
 export default function AdminOrder({ order }) {
   const { log, customer, _id, _ts, charge } = order
+  const componentRef = useRef()
   // console.log(customer)
   // console.log(order)
   // const data = []
@@ -41,12 +51,20 @@ export default function AdminOrder({ order }) {
           <span className="ml-2 flex-1 w-0 truncate">領収書</span>
         </div>
         <div className="ml-4 flex-shrink flex space-x-4">
-          <button
-            type="button"
-            className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Download
-          </button>
+          <ReactToPrint
+            trigger={() => (
+              <button
+                type="button"
+                className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                印刷
+              </button>
+            )}
+            content={() => componentRef.current}
+          />
+          <div className="absolute hidden">
+            <ComponentToPrint order={order} ref={componentRef} />
+          </div>
         </div>
       </li>
     </ul>
@@ -55,13 +73,15 @@ export default function AdminOrder({ order }) {
   const Field = ({ name }) => {
     return (
       <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-        <dt className="text-sm font-medium text-gray-500">{name}</dt>
+        <dt className="text-sm font-medium text-gray-500">{labels[name]}</dt>
         <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
           <span className="">
             {name === "addr"
               ? address
               : name === "pay"
               ? getPay(charge.pay)
+              : name === "date"
+              ? new Date(customer[name]).toLocaleDateString()
               : name === "receipt"
               ? getReceipt()
               : customer[name]}
@@ -73,7 +93,7 @@ export default function AdminOrder({ order }) {
 
   return (
     <Layout order={order}>
-      <div>
+      <div className="">
         <h3 className="text-lg leading-6 text-gray-900 uppercase font-bold">
           #{_id.substr(18)}
           <span className="ml-2 align-top inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800">
@@ -98,6 +118,8 @@ export default function AdminOrder({ order }) {
           <Field name="email" />
           <Field name="tel" />
           <Field name="pay" />
+          <Field name="date" />
+          <Field name="time" />
           <Field name="receipt" />
         </dl>
       </div>
@@ -117,56 +139,64 @@ export async function getServerSideProps(context) {
   }
 }
 
-const Log = ({ log }) => (
-  <div className="">
-    <h3 className="py-6 font-bold">履歴</h3>
-    <div className="flow-root bg-gray-50  px-4 py-8 rounded-md">
-      <ul className="-mb-8">
-        {log.reverse().map((v, i) => {
-          const check = [
-            "draft",
-            "awaiting_payment",
-            "sent_order_confirm",
-            "sent_shipping",
-          ]
-          const failure = ["sent_failure", "payment_failed"]
-          const thumbsUp = ["done", "shipping", "paid", "done"]
-          const icon = check.includes(v.status) ? (
-            <SolidCheck2 />
-          ) : failure.includes(v.status) ? (
-            <Close />
-          ) : (
-            <ThumbsUp />
-          )
-          return (
-            <li key={v.status}>
-              <div className="relative pb-8">
-                {log.length - 1 === i ? null : (
-                  <span
-                    className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
-                    aria-hidden="true"
-                  />
-                )}
-                <div className="relative flex space-x-3">
-                  <div>{icon}</div>
-                  <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                    <div>
-                      <p className="text-sm text-gray-500">{v.status}</p>
-                    </div>
-                    <div className="text-right text-sm whitespace-nowrap text-gray-500">
-                      <time dateTime={v._ts}>{v._ts.toLocaleString()}</time>
+const Log = ({ log }) => {
+  // const { log } = order
+  return (
+    <div className="">
+      <h3 className="py-6 font-bold">履歴</h3>
+      <div className="flow-root bg-gray-50  px-4 py-8 rounded-md">
+        <ul className="-mb-8">
+          {log
+            // .sort((a, b) => {
+            //   return a._ts < b._ts ? 1 : -1
+            // })
+            .map((v, i) => {
+              const check = [
+                "draft",
+                "awaiting_payment",
+                "sent_order_confirm",
+                "sent_tracking",
+              ]
+              const failure = ["sent_failure", "payment_failed"]
+              const thumbsUp = ["done", "sent_tracking", "paid", "done"]
+              const icon = check.includes(v.status) ? (
+                <SolidCheck2 />
+              ) : failure.includes(v.status) ? (
+                <Close />
+              ) : (
+                <ThumbsUp />
+              )
+              return (
+                <li key={v._ts}>
+                  <div className="relative pb-8">
+                    {log.length - 1 === i ? null : (
+                      <span
+                        className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <div className="relative flex space-x-3">
+                      <div>{icon}</div>
+                      <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                        <div>
+                          <p className="text-sm text-gray-500">
+                            {labels[v.status]}
+                          </p>
+                        </div>
+                        <div className="text-right text-sm whitespace-nowrap text-gray-500">
+                          <time dateTime={v._ts}>{v._ts.toLocaleString()}</time>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
+                </li>
+              )
+            })}
+        </ul>
+      </div>
     </div>
-  </div>
-)
-
+  )
+}
 const OrderDetails = ({ items, charge }) => (
   <div className="relative">
     {/* <div className="absolute inset-0 h-1/2 bg-gray-100" /> */}
@@ -192,10 +222,10 @@ const OrderDetails = ({ items, charge }) => (
                     <div>
                       <div className="flex text-sm font-medium text-gray-800 truncate items-center">
                         <div className="w-6 h-6">
-                          <Image
+                          {image ? <Image
                             {...getImageFields(image)}
                             className="rounded-sm"
-                          />
+                          /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />}
                         </div>
                         <p className="mx-2">{title}</p>
                         <p className="font-normal text-gray-500">
@@ -318,3 +348,122 @@ const Close = ({ ...props }) => (
     </svg>
   </span>
 )
+
+class ComponentToPrint extends Component {
+  render() {
+    const { order } = this.props
+    if (!order) return null
+    const { customer, _ts, items, charge } = order
+    const address = customer.zip + " " + customer.addr1 + customer.addr2
+
+    return (
+      <div className="py-8 px-12">
+        <div>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            領収書
+          </h3>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            注文日: {new Date(_ts).toLocaleString()}
+          </p>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            お届け日時: {new Date(customer.date).toLocaleDateString()}
+            <span className="ml-2">{customer.time}</span>
+          </p>
+        </div>
+        <div className="mt-5 border-t border-gray-200">
+          <dl className="divide-y divide-gray-200">
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">お名前</dt>
+              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="flex-grow">{customer.name}&nbsp;様</span>
+              </dd>
+            </div>
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">
+                メールアドレス
+              </dt>
+              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="flex-grow">{customer.email}</span>
+              </dd>
+            </div>
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">ご住所</dt>
+              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="flex-grow">{address}</span>
+              </dd>
+            </div>
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">お電話番号</dt>
+              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="flex-grow">{customer.tel}</span>
+              </dd>
+            </div>
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">注文概要</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
+                  {items.map((v) => {
+                    const { fields, sys, quantity } = v
+                    const { image, title, price } = fields
+                    return (
+                      <li
+                        key={sys.id}
+                        className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                      >
+                        <div className="w-0 flex-1 flex items-center">
+                          <span className="flex-shrink-0 h-5 w-5 text-gray-400">
+                            {image ? <img {...getImageFields(image)} /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />}
+                          </span>
+                          <span className="ml-2 flex-1 w-0 truncate">
+                            {title}
+                            <span className="px-2">x</span> {quantity}
+                          </span>
+                        </div>
+                        <div className="ml-4 flex-shrink-0 flex space-x-4">
+                          <span className="text-gray-900" aria-hidden="true">
+                            &yen;{price.toLocaleString()}
+                          </span>
+                        </div>
+                      </li>
+                    )
+                  })}
+                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                    <div className="w-0 flex-1 flex items-center">
+                      <span className="ml-2 flex-1 w-0 truncate">配送料</span>
+                    </div>
+                    <div className="ml-4 flex-shrink-0 flex space-x-4">
+                      <span className="text-gray-900" aria-hidden="true">
+                        &yen; {charge.delivery}
+                      </span>
+                    </div>
+                  </li>
+                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                    <div className="w-0 flex-1 flex items-center">
+                      <span className="ml-2 flex-1 w-0 truncate">合計</span>
+                    </div>
+                    <div className="ml-4 flex-shrink-0 flex space-x-4">
+                      <span className="text-gray-900" aria-hidden="true">
+                        &yen; {charge.total}
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </dd>
+            </div>
+          </dl>
+          <div className="text-sm text-gray-900">
+            上記金額を領収しました。
+            <br />
+            この度はよみうりのお届け隊をご利用いただきありがとうございました。
+            <br />
+            またのご利用を心よりお待ちしております。
+            <br />
+            ＹＣ東金中央・東金東部 よみうりお届け隊 代表：館坂民和
+            <br />
+            〒283-0063　東金市堀上56-4　電話0475-52-2240
+          </div>
+        </div>
+      </div>
+    )
+  }
+}

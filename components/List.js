@@ -42,7 +42,7 @@ export default function List({ data, copies }) {
           const { fields, sys } = v
           const { image, address, name, slug, hook, comment } = fields
           // console.log(image)
-          return (
+          return image ? (
             <div
               key={sys.id}
               className="flex flex-col rounded-lg shadow-lg overflow-hidden"
@@ -92,7 +92,7 @@ export default function List({ data, copies }) {
                 </div>}
               </div>
             </div>
-          )
+          ) : null
         })}
       </div>
     </div>

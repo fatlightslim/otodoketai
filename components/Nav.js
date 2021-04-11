@@ -96,7 +96,7 @@ const List = ({ fields, sys }) => {
       <a className={className}>
         <div className="flex md:h-full lg:flex-col md:text-center">
           <div className="w-16 sm:w-32 md:mx-auto">
-            <Image {...getImageFields(image)} />
+            {image && <Image {...getImageFields(image)} />}
           </div>
           <div className="ml-4 md:flex-1 md:flex md:flex-col md:justify-between lg:ml-0 lg:mt-4">
             <div>

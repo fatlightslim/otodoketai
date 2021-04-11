@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { getImageFields } from "../utils/contentful"
 import { Plus, Minus } from "./Svg"
-import { useCart } from "react-use-cart";
+import { useCart } from "react-use-cart"
 
 export default function Menu({ menu, setCartOpen }) {
   const { addItem } = useCart()
@@ -48,11 +48,14 @@ export default function Menu({ menu, setCartOpen }) {
                 <div className="w-32 h-32 flex-shrink-0 mx-auto ">
                   {/* <Image {...getImageFields(image)} className="rounded-md" /> */}
 
-                          {image && image.fields ? <Image
-                            {...getImageFields(image)}
-                            className="rounded-md"
-                          /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />
-                        }
+                  {image && image.fields ? (
+                    <Image {...getImageFields(image)} className="rounded-md" />
+                  ) : (
+                    <img
+                      className="rounded-md"
+                      src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
+                    />
+                  )}
                 </div>
                 <h3 className="mt-6 text-gray-900 text-sm font-medium">
                   {title}

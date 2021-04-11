@@ -5,8 +5,10 @@ import React, { useEffect, useState } from "react"
 import { ExCircle, ChevRight } from "../Svg"
 import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
-import DatePicker from "react-datepicker"
+import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import ja from "date-fns/locale/ja"
+registerLocale("ja", ja)
 
 function isEmpty(obj) {
   return !Object.keys(obj).length
@@ -25,6 +27,8 @@ export default function OrderForm(props) {
         setValue(v, customer[v])
       })
     }
+
+    setStartDate(new Date())
   }, [])
 
   const onSubmit = (customer) => {
@@ -163,7 +167,7 @@ export default function OrderForm(props) {
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
-              children="お届け日(月曜日の配達をお休みとなります)"
+              children="お届け日時(月曜日の配達はお休みとなります)"
             />
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <Controller
@@ -172,12 +176,22 @@ export default function OrderForm(props) {
                 defaultValue={new Date()}
                 render={({ onChange, value }) => (
                   <DatePicker
-                    className={`rounded-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
-                    selected={value}
+                    // dateFormat="MM-DD-YYYY"
+                    locale="ja"
+                    className={`rounded-t-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
+                    selected={new Date(value)}
                     onChange={onChange}
                   />
                 )}
               />
+              <select
+                              ref={register({ required: true })}
+                name="time"
+                className={`rounded-b-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full rounded-none  bg-transparent focus:z-10 sm:text-sm`}
+              >
+                <option>11:00 ~ 12:00</option>
+                <option>16:00 ~ 17:00</option>
+              </select>
             </div>
           </fieldset>
 

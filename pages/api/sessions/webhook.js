@@ -5,7 +5,7 @@ const cors = Cors({
   allowMethods: ["POST", "HEAD"],
 })
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY_TEST)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -20,6 +20,7 @@ const fulfillOrder = (session) => {
     _id: session.client_reference_id,
     payment: session,
     status: "paid",
+    url: session.cancel_url,
   }).then((r) => {
     console.log("Fulfilled")
   })
@@ -28,11 +29,16 @@ const fulfillOrder = (session) => {
 const createOrder = (session) => {
   // Saving a copy of the order in your own database.
   // console.log("Creating order", session)
+  const meta = session.metadata
+  const charge = {}
+  Object.keys(meta).forEach((v) => {
+    charge[v] = v === "pay" ? meta[v] : parseInt(meta[v])
+  })
   fetchPostJSON(`${session.cancel_url}/api/orders`, {
     _id: session.client_reference_id,
     payment: session,
     status: "awaiting_payment",
-    charge: session.metadata
+    charge,
   }).then((r) => {
     console.log("awaiting_payment")
   })

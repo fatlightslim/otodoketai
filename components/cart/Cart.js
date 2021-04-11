@@ -133,7 +133,7 @@ const List = ({ brand, image, title, price, id, quantity }) => {
           </p> */}
         </div>
         <div className="w-10 h-10  flex-shrink-0">
-          <Image {...getImageFields(image)} />
+          {image ? <Image {...getImageFields(image)} /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />}
         </div>
       </div>
       <div>

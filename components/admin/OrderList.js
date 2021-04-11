@@ -4,7 +4,7 @@ import { ClipboardCheck } from "../../components/Svg"
 const labels = {
   sent_order_confirm: "配送待ち",
   cod: "配送待ち",
-  draft: "Draft"
+  draft: "未確定"
 }
 
 const List = ({ customer, log, _id, charge }) => {

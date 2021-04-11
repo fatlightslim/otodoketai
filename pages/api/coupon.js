@@ -1,4 +1,4 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY_TEST)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 export default async function handler(req, res) {
   try {

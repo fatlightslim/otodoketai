@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import { init } from "ityped"
 import { CartProvider } from "react-use-cart"
+import { UserProvider } from "@auth0/nextjs-auth0"
 
 function MyApp({ Component, pageProps }) {
   const [cartOpen, setCartOpen] = useState(false)
@@ -31,9 +32,11 @@ function MyApp({ Component, pageProps }) {
     setCartOpen,
   }
   return (
-    <CartProvider>
-      <Component {...pageProps} {...props} />
-    </CartProvider>
+    <UserProvider>
+      <CartProvider>
+        <Component {...pageProps} {...props} />
+      </CartProvider>
+    </UserProvider>
   )
 }
 
