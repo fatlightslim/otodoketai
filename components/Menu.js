@@ -3,7 +3,8 @@ import { getImageFields } from "../utils/contentful"
 import { Plus, Minus } from "./Svg"
 import { useCart } from "react-use-cart"
 
-export default function Menu({ menu, setCartOpen }) {
+export default function Menu({ menu, setCartOpen, name }) {
+  const shopName = name
   const { addItem } = useCart()
 
   // const Counter = ({ icon }) => {
@@ -95,6 +96,7 @@ export default function Menu({ menu, setCartOpen }) {
                               price: fields.price, // required for cart
                               fields, // for DB
                               sys, // for DB
+                              shopName,
                             },
                             1 // quantity, required for both DB and Cart
                           )

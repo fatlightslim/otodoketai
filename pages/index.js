@@ -11,7 +11,7 @@ import Layout from "../components/Layout"
 // const { username, password } = process.env
 
 export default function Home(props) {
-  // console.log(props)
+  console.log(props)
   return (
     <Layout {...props}>
       <main>

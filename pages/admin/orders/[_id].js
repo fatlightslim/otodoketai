@@ -3,6 +3,7 @@ import { getImageFields } from "../../../utils/contentful"
 import Image from "next/image"
 import { useState, useRef, Component } from "react"
 import ReactToPrint from "react-to-print"
+import PurchaseOrder from "../../../components/PurchaseOrder"
 
 const labels = {
   sent_order_confirm: "配送待ち",
@@ -20,7 +21,6 @@ const labels = {
 
 export default function AdminOrder({ order }) {
   const { log, customer, _id, _ts, charge } = order
-  const componentRef = useRef()
   // console.log(customer)
   // console.log(order)
   // const data = []
@@ -33,40 +33,8 @@ export default function AdminOrder({ order }) {
 
   const getReceipt = () => (
     <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-      <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-        <div className="w-0 flex-1 flex items-center">
-          <svg
-            className="flex-shrink-0 h-5 w-5 text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-              clipRule="evenodd"
-            />
-          </svg>
-          <span className="ml-2 flex-1 w-0 truncate">領収書</span>
-        </div>
-        <div className="ml-4 flex-shrink flex space-x-4">
-          <ReactToPrint
-            trigger={() => (
-              <button
-                type="button"
-                className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                印刷
-              </button>
-            )}
-            content={() => componentRef.current}
-          />
-          <div className="absolute hidden">
-            <ComponentToPrint order={order} ref={componentRef} />
-          </div>
-        </div>
-      </li>
+      <Po order={order} />
+      <Receipt order={order} />
     </ul>
   )
 
@@ -137,6 +105,86 @@ export async function getServerSideProps(context) {
   return {
     props: { order: data }, // will be passed to the page component as props
   }
+}
+
+const Receipt = ({order}) => {
+  const componentRef = useRef()
+  return (
+    <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+      <div className="w-0 flex-1 flex items-center">
+        <svg
+          className="flex-shrink-0 h-5 w-5 text-gray-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <span className="ml-2 flex-1 w-0 truncate">領収書</span>
+      </div>
+      <div className="ml-4 flex-shrink flex space-x-4">
+        <ReactToPrint
+          trigger={() => (
+            <button
+              type="button"
+              className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              印刷
+            </button>
+          )}
+          content={() => componentRef.current}
+        />
+        <div className="absolute hidden">
+          <ComponentToPrint order={order} ref={componentRef} />
+        </div>
+      </div>
+    </li>
+  )
+}
+
+const Po = ({ order }) => {
+  const componentRef = useRef()
+  return (
+    <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+      <div className="w-0 flex-1 flex items-center">
+        <svg
+          className="flex-shrink-0 h-5 w-5 text-gray-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <span className="ml-2 flex-1 w-0 truncate">発注書</span>
+      </div>
+      <div className="ml-4 flex-shrink flex space-x-4">
+        <ReactToPrint
+          trigger={() => (
+            <button
+              type="button"
+              className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              印刷
+            </button>
+          )}
+          content={() => componentRef.current}
+        />
+        <div className="absolute hidden">
+          <PurchaseOrder order={order} ref={componentRef} />
+        </div>
+      </div>
+    </li>
+  )
 }
 
 const Log = ({ log }) => {
@@ -222,10 +270,17 @@ const OrderDetails = ({ items, charge }) => (
                     <div>
                       <div className="flex text-sm font-medium text-gray-800 truncate items-center">
                         <div className="w-6 h-6">
-                          {image ? <Image
-                            {...getImageFields(image)}
-                            className="rounded-sm"
-                          /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />}
+                          {image ? (
+                            <Image
+                              {...getImageFields(image)}
+                              className="rounded-sm"
+                            />
+                          ) : (
+                            <img
+                              className="rounded-md"
+                              src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
+                            />
+                          )}
                         </div>
                         <p className="mx-2">{title}</p>
                         <p className="font-normal text-gray-500">
@@ -412,7 +467,14 @@ class ComponentToPrint extends Component {
                       >
                         <div className="w-0 flex-1 flex items-center">
                           <span className="flex-shrink-0 h-5 w-5 text-gray-400">
-                            {image ? <img {...getImageFields(image)} /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />}
+                            {image ? (
+                              <img {...getImageFields(image)} />
+                            ) : (
+                              <img
+                                className="rounded-md"
+                                src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
+                              />
+                            )}
                           </span>
                           <span className="ml-2 flex-1 w-0 truncate">
                             {title}

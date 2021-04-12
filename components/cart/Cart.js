@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Transition } from "@headlessui/react"
 import { CartSvg, X, Close, Minus, Plus } from "../Svg"
-import { useCart } from "react-use-cart";
+import { useCart } from "react-use-cart"
 import { getImageFields } from "../../utils/contentful"
 
 export default function Cart(props) {
@@ -41,12 +41,12 @@ export default function Cart(props) {
         買い物を続ける
       </button>
       <Link href="/order">
-      <a
-        // onClick={() => setForm({ key: "ORDER", value: form.value })}
-        className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        ご購入手続き
-      </a>
+        <a
+          // onClick={() => setForm({ key: "ORDER", value: form.value })}
+          className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          ご購入手続き
+        </a>
       </Link>
     </div>
   )
@@ -55,7 +55,9 @@ export default function Cart(props) {
     <div className="bg-gray-50 overflow-hidden shadow rounded-lg mx-4 relative mb-4">
       <div className="px-4 py-4 text-xs font-medium text-center">
         <p className="text-lg">配送料について</p>
-        配送料として150円を徴収させていただきます。<br />あらかじめご了承ください。
+        配送料として150円を徴収させていただきます。
+        <br />
+        あらかじめご了承ください。
       </div>
     </div>
   )
@@ -133,7 +135,14 @@ const List = ({ brand, image, title, price, id, quantity }) => {
           </p> */}
         </div>
         <div className="w-10 h-10  flex-shrink-0">
-          {image ? <Image {...getImageFields(image)} /> : <img className="rounded-md" src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中" />}
+          {image ? (
+            <Image {...getImageFields(image)} />
+          ) : (
+            <img
+              className="rounded-md"
+              src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
+            />
+          )}
         </div>
       </div>
       <div>
@@ -178,7 +187,10 @@ const Counter = ({ id, quantity }) => {
   return (
     <div className="flex items-center">
       <div className="flex-shrink  px-2 bg-white">
-        <button type="button" onClick={() => updateItemQuantity(id, quantity - 1)}>
+        <button
+          type="button"
+          onClick={() => updateItemQuantity(id, quantity - 1)}
+        >
           <Minus width={16} height={16} />
         </button>
         <span
@@ -188,7 +200,10 @@ const Counter = ({ id, quantity }) => {
           className="text-center align-text-bottom font-bold px-2 border-none"
           children={quantity}
         />
-        <button type="button" onClick={() => updateItemQuantity(id, quantity + 1)}>
+        <button
+          type="button"
+          onClick={() => updateItemQuantity(id, quantity + 1)}
+        >
           <Plus width={16} height={16} />
         </button>
       </div>
