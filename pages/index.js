@@ -6,17 +6,12 @@ import Marquee from "../components/Marquee"
 import List from "../components/List"
 import Testimonial from "../components/Testimonial"
 import Layout from "../components/Layout"
-// import InstagramFeed from "../components/InstagramFeed"
-// const Instagram = require("instagram-web-api")
-// const { username, password } = process.env
 
 export default function Home(props) {
-  console.log(props)
   return (
     <Layout {...props}>
       <main>
         <Hero />
-        <Testimonial />
         <Marquee {...props} />
         <List {...props} />
 
