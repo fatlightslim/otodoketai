@@ -57,6 +57,8 @@ export async function getServerSideProps() {
   const url = process.env.URL || "http://localhost:3000"
   const res = await fetch(`${url}/api/orders`)
   const data = await res.json()
+  console.log(res);
+
   const today = data.filter(
     (v) =>
       isToday(new Date(v.customer.date)) &&

@@ -99,7 +99,8 @@ export default function AdminOrder({ order }) {
 }
 export async function getServerSideProps(context) {
   const { params } = context
-  const res = await fetch("http://localhost:3000/api/orders/" + params._id)
+  const url = process.env.URL || "http://localhost:3000"
+  const res = await fetch(url + "/api/orders/" + params._id)
   const data = await res.json()
 
   return {
