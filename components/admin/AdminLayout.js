@@ -37,7 +37,7 @@ export default function Admin({ children }) {
     )
   }
   // return <a href="/api/auth/login">Login</a>
-  return window.location.href = "/api/auth/login"
+  return (window.location.href = `/api/auth/login?returnTo=${router.asPath}`)
 }
 
 const MenuButton = ({ setIsOpen }) => (

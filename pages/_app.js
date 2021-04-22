@@ -32,7 +32,8 @@ function MyApp({ Component, pageProps }) {
     setCartOpen,
   }
   return (
-    <UserProvider>
+    <UserProvider
+    >
       <CartProvider>
         <Component {...pageProps} {...props} />
       </CartProvider>
