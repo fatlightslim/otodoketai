@@ -1,5 +1,4 @@
 import { useUser } from "@auth0/nextjs-auth0"
-
 import { useRouter } from "next/router"
 import { MobileMenu, DesktopMenu } from "./Menu"
 import { useState } from "react"
