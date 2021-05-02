@@ -20,11 +20,29 @@ const labels = [
 ]
 export default function Payment(props) {
   const router = useRouter()
-  const { items, cartTotal } = useCart()
+  const { cartTotal, items } = useCart()
   // console.log(items);
-  const [pay, setPay] = useState(labels[0]["label"])
+  const [delivery, setDelivery] = useState(150)
+  const [pay, setPay] = useState("online")
   const [coupon, setCoupon] = useState({ id: "" })
   const [form, setForm] = useState({ key: "ORDER", value: {} })
+  const [charge, setCharge] = useState(getCharge())
+
+  function getCharge() {
+    const discount = 0
+    const total = cartTotal + delivery - discount
+    return {
+      delivery: delivery || 150,
+      discount,
+      total,
+      subTotal: cartTotal,
+      tax: total - parseInt(total / 1.1),
+    }
+  }
+
+  useEffect(() => {
+    setCharge(getCharge())
+  }, [cartTotal, coupon, pay, delivery])
 
   useEffect(() => {
     if (items.length === 0) {
@@ -48,6 +66,8 @@ export default function Payment(props) {
     setPay,
     form,
     setForm,
+    charge,
+    setDelivery
   }
 
   return items.length > 0 && (

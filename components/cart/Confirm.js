@@ -4,14 +4,13 @@ import { Spin, Lock } from "../Svg"
 import { useRouter } from "next/router"
 import { useCart } from "react-use-cart"
 
-export default function Confirm({ setForm, form, coupon, setCartOpen }) {
+export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
   const router = useRouter()
-  const { items, cartTotal, totalItems } = useCart()
+  const { items } = useCart()
   const { addr1, addr2, pref, name, tel, zip, email } = form.value.customer
   const [loading, setLoading] = useState(false)
-  const fee = calcFee(cartTotal)
-  const coupon_off = coupon.amount_off || 0
-  const delivery = 150
+  const { fee, total, discount, delivery, subTotal } = charge
+
 
   const onSubmit = () => {
     const { _id, customer } = form.value
@@ -23,20 +22,12 @@ export default function Confirm({ setForm, form, coupon, setCartOpen }) {
       customer,
       items: cleanUp(items),
       status: "cod",
-      charge: {
-        delivery,
-        discount: 0,
-        deliveryFee: 0,
-        subTotal: cartTotal,
-        tax: 0,
-        total: cartTotal + delivery - coupon_off,
-        pay: "cod"
-      },
-      url: window.location.origin
+      charge: {...charge, pay},
+      url: window.location.origin,
     }).then((value) => {
       router.push({
         pathname: "/order/success",
-        query: { _id: value._id, price: cartTotal + delivery - coupon_off },
+        query: { _id: value._id, price: total },
       })
       setLoading(false)
       // setForm({ key: "ORDER", value: {}})
@@ -88,7 +79,7 @@ export default function Confirm({ setForm, form, coupon, setCartOpen }) {
           <div className="grid grid-cols-2">
             <span>商品金額計</span>
             <span className="text-right">
-              &yen;{cartTotal.toLocaleString()}
+              &yen;{subTotal.toLocaleString()}
             </span>
           </div>
           <div className="">
@@ -97,23 +88,13 @@ export default function Confirm({ setForm, form, coupon, setCartOpen }) {
               &yen;{delivery.toLocaleString()}
             </span>
           </div>
-          {/* <div className="">
-            <span>クーポン割引</span>
-            <span className="float-right">&yen;{coupon_off.toLocaleString()}</span>
-          </div> */}
-          {/* <div className="">
-            <span>代引手数料 (消費税込)</span>
-            <span className="float-right">
-              &yen;{(fee).toLocaleString()}
-            </span>
-          </div> */}
 
           <hr className="my-4" />
 
           <div className="text-sm  font-bold">
             <span>お支払い金額</span>
             <span className="float-right text-lg -mt-1">
-              &yen;{(cartTotal + delivery - coupon_off).toLocaleString()}
+              &yen;{total.toLocaleString()}
             </span>
           </div>
         </div>

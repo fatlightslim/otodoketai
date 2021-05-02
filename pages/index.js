@@ -5,37 +5,12 @@ import Marquee from "../components/Marquee"
 import List from "../components/List"
 import Layout from "../components/Layout"
 
-import { getImageFields } from "../utils/contentful"
-import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
-import { Carousel } from "react-responsive-carousel"
 
 export default function Home(props) {
   const { data } = props
   return (
     <Layout {...props}>
       <main>
-        <div className="bg-gray-800 m-2 py-8 rounded-md">
-          <h3 className="text-gray-50">人気商品</h3>
-
-          <Carousel centerMode centerSlidePercentage={80}>
-            {data.items.map((v) => {
-              const { fields, sys } = v
-              const { image, address, name, slug, hook, comment } = fields
-              return (
-                <div
-                  key={sys.id}
-                  className="flex flex-col px-1 rounded-lg shadow-lg overflow-hidden"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="h-48 w-full overflow-hidden">
-                      <Image {...getImageFields(image)} />
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </Carousel>
-        </div>
         <Hero />
         <Marquee {...props} />
         <List {...props} />
