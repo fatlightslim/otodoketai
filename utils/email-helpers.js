@@ -16,6 +16,7 @@ function getTemplateData(data) {
     subject,
     url,
     name: customer.name,
+    tel: customer.tel,
     order_id: "#" + _id.substr(18).toUpperCase(),
     order_url: `${url}/order/detail?_id=${_id}`,
     subTotal: charge.subTotal.toLocaleString(),

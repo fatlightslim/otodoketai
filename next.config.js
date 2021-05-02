@@ -1,9 +1,4 @@
 module.exports = {
-  mode: 'jit',
-purge: [
-     './public/**/*.html',
-     './src/**/*.{js,jsx,ts,tsx,vue}',
-   ],
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
@@ -34,8 +29,8 @@ purge: [
     },
     site: {
       name: "お届け隊",
-      url: "http://fatlightslim.com/",
-      email: "t.officework@ycs-hd.com",
+      url: "https://otodoketai.vercel.app/",
+      email: "touganechuuou@ycmail.jp",
       twitter: "@fatlightslim",
     },
   },
