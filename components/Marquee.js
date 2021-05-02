@@ -1,14 +1,17 @@
+import Link from "next/link"
 import Ticker from "react-ticker"
 import { getImageFields } from "../utils/contentful"
 import Image from "next/image"
 
 export default function Marquee({ data }) {
   // console.log(data.items.filter(v => v.fields.menu));
-  
-  const featured = data.items.filter(v => v.fields.menu).map((v) => {
-    const { fields, sys } = v
-    return fields.menu ? v : null
-  })
+
+  const featured = data.items
+    .filter((v) => v.fields.menu)
+    .map((v) => {
+      const { fields, sys } = v
+      return fields.menu ? v : null
+    })
   // const featured = data.items.filter(
   //   (v) => v.sys.id === "6Bu0ljtIiwIO4hIrlzoT9d"
   // )[0]["fields"].menu
@@ -27,24 +30,28 @@ export default function Marquee({ data }) {
         >
           {featured.map((v, i) => {
             const { fields, sys } = v
-            const { name, menu } = fields
+            const { name, menu, slug } = fields
             const image = menu[0].fields.image
             return image && i < 9 ? (
               <li key={sys.id} className="relative">
-                <div className="focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 group block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden">
-                  <img
-                    src={image.fields.file.url}
-                    alt=""
-                    layout="fill"
-                    className="group-hover:opacity-75 object-cover pointer-events-none"
-                  />
-                </div>
-                <p className="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none">
-                  {menu[0].fields.title}
-                </p>
-                <p className="block text-sm font-medium text-gray-500 pointer-events-none">
-                  {name}
-                </p>
+                <Link href={`/shops/${slug}`}>
+                  <a>
+                    <div className="focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500 group block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden">
+                      <img
+                        src={image.fields.file.url}
+                        alt=""
+                        layout="fill"
+                        className="group-hover:opacity-75 object-cover pointer-events-none"
+                      />
+                    </div>
+                    <p className="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none">
+                      {menu[0].fields.title}
+                    </p>
+                    <p className="block text-sm font-medium text-gray-500 pointer-events-none">
+                      {name}
+                    </p>
+                  </a>
+                </Link>
               </li>
             ) : null
           })}
