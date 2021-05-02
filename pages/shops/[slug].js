@@ -13,7 +13,7 @@ export default function Shop(props) {
 
   return (
     <Layout {...props}>
-      <div className="min-h-screen bg-gray-50 py-4">
+      <div className="min-h-screen bg-gray-50 sm:py-4">
         <main>
           <div>
             {/* Hero card */}
@@ -21,10 +21,10 @@ export default function Shop(props) {
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
               <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">
-                  <div className="absolute inset-0">
+                  <div className="absolute inset-0 ">
                     <Image {...getImageFields(image)} />
                     <div
-                      className="absolute inset-0 bg-red-500"
+                      className="absolute inset-0 bg-yellow-500"
                       style={{ mixBlendMode: "multiply" }}
                     />
                   </div>
