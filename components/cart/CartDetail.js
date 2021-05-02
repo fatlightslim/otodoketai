@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { ExCircle, SolidCheck } from "../Svg"
 import { getImageFields } from "../../utils/contentful"
-import { fetchPostJSON, calcFee } from "../../utils/api-helpers"
+import { fetchPostJSON } from "../../utils/api-helpers"
 import { useCart } from "react-use-cart"
 
 export default function CartDetail(props) {

@@ -58,17 +58,20 @@ export default function OrderForm(props) {
   }
 
   const getZip = async (value) => {
-    const left3 = value.slice(0, 3)
+    const left3 = value.replace('-', '').slice(0, 3)
+    const right4 = value.replace('-', '').slice(3)
     const o = outOfScope.map((v) => v.zip)
 
-    if (left3 === "283" && !o.includes(value)) {
+    if (left3 === "283" && !o.includes(value) && right4.length === 4) {
       setOutArea(false)
-      let r = await fetch("http://api.zipaddress.net/?zipcode=" + value)
+      // let r = await fetch("http://api.zipaddress.net/?zipcode=" + value)
+      let r = await fetch(`https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`)
       r = await r.json()
+      const data = r.data[0].ja
       if (r.data) {
         setValue("zip", value)
-        setValue("pref", r.data["pref"])
-        setValue("addr1", r.data["address"])
+        setValue("pref", data["prefecture"])
+        setValue("addr1", data["address1"] + data["address2"])
 
         const e = extraDeliveryFee.map((v) => v.zip)
         const i = inScope99.map((v) => v.zip)

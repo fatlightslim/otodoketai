@@ -1,4 +1,4 @@
-import { fetchPostJSON, cleanUp, calcFee } from "../../utils/api-helpers"
+import { fetchPostJSON, cleanUp } from "../../utils/api-helpers"
 import { useState } from "react"
 import { Spin, Lock } from "../Svg"
 import { useRouter } from "next/router"
