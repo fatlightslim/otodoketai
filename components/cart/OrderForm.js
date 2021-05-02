@@ -12,6 +12,7 @@ import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
 import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import {getDay} from "date-fns"
 import ja from "date-fns/locale/ja"
 registerLocale("ja", ja)
 
@@ -57,15 +58,18 @@ export default function OrderForm(props) {
     // })
   }
 
+
   const getZip = async (value) => {
-    const left3 = value.replace('-', '').slice(0, 3)
-    const right4 = value.replace('-', '').slice(3)
+    const left3 = value.replace("-", "").slice(0, 3)
+    const right4 = value.replace("-", "").slice(3)
     const o = outOfScope.map((v) => v.zip)
 
     if (left3 === "283" && !o.includes(value) && right4.length === 4) {
       setOutArea(false)
       // let r = await fetch("http://api.zipaddress.net/?zipcode=" + value)
-      let r = await fetch(`https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`)
+      let r = await fetch(
+        `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
+      )
       r = await r.json()
       const data = r.data[0].ja
       if (r.data) {
@@ -205,6 +209,7 @@ export default function OrderForm(props) {
                     className={`rounded-t-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
                     selected={new Date(value)}
                     onChange={onChange}
+                    filterDate={(date) => getDay(date) !== 1}
                   />
                 )}
               />

@@ -7,7 +7,7 @@ function Menu({ isMobile }) {
   /* Current: "bg-purple-50 border-purple-600 text-purple-600", Default: "text-gray-600 hover:bg-gray-50 hover:text-gray-900" */
   return menu.map((v) => {
     return v.url ? (
-       <Link key={v.name} href={`/admin${v.url}`}>
+      <Link key={v.name} href={`/admin${v.url}`}>
         <a
           className={
             isMobile
@@ -20,19 +20,18 @@ function Menu({ isMobile }) {
         </a>
       </Link>
     ) : (
-
-        <a
+      <a
         key={v.name}
-          href="#"
-          className={
-            isMobile
-              ? "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group rounded-md py-2 px-4 flex items-center text-base font-medium"
-              : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 group border-l-4 py-2 px-3 flex items-center text-sm"
-          }
-        >
-          <v.icon />
-          {v.name}
-        </a>
+        href="#"
+        className={
+          isMobile
+            ? "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group rounded-md py-2 px-4 flex items-center text-base font-medium"
+            : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 group border-l-4 py-2 px-3 flex items-center text-sm"
+        }
+      >
+        <v.icon />
+        {v.name}
+      </a>
     )
   })
 }
@@ -64,12 +63,32 @@ const menu = [
       </svg>
     ),
   },
+  // {
+  //   name: "店舗一覧",
+  //   url: "/shops",
+  //   icon: () => (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       className="text-gray-400 mr-3 h-6 w-6"
+  //       fill="none"
+  //       viewBox="0 0 24 24"
+  //       stroke="currentColor"
+  //     >
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+  //       />
+  //     </svg>
+  //   ),
+  // },
   {
     name: "注文入力",
     // url: "/orders/new",
     icon: () => (
       <svg
-        className="text-gray-500 mr-3 h-6 w-6"
+        className="text-gray-400 mr-3 h-6 w-6"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
