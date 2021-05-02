@@ -20,10 +20,9 @@ const stripePromise = loadStripe(
 )
 
 export default function PaymentForm(props) {
-  const { labels, setForm, form, pay, setPay } = props
+  const { labels, setForm, form, pay, setPay, charge } = props
   const [loading, setLoading] = useState(false)
-  const { items, cartTotal, totalItems } = useCart()
-  const delivery = 150
+  const { items } = useCart()
 
   const handleClick = async () => {
     setLoading(true)
@@ -33,7 +32,7 @@ export default function PaymentForm(props) {
   }
 
   const createStripeSession = async () => {
-    items.push({fields: {title: "配送料", price: 150}, sys: {id: "delivery"}, quantity: 1})
+    // items.push({fields: {title: "配送料", price: 150}, sys: {id: "delivery"}, quantity: 1})
     // Get Stripe.js instance
     const stripe = await stripePromise
 
@@ -43,13 +42,7 @@ export default function PaymentForm(props) {
       client_reference_id: form.value._id,
       customer_email: form.value.customer.email,
       metadata: {
-        delivery,
-        discount: 0,
-        deliveryFee: 0,
-        subTotal: cartTotal,
-        tax: 0,
-        total: cartTotal + delivery,
-        pay: "online"
+        ...charge, pay
       },
       line_items: items.map((v) => {
         const { title, price, image } = v.fields

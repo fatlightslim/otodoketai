@@ -25,11 +25,8 @@ const Chev = ({ isOpen }) => (
 )
 
 export default function CartBar(props) {
-  const { coupon } = props
-  const { cartTotal, totalItems } = useCart()
+  const { total } = props.charge
   const [isOpen, setIsOpen] = useState(false)
-  const discount = coupon.amount_off || 0
-  const delivery = 150
 
   return (
     <>
@@ -47,12 +44,12 @@ export default function CartBar(props) {
             >
               <CartSvg />
               <span className="">
-                {isOpen ? "注文概要を非表示にする" : "注文概要・クーポン入力"}
+                {isOpen ? "注文概要を非表示にする" : "注文概要"}
               </span>
               <Chev isOpen={isOpen} />
             </button>
             <span className="font-medium flex-grow text-right">
-              &yen;{(cartTotal + delivery - discount).toLocaleString()}
+              &yen;{total.toLocaleString()}
             </span>
           </div>
         </div>

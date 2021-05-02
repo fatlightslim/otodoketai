@@ -1,5 +1,10 @@
 import Link from "next/link"
 import { fetchPostJSON, cleanUp } from "../../utils/api-helpers"
+import {
+  extraDeliveryFee,
+  outOfScope,
+  inScope99,
+} from "../../utils/delivery-area"
 import { useForm, Controller } from "react-hook-form"
 import React, { useEffect, useState } from "react"
 import { ExCircle, ChevRight } from "../Svg"
@@ -15,10 +20,11 @@ function isEmpty(obj) {
 }
 
 export default function OrderForm(props) {
-  const { setForm, form, items } = props
+  const { items } = useCart()
+  const { setForm, form, charge, setDelivery } = props
   const { handleSubmit, errors, control, register, setValue } = useForm()
-  const { cartTotal, totalItems } = useCart()
   const [startDate, setStartDate] = useState(new Date())
+  const [outArea, setOutArea] = useState(false)
 
   useEffect(() => {
     const { customer } = form.value
@@ -37,14 +43,7 @@ export default function OrderForm(props) {
       customer,
       items: cleanUp(items),
       status: "draft",
-      charge: {
-        delivery: 150,
-        discount: 0,
-        deliveryFee: 0,
-        subTotal: cartTotal,
-        tax: 0,
-        total: cartTotal + totalItems * 100,
-      },
+      charge,
     }).then((r) => {
       setForm({ key: "PAYMENT", value: r })
     })
@@ -59,12 +58,28 @@ export default function OrderForm(props) {
   }
 
   const getZip = async (value) => {
-    let r = await fetch("https://api.zipaddress.net/?zipcode=" + value)
-    r = await r.json()
-    if (r.data) {
-      setValue("zip", value)
-      setValue("pref", r.data["pref"])
-      setValue("addr1", r.data["address"])
+    const left3 = value.slice(0, 3)
+    const o = outOfScope.map((v) => v.zip)
+
+    if (left3 === "283" && !o.includes(value)) {
+      setOutArea(false)
+      let r = await fetch("http://api.zipaddress.net/?zipcode=" + value)
+      r = await r.json()
+      if (r.data) {
+        setValue("zip", value)
+        setValue("pref", r.data["pref"])
+        setValue("addr1", r.data["address"])
+
+        const e = extraDeliveryFee.map((v) => v.zip)
+        const i = inScope99.map((v) => v.zip)
+        if (e.includes(value) || i.includes(value)) {
+          setDelivery(250)
+        }
+      }
+    } else {
+      setValue("pref", "")
+      setValue("addr1", "")
+      setOutArea(true)
     }
   }
 
@@ -75,12 +90,18 @@ export default function OrderForm(props) {
       </div>
 
       <div className="px-4 max-w-xl mx-auto">
-        <h3
-          className={`${
-            isEmpty(errors) ? "text-gray-600" : "text-red-500"
-          } text-center pt-12 pb-6 font-bold`}
-          children="配送情報を入力してください。"
-        />
+        {outArea ? (
+          <h3 className="text-center pt-12 pb-6 font-bold text-red-500">
+            配達対象エリア外の地域です
+          </h3>
+        ) : (
+          <h3
+            className={`${
+              isEmpty(errors) ? "text-gray-600" : "text-red-500"
+            } text-center pt-12 pb-6 font-bold`}
+            children="配送情報を入力してください。"
+          />
+        )}
 
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <fieldset className="mt-6">
@@ -185,7 +206,7 @@ export default function OrderForm(props) {
                 )}
               />
               <select
-                              ref={register({ required: true })}
+                ref={register({ required: true })}
                 name="time"
                 className={`rounded-b-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full rounded-none  bg-transparent focus:z-10 sm:text-sm`}
               >
@@ -198,8 +219,9 @@ export default function OrderForm(props) {
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
+                disabled={outArea}
                 type="submit"
-                className="text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
+                className=" disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >
                 支払情報確認 <ChevRight />
               </button>

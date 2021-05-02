@@ -1,4 +1,9 @@
 module.exports = {
+  mode: 'jit',
+purge: [
+     './public/**/*.html',
+     './src/**/*.{js,jsx,ts,tsx,vue}',
+   ],
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
