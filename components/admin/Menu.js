@@ -25,8 +25,8 @@ function Menu({ isMobile }) {
         href="#"
         className={
           isMobile
-            ? "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group rounded-md py-2 px-4 flex items-center text-base font-medium"
-            : "border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50 group border-l-4 py-2 px-3 flex items-center text-sm"
+            ? "text-gray-300 hover:bg-gray-50 hover:text-gray-900 group rounded-md py-2 px-4 flex items-center text-base font-medium"
+            : "border-transparent text-gray-300 hover:text-gray-900 hover:bg-gray-50 group border-l-4 py-2 px-3 flex items-center text-sm"
         }
       >
         <v.icon />
@@ -88,7 +88,7 @@ const menu = [
     // url: "/orders/new",
     icon: () => (
       <svg
-        className="text-gray-400 mr-3 h-6 w-6"
+        className="text-gray-300 mr-3 h-6 w-6"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -115,9 +115,8 @@ const menu = [
     // url: "/stats",
     icon: () => (
       <svg
-        className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+        className="mr-3 h-6 w-6 text-gray-300 group-hover:text-gray-500"
         xmlns="http://www.w3.org/2000/svg"
-        className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

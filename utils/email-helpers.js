@@ -68,7 +68,7 @@ function buildEmail(data, s) {
       {
         subject: templates[s].subject,
         to: [{ email: customer.email }],
-        bcc: [{ email: "fatlightslim@gmail.com" }],
+        bcc: [{ email: "fatlightslim@gmail.com" }, {email: "touganechuuou@ycmail.jp"}],
       },
     ],
     from: `お届け隊<${process.env.EMAIL}>`,
