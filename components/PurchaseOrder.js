@@ -88,7 +88,7 @@ export default class PurchaseOrder extends React.Component {
                 </td>
               </tr>
             )}
-
+{/* 
             <tr  className="border-t border-gray-200">
               <th
                 className="py-5 px-4 text-sm font-normal text-left"
@@ -99,7 +99,7 @@ export default class PurchaseOrder extends React.Component {
               <td className="py-5 pr-4 text-right">
                 &yen;{charge.delivery.toLocaleString()}
               </td>
-            </tr>
+            </tr> */}
 
             <tr className="bg-gray-50 border-t border-b border-gray-200 font-medium text-gray-900 text-left">
               <th
@@ -109,7 +109,7 @@ export default class PurchaseOrder extends React.Component {
                 合計(税込)
               </th>
               <td className="py-4 pr-4 text-right">
-                &yen;{charge.total.toLocaleString()}
+                &yen;{(charge.total - charge.delivery).toLocaleString()}
               </td>
             </tr>
           </tbody>
