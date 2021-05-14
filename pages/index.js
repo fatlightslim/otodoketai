@@ -67,7 +67,7 @@ export default function Home(props) {
 //   }
 // }
 
-export async function getStaticProps(params) {
+export async function getServerSideProps(params) {
   return {
     props: {
       data: await getDataFromContentful("shop"),
