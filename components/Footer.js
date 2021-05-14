@@ -10,7 +10,7 @@ export default function Footer({
         href: "/terms",
       },
       {
-        name: "サイトポリシー",
+        name: "サイトポリシーです",
         href: "/policies",
       },
       // {
