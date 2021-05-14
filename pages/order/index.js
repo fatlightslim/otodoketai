@@ -9,11 +9,13 @@ import { useRouter } from "next/router"
 
 const labels = [
   {
+    key: "online",
     label: "オンライン決済",
     desc:
       "各種クレジットカード, Apple Pay, Google Payが手数料無料でご利用いただけます.",
   },
   {
+    key: "cod",
     label: "代金引換",
     desc: "ご自宅までお届けの際に、配達のスタッフへ直接お支払いください.",
   },
