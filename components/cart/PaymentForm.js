@@ -32,7 +32,7 @@ export default function PaymentForm(props) {
   }
 
   const createStripeSession = async () => {
-    // items.push({fields: {title: "配送料", price: 150}, sys: {id: "delivery"}, quantity: 1})
+    items.push({fields: {title: "配送料", price: charge.delivery}, sys: {id: "delivery"}, quantity: 1})
     // Get Stripe.js instance
     const stripe = await stripePromise
 
