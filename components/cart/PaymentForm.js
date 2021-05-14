@@ -15,24 +15,27 @@ const feeList = [
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 export default function PaymentForm(props) {
   const { labels, setForm, form, pay, setPay, charge } = props
   const [loading, setLoading] = useState(false)
+  const [active, setActive] = useState(false)
   const { items } = useCart()
 
   const handleClick = async () => {
     setLoading(true)
-    labels[1]["label"] === pay
+    "cod" === pay
       ? setForm({ key: "CONFIRM", value: form.value })
       : createStripeSession()
   }
 
   const createStripeSession = async () => {
-    items.push({fields: {title: "配送料", price: charge.delivery}, sys: {id: "delivery"}, quantity: 1})
+    items.push({
+      fields: { title: "配送料", price: charge.delivery },
+      sys: { id: "delivery" },
+      quantity: 1,
+    })
     // Get Stripe.js instance
     const stripe = await stripePromise
 
@@ -42,7 +45,8 @@ export default function PaymentForm(props) {
       client_reference_id: form.value._id,
       customer_email: form.value.customer.email,
       metadata: {
-        ...charge, pay
+        ...charge,
+        pay,
       },
       line_items: items.map((v) => {
         const { title, price, image } = v.fields
@@ -113,10 +117,10 @@ export default function PaymentForm(props) {
       <legend className="sr-only">Payment form</legend>
       <div className="bg-white rounded-md -space-y-px">
         {labels.map((v, i) => {
-          const on = pay === v.label
+          const on = pay === v.key
           return (
             <div
-              key={v.label}
+              key={v.key}
               className={`${
                 on ? "bg-indigo-50 border-indigo-200 z-10" : "border-gray-200"
               } ${
@@ -127,13 +131,13 @@ export default function PaymentForm(props) {
             >
               <div className="flex items-center h-5">
                 <input
-                  id={v.label}
+                  id={v.key}
                   name="payment_method"
                   type="radio"
                   className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
                   defaultChecked={on}
                   onClick={() => {
-                    setPay(v.label)
+                    setPay(v.key)
                   }}
                 />
               </div>
@@ -170,15 +174,17 @@ export default function PaymentForm(props) {
           onClick={() => handleClick()}
           className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
         >
-          {loading && <Spin className="animate-spin -ml-4 h-5 w-5 text-white" />}
-          {labels[1]["label"] === pay ? "注文確認画面" : "決済情報確認"}
+          {loading && (
+            <Spin className="animate-spin -ml-4 h-5 w-5 text-white" />
+          )}
+          {"cod" === pay ? "注文確認画面" : "決済情報確認"}
           <ChevRight />
         </button>
       </div>
       <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
         <button
           onClick={() => setForm({ key: "ORDER", value: form.value })}
-          className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+          className={`w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10`}
         >
           戻る
         </button>
@@ -196,7 +202,6 @@ export default function PaymentForm(props) {
           お支払い方法を選択してください。
         </h3>
         <Fieldset />
-        {/* {labels[1]["label"] === pay ? <Fee /> : null} */}
         <Actions />
       </div>
     </div>
