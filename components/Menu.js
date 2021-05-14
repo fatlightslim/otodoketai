@@ -27,9 +27,9 @@ export default function Menu({ menu, setCartOpen, name }) {
             <h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase">
               メニュー
             </h2>
-            <p className="mt-1 text-3xl sm:text-4xl font-extrabold text-gray-900">
+            <p className="mt-1 text-3xl sm:text-4xl font-extrabold text-gray-900 h-8">
               たまには、いいよね？
-              <span id="copy" className="" />
+              <span id="copy" className="block sm:inline-block" />
             </p>
             {/* <p className="max-w-xl mt-5 mx-auto text-xl text-gray-500">Start building for free, then add a site plan to go live. Account plans unlock additional features.</p> */}
           </div>
