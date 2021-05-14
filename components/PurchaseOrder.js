@@ -3,7 +3,6 @@ import React from "react"
 export default class PurchaseOrder extends React.Component {
   render() {
     const { items, charge, _ts, _id } = this.props.order
-    console.log(this.props.order);
     return (
       <section className="py-12 px-8">
         <div className="px-4 mb-8">
