@@ -229,7 +229,7 @@ export default function OrderForm(props) {
               <button
                 disabled={outArea}
                 type="submit"
-                className=" disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
+                className="disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >
                 支払情報確認 <ChevRight />
               </button>

@@ -23,7 +23,7 @@ const labels = [
 export default function Payment(props) {
   const router = useRouter()
   const { cartTotal, items } = useCart()
-  // console.log(items);
+  console.log(items);
   const [delivery, setDelivery] = useState(150)
   const [pay, setPay] = useState("online")
   const [coupon, setCoupon] = useState({ id: "" })

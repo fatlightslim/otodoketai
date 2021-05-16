@@ -41,7 +41,7 @@ export default function Shop(props) {
             </div>
           </div>
           {/* More main page content here... */}
-          <Menu menu={menu} {...props} />
+          <Menu menu={menu} name={name} {...props} />
         </main>
       </div>
     </Layout>
