@@ -431,10 +431,10 @@ class ComponentToPrint extends Component {
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             領収書
           </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          <p className="mt-1 max-w-2xl text-md text-gray-500">
             注文日: {new Date(_ts).toLocaleString()}
           </p>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          <p className="mt-1 max-w-2xl text-md text-gray-500">
             お届け日時: {new Date(customer.date).toLocaleDateString()}
             <span className="ml-2">{customer.time}</span>
           </p>
