@@ -3,7 +3,6 @@ import React from "react"
 export default class PurchaseOrder extends React.Component {
   render() {
     const { _id, _ts, charge } = this.props.order
-    console.log(this.props.items)
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
         const { shop, orders } = v
