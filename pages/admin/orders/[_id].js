@@ -5,6 +5,17 @@ import { useState, useRef, Component } from "react"
 import ReactToPrint from "react-to-print"
 import PurchaseOrder from "../../../components/PurchaseOrder"
 
+const groupBy = (array, getKey) =>
+  Array.from(
+    array.reduce((map, cur, idx, src) => {
+      const key = getKey(cur, idx, src)
+      const list = map.get(key)
+      if (list) list.push(cur)
+      else map.set(key, [cur])
+      return map
+    }, new Map())
+  )
+
 const labels = {
   sent_order_confirm: "配送待ち",
   sent_tracking: "配送中",
@@ -20,9 +31,11 @@ const labels = {
 }
 
 export default function AdminOrder({ order }) {
-  const { log, customer, _id, _ts, charge } = order
-  // console.log(customer)
-  // console.log(order)
+  const { items, log, customer, _id, _ts, charge } = order
+  const result = groupBy(items, (item) => item.shopName).map(([shop, items]) => ({
+    shop,
+    orders: items,
+  }))
   // const data = []
   // Object.keys(customer).forEach((v) => {
   //   data.push({ [v]: customer[v] })
@@ -33,7 +46,7 @@ export default function AdminOrder({ order }) {
 
   const getReceipt = () => (
     <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-      <Po order={order} />
+      <Po order={order} result={result} />
       <Receipt order={order} />
     </ul>
   )
@@ -108,7 +121,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-const Receipt = ({order}) => {
+const Receipt = ({ order }) => {
   const componentRef = useRef()
   return (
     <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
@@ -148,7 +161,7 @@ const Receipt = ({order}) => {
   )
 }
 
-const Po = ({ order }) => {
+const Po = ({ order, result }) => {
   const componentRef = useRef()
   return (
     <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
@@ -181,7 +194,7 @@ const Po = ({ order }) => {
           content={() => componentRef.current}
         />
         <div className="absolute hidden">
-          <PurchaseOrder order={order} ref={componentRef} />
+          <PurchaseOrder order={order} items={result} ref={componentRef} />
         </div>
       </div>
     </li>
