@@ -219,7 +219,7 @@ export default function OrderForm(props) {
                 className={`rounded-b-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full rounded-none  bg-transparent focus:z-10 sm:text-sm`}
               >
                 <option>11:00 ~ 12:00</option>
-                <option>16:00 ~ 17:00</option>
+                <option>17:00 ~ 18:00</option>
               </select>
             </div>
           </fieldset>
