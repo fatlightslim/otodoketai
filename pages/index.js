@@ -27,7 +27,7 @@ export default function Home(props) {
             className="h-full w-full "
             src="/img/banner1.jpg"
             alt=""
-            width={1200}
+            width={900}
             height={606}
           />
           <Image
