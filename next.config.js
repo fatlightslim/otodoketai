@@ -24,8 +24,8 @@ module.exports = {
       ja: "株式会社ワイシーエス",
       en: "YCS HD Inc.",
       person: "館坂 民和",
-      tel: "047-459-0084",
-      address: "千葉県八千代市高津６７８－２ グリーンハイランドⅠ",
+      tel: "0475-52-2240",
+      address: "千葉県東金市堀上56-4",
     },
     site: {
       name: "お届け隊",
