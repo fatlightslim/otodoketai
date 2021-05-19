@@ -1,8 +1,9 @@
 import Link from "next/link"
 import { fetchPostJSON, cleanUp } from "../../utils/api-helpers"
+
 import {
   extraDeliveryFee,
-  outOfScope,
+  outofScope,
   inScope99,
 } from "../../utils/delivery-area"
 import { useForm, Controller } from "react-hook-form"
@@ -12,7 +13,7 @@ import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
 import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import {getDay} from "date-fns"
+import {getDay, isToday } from "date-fns"
 import ja from "date-fns/locale/ja"
 registerLocale("ja", ja)
 
@@ -195,7 +196,7 @@ export default function OrderForm(props) {
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
-              children="お届け日時(月曜日の配達はお休みとなります)"
+              children="お届け日時(月曜日の配達はお休みとなります。当日の配達は夕方のみとなります。)"
             />
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <Controller
@@ -218,7 +219,7 @@ export default function OrderForm(props) {
                 name="time"
                 className={`rounded-b-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full rounded-none  bg-transparent focus:z-10 sm:text-sm`}
               >
-                <option>11:00 ~ 12:00</option>
+                {isToday(new Date()) ? null : <option>11:00 ~ 12:00</option>}
                 <option>17:00 ~ 18:00</option>
               </select>
             </div>

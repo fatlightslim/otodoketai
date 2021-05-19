@@ -34,7 +34,7 @@ export const outOfScope = [
 
 export const inScope99 = [
   {zip: "283-0105", name: "粟生"},
-  {zip: "283-0104", name: "片貝"},
+  {zip: "283-0107", name: "片貝"},
   {zip: "283-0102", name: "小関"},
   {zip: "283-0117", name: "下貝塚"},
   {zip: "283-0106", name: "宿"},
