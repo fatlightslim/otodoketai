@@ -13,7 +13,7 @@ import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
 import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import {getDay, isToday } from "date-fns"
+import { addDays, getDay, isToday, getHours, setHours } from "date-fns"
 import ja from "date-fns/locale/ja"
 registerLocale("ja", ja)
 
@@ -27,6 +27,8 @@ export default function OrderForm(props) {
   const { handleSubmit, errors, control, register, setValue } = useForm()
   const [startDate, setStartDate] = useState(new Date())
   const [outArea, setOutArea] = useState(false)
+  const [excludeDates, setExcludeDates] = useState([])
+  const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
 
   useEffect(() => {
     const { customer } = form.value
@@ -37,7 +39,22 @@ export default function OrderForm(props) {
     }
 
     setStartDate(new Date())
+
+    getTimeAndDisableDate()
   }, [])
+
+  const getTimeAndDisableDate = () => {
+    const now = new Date()
+    const hour = getHours(now)
+    const today = isToday(now)
+    if (today && hour >= 11) {
+      setExcludeDates([new Date()])
+      setHours(["17:00 ~ 18:00"])
+    } else if (today && hour >= 16) {
+      setExcludeDates([new Date(), addDays(new Date(), 1)])
+      setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+    }
+  }
 
   const onSubmit = (customer) => {
     fetchPostJSON("/api/orders", {
@@ -58,7 +75,6 @@ export default function OrderForm(props) {
     //   setValue(v, values[v])
     // })
   }
-
 
   const getZip = async (value) => {
     const left3 = value.replace("-", "").slice(0, 3)
@@ -196,13 +212,13 @@ export default function OrderForm(props) {
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
-              children="お届け日時(月曜日の配達はお休みとなります。当日の配達は夕方のみとなります。)"
+              children="お届け日時(月曜日の配達はお休みとなります。当日配達は夕方のお届けになります。)"
             />
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <Controller
                 name={"date"}
                 control={control}
-                defaultValue={new Date()}
+                defaultValue={startDate}
                 render={({ onChange, value }) => (
                   <DatePicker
                     // dateFormat="MM-DD-YYYY"
@@ -210,7 +226,10 @@ export default function OrderForm(props) {
                     className={`rounded-t-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
                     selected={new Date(value)}
                     onChange={onChange}
-                    filterDate={(date) => getDay(date) !== 1}
+                    filterDate={(date) =>
+                      getDay(date) !== 1 && date >= new Date()
+                    }
+                    excludeDates={excludeDates}
                   />
                 )}
               />
@@ -219,8 +238,9 @@ export default function OrderForm(props) {
                 name="time"
                 className={`rounded-b-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full rounded-none  bg-transparent focus:z-10 sm:text-sm`}
               >
-                {isToday(new Date()) ? null : <option>11:00 ~ 12:00</option>}
-                <option>17:00 ~ 18:00</option>
+                {hours.map((v) => {
+                  return <option key={v}>{v}</option>
+                })}
               </select>
             </div>
           </fieldset>

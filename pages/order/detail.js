@@ -111,17 +111,9 @@ export default function Detail(props) {
                   {/* </div> */}
                   <div className="mt-2">
                     <div className="rounded-md shadow">
-                      {/* <a
-                        target="_blank"
-                        href={`mailto:hello@fatlightslim.com?subject=購入後のお問い合わせ #${client_reference_id
-                          .substr(18)
-                          .toUpperCase()}`}
-                        className="relative focus:z-40 flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900"
-                      >
-                        お問い合わせ
-                      </a> */}
+
                       <p className="relative focus:z-40 flex items-center justify-center px-5 py-3 border border-transparent text-lg font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900">
-                        領収書をダウンロード
+                        TEL: 0475-52-2240
                       </p>
                     </div>
                   </div>

@@ -2,7 +2,8 @@ import { connectToDatabase } from "./mongodb"
 import { ObjectId } from "mongodb"
 const sgMail = require("@sendgrid/mail")
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-const headerImage = "http://cdn.mcauto-images-production.sendgrid.net/9257f8dcd27cf709/ae5db8df-9aa0-4e15-b8b8-98de5fe7df9a/2467x1535.png"
+const headerImage =
+  "http://cdn.mcauto-images-production.sendgrid.net/9257f8dcd27cf709/ae5db8df-9aa0-4e15-b8b8-98de5fe7df9a/2467x1535.png"
 
 function getTemplateData(data) {
   const _id = data._id.toString() // NOTICE: returned _id is not String but Object
@@ -10,11 +11,12 @@ function getTemplateData(data) {
   const { addr1, addr2, zip, pref } = customer
   const address = zip + " " + pref + addr1 + addr2
 
-
   return {
     // tracking_code,
     subject,
     url,
+    date: customer.date,
+    time: customer.time,
     name: customer.name,
     tel: customer.tel,
     order_id: "#" + _id.substr(18).toUpperCase(),
@@ -27,7 +29,7 @@ function getTemplateData(data) {
     pay: payment ? "オンライン決済" : "代金引換",
     items: items.map((v) => {
       const { fields, quantity } = v
-      const { image, title, price,  } = fields
+      const { image, title, price } = fields
       return {
         title,
         price,
@@ -36,8 +38,7 @@ function getTemplateData(data) {
       }
     }),
     price_detail: [{ title: "配送料", amount: charge.delivery }],
-    headerImage
-      
+    headerImage,
   }
 }
 
@@ -61,14 +62,17 @@ function buildEmail(data, s) {
   }
 
   //https://github.com/sendgrid/sendgrid-nodejs/issues/843
-  data.subject = templates[s].subject 
+  data.subject = templates[s].subject
 
   return {
     personalizations: [
       {
         subject: templates[s].subject,
         to: [{ email: customer.email }],
-        bcc: [{ email: "fatlightslim@gmail.com" }, {email: "touganechuuou@ycmail.jp"}],
+        bcc: [
+          { email: "fatlightslim@gmail.com" },
+          { email: "touganechuuou@ycmail.jp" },
+        ],
       },
     ],
     from: `お届け隊<${process.env.EMAIL}>`,
