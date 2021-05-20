@@ -15,7 +15,7 @@ function getTemplateData(data) {
     // tracking_code,
     subject,
     url,
-    date: customer.date,
+    date: new Date(customer.date).toLocaleDateString(),
     time: customer.time,
     name: customer.name,
     tel: customer.tel,
