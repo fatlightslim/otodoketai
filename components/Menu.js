@@ -39,7 +39,7 @@ export default function Menu({ menu, setCartOpen, name }) {
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {menu.map((v) => {
           const { fields, sys } = v
-          const { title, price, image } = fields
+          const { title, price, image, category } = fields
           return (
             <li
               key={sys.id}
@@ -47,7 +47,6 @@ export default function Menu({ menu, setCartOpen, name }) {
             >
               <div className="flex-1 flex flex-col p-8">
                 <div className="w-32 h-32 flex-shrink-0 mx-auto ">
-                  {/* <Image {...getImageFields(image)} className="rounded-md" /> */}
 
                   {image && image.fields ? (
                     <Image {...getImageFields(image)} className="rounded-md" />
@@ -60,6 +59,10 @@ export default function Menu({ menu, setCartOpen, name }) {
                 </div>
                 <h3 className="mt-6 text-gray-900 text-sm font-medium">
                   {title}
+                  <br />
+<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+        {category}
+      </span>
                 </h3>
                 {/* <dl className="mt-1 flex-grow flex flex-col justify-between">
                   <dt className="sr-only">Title</dt>
