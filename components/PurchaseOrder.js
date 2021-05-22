@@ -5,11 +5,11 @@ export default class PurchaseOrder extends React.Component {
     const { _id, _ts, charge } = this.props.order
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
-        const { shop, orders } = v
+        const { shop,time,date orders } = v
         return (
           <>
             <div className="page-break" />
-            <section key={v.shop} className="py-12 px-8 border-b border-dotted">
+            <section key={v.shop,time,date} className="py-12 px-8 border-b border-dotted">
               <div className="px-4 mb-8">
                 <h2 className="text-xl leading-6 font-medium text-gray-900">
                   発注書
