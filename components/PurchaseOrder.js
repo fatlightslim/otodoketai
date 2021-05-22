@@ -20,7 +20,7 @@ export default class PurchaseOrder extends React.Component {
                     {new Date(_ts).toLocaleDateString()}
                   </span>
                 </h2>
-                <h3> {shop} 様,{date} お届け日,{time} お届け時間</h3>
+                <h3> {shop} 様</h3>
                 <h4> {date} お届け日</h4> 
                 <h5> {time} お届け時間</h5> 
                 <p className="mt-4">
