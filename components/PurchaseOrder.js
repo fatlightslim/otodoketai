@@ -5,11 +5,11 @@ export default class PurchaseOrder extends React.Component {
     const { _id, _ts, charge } = this.props.order
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
-        const { shop,time,date orders } = v
+        const { shop, orders } = v
         return (
           <>
             <div className="page-break" />
-            <section key={v.shop,time,date} className="py-12 px-8 border-b border-dotted">
+            <section key={v.shop} className="py-12 px-8 border-b border-dotted">
               <div className="px-4 mb-8">
                 <h2 className="text-xl leading-6 font-medium text-gray-900">
                   発注書
@@ -20,9 +20,7 @@ export default class PurchaseOrder extends React.Component {
                     {new Date(_ts).toLocaleDateString()}
                   </span>
                 </h2>
-                <h3> {shop} 様</h3>
-                <h4> {date} お届け日</h4> 
-                <h5> {time} お届け時間</h5> 
+                <h3> {shop} 様</h3> 
                 <p className="mt-4">
                   <span className="text-4xl font-extrabold text-gray-900">
                     {/* &yen;{charge.total.toLocaleString()}&nbsp;- */}
