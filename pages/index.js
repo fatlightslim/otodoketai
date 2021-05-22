@@ -12,7 +12,7 @@ export default function Home(props) {
     <Layout {...props}>
       <main>
         <Hero />
-        {/* <Marquee {...props} /> */}
+        <Marquee {...props} />
         <List {...props} />
 
         <div className="py-8 mx-auto text-center">
