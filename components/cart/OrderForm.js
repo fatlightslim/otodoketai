@@ -49,6 +49,7 @@ export default function OrderForm(props) {
     const today = isToday(now)
     if (today && hour >= 11) {
       setExcludeDates([new Date()])
+      setHours(["11:00 ~ 12:00"])
       setHours(["17:00 ~ 18:00"])
     } else if (today && hour >= 16) {
       setExcludeDates([new Date(), addDays(new Date(), 1)])
