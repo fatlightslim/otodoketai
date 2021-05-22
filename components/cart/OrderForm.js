@@ -3,7 +3,7 @@ import { fetchPostJSON, cleanUp } from "../../utils/api-helpers"
 
 import {
   extraDeliveryFee,
-  outofScope,
+  outOfScope,
   inScope99,
 } from "../../utils/delivery-area"
 import { useForm, Controller } from "react-hook-form"
@@ -28,7 +28,7 @@ export default function OrderForm(props) {
   const [startDate, setStartDate] = useState(new Date())
   const [outArea, setOutArea] = useState(false)
   const [excludeDates, setExcludeDates] = useState([])
-  const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+  const [hours, setHours] = useState([])
 
   useEffect(() => {
     const { customer } = form.value
