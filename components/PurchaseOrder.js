@@ -21,6 +21,7 @@ export default class PurchaseOrder extends React.Component {
                   </span>
                 </h2>
                 <h3> {shop} 様</h3>
+                <h4> お届け日{Date} お届け時間{Time}</h4> 
                 <p className="mt-4">
                   <span className="text-4xl font-extrabold text-gray-900">
                     {/* &yen;{charge.total.toLocaleString()}&nbsp;- */}
