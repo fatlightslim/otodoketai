@@ -2,7 +2,7 @@ import React from "react"
 
 export default class PurchaseOrder extends React.Component {
   render() {
-    const { _id, _ts, charge } = this.props.order
+    const { _id, _ts, charge, customer } = this.props.order
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
         const { shop, orders } = v
@@ -69,10 +69,11 @@ export default class PurchaseOrder extends React.Component {
                       className="py-4 px-4 text-sm font-medium text-left"
                       scope="row"
                     >
-                      小計
+                      お届け日時
                     </th>
                     <td className="py-4 pr-4 text-right">
-                      &yen;{charge.subTotal.toLocaleString()}
+                      {/* &yen;{charge.subTotal.toLocaleString()} */}
+                      {new Date(customer.date).toLocaleDateString()}&nbsp;{customer.time}
                     </td>
                   </tr>
                 </tbody>
