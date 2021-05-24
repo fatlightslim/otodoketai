@@ -43,7 +43,7 @@ export default function OrderForm(props) {
     getTimeAndDisableDate()
   }, [])
 
-  const getTimeAndDisableDate() => {
+  const getTimeAndDisableDate = () => {
     const now = new Date()
     const hour = getHours(now)
     const today = isToday(now)
