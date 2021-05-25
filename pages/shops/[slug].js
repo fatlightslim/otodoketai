@@ -9,7 +9,7 @@ import {
 
 export default function Shop(props) {
   const { fields, sys } = props.data.items[0]
-  const { image, name, menu, hook } = fields
+  const { image, name, menu, hook, holiday } = fields
 
   return (
     <Layout {...props}>
@@ -41,7 +41,7 @@ export default function Shop(props) {
             </div>
           </div>
           {/* More main page content here... */}
-          <Menu menu={menu} name={name} {...props} />
+          <Menu holiday={holiday} menu={menu} name={name} {...props} />
         </main>
       </div>
     </Layout>

@@ -23,7 +23,8 @@ function isEmpty(obj) {
 
 export default function OrderForm(props) {
   const { items } = useCart()
-  const { setForm, form, charge, setDelivery } = props
+  const { setForm, form, charge, setDelivery, setDateNumber, hasHoliday } =
+    props
   const { handleSubmit, errors, control, register, setValue } = useForm()
   const [startDate, setStartDate] = useState(new Date())
   const [outArea, setOutArea] = useState(false)
@@ -213,12 +214,19 @@ export default function OrderForm(props) {
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
-              children="お届け日時(月曜日の配達はお休みとなります。当日配達は夕方のお届けになります。)"
+              children={
+                hasHoliday ? (
+                  <p>お届け日時 <span className="text-red-400">ご指定の曜日に定休日の店舗があります</span></p>
+                ) : (
+                  <p>お届け日時 <span className="text-gray-400">当日配達は夕方のお届けになります</span></p>
+                )
+              }
             />
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <Controller
                 name={"date"}
                 control={control}
+                // onChange={setStartDate}
                 defaultValue={startDate}
                 render={({ onChange, value }) => (
                   <DatePicker
@@ -226,7 +234,10 @@ export default function OrderForm(props) {
                     locale="ja"
                     className={`rounded-t-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
                     selected={new Date(value)}
-                    onChange={onChange}
+                    onChange={(date) => {
+                      setDateNumber(getDay(date))
+                      onChange(date)
+                    }}
                     filterDate={(date) =>
                       getDay(date) !== 1 && date >= new Date()
                     }

@@ -6,13 +6,13 @@ import CartBar from "../../components/cart/CartBar"
 import { useCart } from "react-use-cart"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
+import { getDay} from "date-fns"
 
 const labels = [
   {
     key: "online",
     label: "オンライン決済",
-    desc:
-      "各種クレジットカード, Apple Pay, Google Payが手数料無料でご利用いただけます.",
+    desc: "各種クレジットカード, Apple Pay, Google Payが手数料無料でご利用いただけます.",
   },
   {
     key: "cod",
@@ -23,12 +23,13 @@ const labels = [
 export default function Payment(props) {
   const router = useRouter()
   const { cartTotal, items } = useCart()
-  console.log(items);
   const [delivery, setDelivery] = useState(150)
   const [pay, setPay] = useState("online")
   const [coupon, setCoupon] = useState({ id: "" })
   const [form, setForm] = useState({ key: "ORDER", value: {} })
   const [charge, setCharge] = useState(getCharge())
+  const [dateNumber, setDateNumber] = useState(getDay(new Date()))
+  const [hasHoliday, setHasHoliday] = useState(false)
 
   function getCharge() {
     const discount = 0
@@ -41,6 +42,11 @@ export default function Payment(props) {
       tax: total - parseInt(total / 1.1),
     }
   }
+
+  useEffect(() => {
+    const hoilidayList = items.filter(v => v.holidays.includes(dateNumber))
+    hoilidayList.length > 0 ? setHasHoliday(true) : setHasHoliday(false)
+  }, [dateNumber])
 
   useEffect(() => {
     setCharge(getCharge())
@@ -69,16 +75,21 @@ export default function Payment(props) {
     form,
     setForm,
     charge,
-    setDelivery
+    setDelivery,
+    dateNumber,
+    setDateNumber,
+    hasHoliday
   }
 
-  return items.length > 0 && (
-    <div className="pb-8">
-      <CartBar {...locals} />
-      <Breadcrumb {...locals} />
-      <Conditional {...locals} />
-    </div>
-  ) 
+  return (
+    items.length > 0 && (
+      <div className="pb-8">
+        <CartBar {...locals} />
+        <Breadcrumb {...locals} />
+        <Conditional {...locals} />
+      </div>
+    )
+  )
 }
 
 const Conditional = (props) => {

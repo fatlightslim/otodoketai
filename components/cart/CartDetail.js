@@ -3,6 +3,7 @@ import { ExCircle, SolidCheck } from "../Svg"
 import { getImageFields } from "../../utils/contentful"
 import { fetchPostJSON } from "../../utils/api-helpers"
 import { useCart } from "react-use-cart"
+import { getDay } from "date-fns"
 
 export default function CartDetail(props) {
   return (
@@ -49,17 +50,21 @@ const Total = ({ pay, coupon, labels, charge }) => {
   )
 }
 
-const Summary = () => {
+const Summary = ({dateNumber}) => {
   const { items } = useCart()
+
+
   return (
     <div className="max-w-7xl mx-auto grid gap-y-6 px-4 py-6 ">
       {items.map((v) => {
-        const { title, image, price } = v.fields
+        const {fields, holidays} = v
+        const { title, image, price } = fields
         return (
           <div
             key={v.sys.id}
-            className="-m-3 p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
+            className={`${holidays.includes(dateNumber) && "border border-red-500"} -m-3 p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150`}
           >
+            {holidays.includes(dateNumber) && <div className="text-red-500 absolute z-10 -mt-6 font-bold bg-white">定休日</div>}
             <div className="flex ">
               <div className="flex-shrink-0">
                 {image && (
