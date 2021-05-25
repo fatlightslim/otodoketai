@@ -30,6 +30,7 @@ export default function OrderForm(props) {
   const [outArea, setOutArea] = useState(false)
   const [excludeDates, setExcludeDates] = useState([])
   const [hours, setHours] = useState([])
+  const [disableButton, setDisableButton] = useState(false)
 
   useEffect(() => {
     const { customer } = form.value
@@ -43,6 +44,10 @@ export default function OrderForm(props) {
 
     getTimeAndDisableDate()
   }, [])
+
+  useEffect(() => {
+    setDisableButton(hasHoliday)
+  }, [hasHoliday])
 
   const getTimeAndDisableDate = () => {
     const now = new Date()
@@ -260,7 +265,7 @@ export default function OrderForm(props) {
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
-                disabled={outArea}
+                disabled={outArea || disableButton}
                 type="submit"
                 className="disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >

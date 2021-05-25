@@ -46,7 +46,7 @@ export default function Payment(props) {
   useEffect(() => {
     const hoilidayList = items.filter(v => v.holidays.includes(dateNumber))
     hoilidayList.length > 0 ? setHasHoliday(true) : setHasHoliday(false)
-  }, [dateNumber])
+  }, [dateNumber, items])
 
   useEffect(() => {
     setCharge(getCharge())
