@@ -38,8 +38,8 @@ export default function Menu({ menu, setCartOpen, name, holiday }) {
               key={sys.id}
               className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200"
             >
-              <div className="flex-1 flex flex-col p-8">
-                <div className="w-32 h-32 flex-shrink-0 mx-auto ">
+              <div className="flex-1 flex flex-col p-2">
+                <div className="flex-shrink-0 mx-auto ">
                   {image && image.fields ? (
                     <Image {...getImageFields(image)} className="rounded-md" />
                   ) : (
@@ -52,9 +52,9 @@ export default function Menu({ menu, setCartOpen, name, holiday }) {
                 <h3 className="mt-6 text-gray-900 text-sm font-medium">
                   {title}
                   <br />
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  {category && <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                     {category}
-                  </span>
+                  </span>}
                 </h3>
                 {/* <dl className="mt-1 flex-grow flex flex-col justify-between">
                   <dt className="sr-only">Title</dt>
