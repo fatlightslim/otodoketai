@@ -13,7 +13,7 @@ import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
 import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { addDays, getDay, isToday, getHours, setHours } from "date-fns"
+import { isTomorrow, getDay, isToday, getHours } from "date-fns"
 import ja from "date-fns/locale/ja"
 registerLocale("ja", ja)
 
@@ -63,7 +63,7 @@ export default function OrderForm(props) {
     const now = new Date()
 
     return closeToday
-      ? getDay(date) !== 1 && now
+      ? getDay(date) !== 1 && now <= date
       : getDay(date) !== 1 &&
           date > new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
   }
@@ -71,10 +71,16 @@ export default function OrderForm(props) {
   const getTime = () => {
     const hour = getHours(new Date())
     if (isToday(getValues("date"))) {
-      if (hour < 11) {
+      if (hour <= 11) {
         setHours(["17:00 ~ 18:00"])
       } else {
         setCloseToday(true)
+      }
+    } else if (isTomorrow(getValues("date"))) {
+      if (hour >= 16) {
+        setHours(["17:00 ~ 18:00"])
+      } else {
+        setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
       }
     } else {
       setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
