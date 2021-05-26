@@ -107,34 +107,46 @@ export default function OrderForm(props) {
     // })
   }
 
+  const checkZip = (value) => {
+    const zip = value.replace("-", "")
+    if (zip.length === 7) {
+      getZip(zip)
+    }
+  }
+
   const getZip = async (value) => {
-    const left3 = value.replace("-", "").slice(0, 3)
-    const right4 = value.replace("-", "").slice(3)
+    const left3 = value.slice(0, 3)
+    const right4 = value.slice(3)
     const o = outOfScope.map((v) => v.zip)
 
     if (left3 === "283" && !o.includes(value) && right4.length === 4) {
       setOutArea(false)
-      // let r = await fetch("http://api.zipaddress.net/?zipcode=" + value)
-      let r = await fetch(
-        `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
-      )
-      r = await r.json()
-      const data = r.data[0].ja
-      if (r.data) {
-        setValue("zip", value)
-        setValue("pref", data["prefecture"])
-        setValue("addr1", data["address1"] + data["address2"])
+      setDelivery(150)
+      try {
+        let r = await fetch(
+          `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
+        )
+        r = await r.json()
+        // console.log(r)
 
-        const e = extraDeliveryFee.map((v) => v.zip)
-        const i = inScope99.map((v) => v.zip)
-        if (e.includes(value) || i.includes(value)) {
-          setDelivery(250)
+        const data = r.data[0].ja
+        if (r.data) {
+          setValue("zip", value)
+          setValue("pref", data["prefecture"])
+          setValue("addr1", data["address1"] + data["address2"])
+
+          const e = extraDeliveryFee.map((v) => v.zip)
+          const i = inScope99.map((v) => v.zip)
+          if (e.includes(value) || i.includes(value)) {
+            setDelivery(250)
+          }
         }
+      } catch (error) {
+        // console.log(error)
+        setValue("pref", "")
+        setValue("addr1", "")
+        setOutArea(true)
       }
-    } else {
-      setValue("pref", "")
-      setValue("addr1", "")
-      setOutArea(true)
     }
   }
 
@@ -172,9 +184,7 @@ export default function OrderForm(props) {
                     name="zip"
                     label="郵便番号"
                     round="rounded-tl-md"
-                    onChange={(e) =>
-                      e.target.value.length > 6 && getZip(e.target.value)
-                    }
+                    onChange={(e) => checkZip(e.target.value)}
                     ref={register({
                       required: true,
                       pattern: {
@@ -182,7 +192,7 @@ export default function OrderForm(props) {
                         message: "正しい郵便番号を入力してください。",
                       },
                     })}
-                    onBlur={(e) => getZip(e.target.value)}
+                    onBlur={(e) => checkZip(e.target.value)}
                   />
                 </div>
                 <div className="w-1/2 flex-1 min-w-0">
