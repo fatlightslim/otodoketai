@@ -23,12 +23,14 @@ function isEmpty(obj) {
 
 export default function OrderForm(props) {
   const { items } = useCart()
-  const { setForm, form, charge, setDelivery } = props
+  const { setForm, form, charge, setDelivery, setDateNumber, hasHoliday } =
+    props
   const { handleSubmit, errors, control, register, setValue } = useForm()
   const [startDate, setStartDate] = useState(new Date())
   const [outArea, setOutArea] = useState(false)
   const [excludeDates, setExcludeDates] = useState([])
   const [hours, setHours] = useState([])
+  const [disableButton, setDisableButton] = useState(false)
 
   useEffect(() => {
     const { customer } = form.value
@@ -42,6 +44,10 @@ export default function OrderForm(props) {
 
     getTimeAndDisableDate()
   }, [])
+
+  useEffect(() => {
+    setDisableButton(hasHoliday)
+  }, [hasHoliday])
 
   const getTimeAndDisableDate = () => {
     const now = new Date()
@@ -212,12 +218,19 @@ export default function OrderForm(props) {
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
-              children="お届け日時(月曜日の配達はお休みとなります。当日配達は夕方のお届けになります。)"
+              children={
+                hasHoliday ? (
+                  <p>お届け日時 <span className="text-red-400">ご指定の曜日に定休日の店舗があります</span></p>
+                ) : (
+                  <p>お届け日時 <span className="text-gray-400">当日配達は夕方のお届けになります</span></p>
+                )
+              }
             />
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <Controller
                 name={"date"}
                 control={control}
+                // onChange={setStartDate}
                 defaultValue={startDate}
                 render={({ onChange, value }) => (
                   <DatePicker
@@ -225,7 +238,10 @@ export default function OrderForm(props) {
                     locale="ja"
                     className={`rounded-t-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
                     selected={new Date(value)}
-                    onChange={onChange}
+                    onChange={(date) => {
+                      setDateNumber(getDay(date))
+                      onChange(date)
+                    }}
                     filterDate={(date) =>
                       getDay(date) !== 1 && date >= new Date()
                     }
@@ -248,7 +264,7 @@ export default function OrderForm(props) {
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
-                disabled={outArea}
+                disabled={outArea || disableButton}
                 type="submit"
                 className="disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >

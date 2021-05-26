@@ -42,25 +42,23 @@ export default function List({ data, copies }) {
         {data.items.map((v) => {
           const { fields, sys } = v
           const { image, address, name, slug, hook, comment, holiday } = fields
-          const today = getDay(new Date())
-          let holidays = []
-          if (holiday) {
-            holidays = holiday.map((v) => parseInt(v.slice(0, 1)))
-          }
+          // const today = getDay(new Date())
+          // let holidays = []
+          // if (holiday) {
+          //   holidays = holiday.map((v) => parseInt(v.slice(0, 1)))
+          // }
 
-          const isHoliday = holidays.includes(today)
+          // const isHoliday = holidays.includes(today)
 
           return image ? (
             <div
               key={sys.id}
-              className={`flex flex-col rounded-lg shadow-lg overflow-hidden ${
-                isHoliday && "opacity-50"
-              }`}
+              className={`flex flex-col rounded-lg shadow-lg overflow-hidden`}
             >
               <div className={`flex-shrink-0`}>
                 <div className="h-48 w-full overflow-hidden">
                   <Image {...getImageFields(image)} />
-                  {isHoliday && <p className="text-center text-gray-50 py-4 font-bold bg-gray-500 bg-opacity-80 text-2xl -mt-40 relative">定休日</p>}
+                  {/* {isHoliday && <p className="text-center text-gray-50 py-4 font-bold bg-gray-500 bg-opacity-80 text-2xl -mt-40 relative">定休日</p>} */}
                 </div>
               </div>
               <div className="flex-1 bg-white p-6 flex flex-col justify-between">
@@ -70,7 +68,7 @@ export default function List({ data, copies }) {
                       {address}
                     </a>
                   </p>
-                  <Link href={isHoliday ? "#" : `/shops/${slug}`}>
+                  <Link href={`/shops/${slug}`}>
                     <a className="block mt-2">
                       <p className="text-xl font-semibold text-gray-900">
                         {name}

@@ -3,21 +3,14 @@ import { getImageFields } from "../utils/contentful"
 import { Plus, Minus } from "./Svg"
 import { useCart } from "react-use-cart"
 
-export default function Menu({ menu, setCartOpen, name }) {
+export default function Menu({ menu, setCartOpen, name, holiday }) {
   const shopName = name
   const { addItem } = useCart()
 
-  // const Counter = ({ icon }) => {
-  //   return icon === "minus" ? (
-  //     <Minus className="w-5 h-5 mr-2" />
-  //   ) : (
-  //     <Plus className="w-5 h-5 ml-2" />
-  //   )
-  // }
-
-  // const randomize = (max, min) => {
-  //   return Math.floor(Math.random() * (max - min)) + min
-  // }
+  let holidays = []
+  if (holiday) {
+    holidays = holiday.map((v) => parseInt(v.slice(0, 1)))
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
@@ -47,7 +40,6 @@ export default function Menu({ menu, setCartOpen, name }) {
             >
               <div className="flex-1 flex flex-col p-8">
                 <div className="w-32 h-32 flex-shrink-0 mx-auto ">
-
                   {image && image.fields ? (
                     <Image {...getImageFields(image)} className="rounded-md" />
                   ) : (
@@ -60,9 +52,9 @@ export default function Menu({ menu, setCartOpen, name }) {
                 <h3 className="mt-6 text-gray-900 text-sm font-medium">
                   {title}
                   <br />
-<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-        {category}
-      </span>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    {category}
+                  </span>
                 </h3>
                 {/* <dl className="mt-1 flex-grow flex flex-col justify-between">
                   <dt className="sr-only">Title</dt>
@@ -100,6 +92,7 @@ export default function Menu({ menu, setCartOpen, name }) {
                               fields, // for DB
                               sys, // for DB
                               shopName,
+                              holidays
                             },
                             1 // quantity, required for both DB and Cart
                           )

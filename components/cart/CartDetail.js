@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ExCircle, SolidCheck } from "../Svg"
+import { ExCircle, SolidCheck, X } from "../Svg"
 import { getImageFields } from "../../utils/contentful"
 import { fetchPostJSON } from "../../utils/api-helpers"
 import { useCart } from "react-use-cart"
@@ -49,17 +49,45 @@ const Total = ({ pay, coupon, labels, charge }) => {
   )
 }
 
-const Summary = () => {
-  const { items } = useCart()
+const Summary = ({ dateNumber }) => {
+  const { items, removeItem } = useCart()
+
   return (
     <div className="max-w-7xl mx-auto grid gap-y-6 px-4 py-6 ">
       {items.map((v) => {
-        const { title, image, price } = v.fields
+        const { fields, holidays, sys } = v
+        const { title, image, price } = fields
         return (
           <div
             key={v.sys.id}
-            className="-m-3 p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
+            className={`${
+              holidays.includes(dateNumber) && "border border-red-500"
+            } -m-3 p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150`}
           >
+            {holidays.includes(dateNumber) && (
+              <>
+                <div className="text-red-500 absolute z-10 -mt-6 font-bold bg-white">
+                  定休日
+                </div>
+                <button className="absolute mt-16 text-red-500 bg-white text-sm" onClick={e => removeItem(sys.id)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 inline-block"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span className="ml-1">削除する</span>
+                </button>
+              </>
+            )}
             <div className="flex ">
               <div className="flex-shrink-0">
                 {image && (

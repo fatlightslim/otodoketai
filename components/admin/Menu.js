@@ -169,7 +169,7 @@ export const MobileMenu = ({ setIsOpen, isOpen }) => {
               onClick={() => setIsOpen(false)}
               className=" h-12 w-12 rounded-full flex items-center justify-center focus:outline-none focus:bg-gray-600"
             >
-              <X />
+              <X className="h-6 w-6" />
               <span className="sr-only">Close sidebar</span>
             </button>
           </div>

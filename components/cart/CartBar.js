@@ -3,7 +3,7 @@ import { CartSvg } from "../Svg"
 import { Transition } from "@headlessui/react"
 import { useState } from "react"
 import CartDetail from "./CartDetail"
-import { useCart } from "react-use-cart";
+import { useCart } from "react-use-cart"
 
 const Chev = ({ isOpen }) => (
   <svg
