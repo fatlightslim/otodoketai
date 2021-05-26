@@ -49,7 +49,7 @@ function buildEmail(data, s) {
   const templates = {
     sent_order_confirm: {
       subject: `${process.env.site.name} ご注文の確認 #${order_id}`,
-      template: "d-5da79b6010c642cab0c6483d95f161e2",
+      template: "d-f73a7c4f594b4a56bfed2627fcac4634",
     },
     sent_shipping: {
       subject: `${process.env.site.name} ご注文の商品(${order_id})が発送されました`,
