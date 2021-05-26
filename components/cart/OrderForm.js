@@ -23,14 +23,22 @@ function isEmpty(obj) {
 
 export default function OrderForm(props) {
   const { items } = useCart()
-  const { setForm, form, charge, setDelivery, setDateNumber, hasHoliday } =
-    props
-  const { handleSubmit, errors, control, register, setValue } = useForm()
+  const {
+    setForm,
+    form,
+    charge,
+    setDelivery,
+    setDateNumber,
+    dateNumber,
+    hasHoliday,
+  } = props
+  const { handleSubmit, errors, control, register, setValue, getValues } =
+    useForm()
   const [startDate, setStartDate] = useState(new Date())
   const [outArea, setOutArea] = useState(false)
-  const [excludeDates, setExcludeDates] = useState([])
-  const [hours, setHours] = useState([])
+  const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
   const [disableButton, setDisableButton] = useState(false)
+  const [closeToday, setCloseToday] = useState(false)
 
   useEffect(() => {
     const { customer } = form.value
@@ -41,23 +49,34 @@ export default function OrderForm(props) {
     }
 
     setStartDate(new Date())
-
-    getTimeAndDisableDate()
   }, [])
 
   useEffect(() => {
     setDisableButton(hasHoliday)
   }, [hasHoliday])
 
-  const getTimeAndDisableDate = () => {
+  useEffect(() => {
+    getTime()
+  }, [dateNumber])
+
+  const getFilterDate = (date) => {
     const now = new Date()
-    const hour = getHours(now)
-    const today = isToday(now)
-    if (today && hour >= 11) {
-      setExcludeDates([new Date()])
-      setHours(["11:00 ~ 12:00","17:00 ~ 18:00"])
-    } else if (today && hour >= 16) {
-      setExcludeDates([new Date(), addDays(new Date(), 1)])
+
+    return closeToday
+      ? getDay(date) !== 1 && now
+      : getDay(date) !== 1 &&
+          date > new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
+  }
+
+  const getTime = () => {
+    const hour = getHours(new Date())
+    if (isToday(getValues("date"))) {
+      if (hour < 11) {
+        setHours(["17:00 ~ 18:00"])
+      } else {
+        setCloseToday(true)
+      }
+    } else {
       setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
     }
   }
@@ -220,9 +239,19 @@ export default function OrderForm(props) {
               className="block text-sm font-medium text-gray-700"
               children={
                 hasHoliday ? (
-                  <p>お届け日時 <span className="text-red-400">ご指定の曜日に定休日の店舗があります</span></p>
+                  <p>
+                    お届け日時{" "}
+                    <span className="text-red-400">
+                      ご指定の曜日に定休日の店舗があります
+                    </span>
+                  </p>
                 ) : (
-                  <p>お届け日時 <span className="text-gray-400">当日配達は夕方のお届けになります</span></p>
+                  <p>
+                    お届け日時{" "}
+                    <span className="text-gray-400">
+                      当日配達は夕方のお届けになります
+                    </span>
+                  </p>
                 )
               }
             />
@@ -230,11 +259,9 @@ export default function OrderForm(props) {
               <Controller
                 name={"date"}
                 control={control}
-                // onChange={setStartDate}
                 defaultValue={startDate}
                 render={({ onChange, value }) => (
                   <DatePicker
-                    // dateFormat="MM-DD-YYYY"
                     locale="ja"
                     className={`rounded-t-md focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full   bg-transparent focus:z-10 sm:text-sm`}
                     selected={new Date(value)}
@@ -242,10 +269,7 @@ export default function OrderForm(props) {
                       setDateNumber(getDay(date))
                       onChange(date)
                     }}
-                    filterDate={(date) =>
-                      getDay(date) !== 1 && date >= new Date()
-                    }
-                    excludeDates={excludeDates}
+                    filterDate={getFilterDate}
                   />
                 )}
               />
