@@ -44,13 +44,13 @@ export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
         注文内容を確認してください。
       </h3>
 
-      <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+      <div className="bg-gray-400 hover:bg-light-blue-400 hover:border-transparent hover:shadow-lg overflow-hidden shadow divide-y divide-gray-400">
         <div className="px-4 py-2 sm:p-MongoError: Updating the path '_ts' would create a conflict at 6 grid grid-cols-2">
           <p className="font-semibold text-sm">配送情報</p>
           <a
             onClick={(e) => setForm({ key: "ORDER", value: form.value })}
             href="#"
-            className="text-right text-xs text-indigo-600 mt-1"
+            className="group-hover:text-white text-right text-xs text-indigo-600 mt-1"
           >
             編集
           </a>
@@ -70,8 +70,8 @@ export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
         </div>
       </div>
 
-      <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200 mt-4">
-        <div className="px-4 py-2 sm:p-6 grid grid-cols-2">
+      <div className="bg-gray-400 hover:bg-light-blue-400 hover:border-transparent hover:shadow-lg overflow-hidden shadow divide-y divide-gray-400 mt-4">
+        <div className="group-hover:text-white px-4 py-2 sm:p-6 grid grid-cols-2">
           <p className="font-semibold text-sm">請求情報</p>
           {/* <p className="text-right text-xs text-indigo-600 mt-1">編集</p> */}
         </div>

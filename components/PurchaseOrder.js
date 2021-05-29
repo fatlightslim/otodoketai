@@ -5,7 +5,7 @@ export default class PurchaseOrder extends React.Component {
     const { _id, _ts, charge, customer } = this.props.order
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
-        const { shop, orders } = v
+        const { shop, orders, charge } = v
         return (
           <>
             <div className="page-break" />
@@ -114,7 +114,7 @@ export default class PurchaseOrder extends React.Component {
                       合計(税込)
                     </th>
                     <td className="py-4 pr-4 text-right">
-                      &yen;{(charge.total - charge.delivery).toLocaleString()}
+                      &yen;{(charge - charge.delivery -charge.discount).toLocaleString()}
                     </td>
                   </tr>
                 </tbody>
