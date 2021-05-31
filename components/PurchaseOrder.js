@@ -5,6 +5,7 @@ export default class PurchaseOrder extends React.Component {
     const { _id, _ts, charge, customer } = this.props.order
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
+        var total = 0
         const { shop, orders } = v
         return (
           <>
@@ -42,6 +43,12 @@ export default class PurchaseOrder extends React.Component {
                   {orders.map((v) => {
                     const { fields, sys, quantity } = v
                     const { title, price } = fields
+                    var shop_price = Math.floor(((price * quantity) - (price * quantity) * 0.1))
+                    if (shop == '中華料理店 萬福飯店'){
+
+                      shop_price = Math.floor((price * quantity) - 50 * quantity )
+                    }
+                    total += shop_price
                     return (
                       <tr key={sys.id} className="border-t border-gray-200">
                         <th
@@ -51,17 +58,21 @@ export default class PurchaseOrder extends React.Component {
                           {title}
                           <span className="text-gray-500">
                             <span className="ml-2 ">
-                              &yen;{price.toLocaleString()}
+                              &yen;{shop_price.toLocaleString()}
                             </span>
                             <span className="px-1">x</span>
                             {quantity}
                           </span>
                         </th>
                         <td className="py-5 pr-4 text-right">
-                          &yen;{(price * quantity).toLocaleString()}
+                          &yen;{shop_price.toLocaleString()}
+                          
+
                         </td>
                       </tr>
+                
                     )
+                    
                   })}
 
                   <tr className="bg-gray-50 border-t border-gray-200 font-medium text-gray-900 text-left">
@@ -113,8 +124,13 @@ export default class PurchaseOrder extends React.Component {
                     >
                       合計(税込)
                     </th>
+                    {/* <td className="py-4 pr-4 text-right">
+                      &yen;{(charge.total - charge.delivery ).toLocaleString()}
+                    
+                    </td> */}
                     <td className="py-4 pr-4 text-right">
-                      &yen;{(charge.total - charge.delivery).toLocaleString()}
+                      &yen;{(total).toLocaleString()}
+                    
                     </td>
                   </tr>
                 </tbody>
