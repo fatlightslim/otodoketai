@@ -6,8 +6,9 @@ export default class PurchaseOrder extends React.Component {
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
         const { shop, orders } = v
+        console.log(orders[0]);
         return (
-          <>
+          <div key={shop}>
             <div className="page-break" />
             <section key={v.shop} className="py-4 px-8  min-h-screen">
               <div className="px-4">
@@ -20,7 +21,8 @@ export default class PurchaseOrder extends React.Component {
                     {new Date(_ts).toLocaleDateString()}
                   </span>
                 </h2>
-                <h3> {shop} 様</h3> 
+                <h3 className="py-2"> {shop} 様</h3> 
+                {orders[0].pickup && <h4 className="text-gray-500 text-sm">引き取り時間 {customer.time === "17:00 ~ 18:00" ? orders[0].pickup.pm : orders[0].pickup.am}</h4> }
                 <p className="mt-4">
                   <span className="text-4xl font-extrabold text-gray-900">
                     {/* &yen;{charge.total.toLocaleString()}&nbsp;- */}
@@ -64,6 +66,7 @@ export default class PurchaseOrder extends React.Component {
                       </tr>
                     )
                   })}
+
 
                 </tbody>
               </table>
@@ -122,7 +125,7 @@ export default class PurchaseOrder extends React.Component {
                 </tbody>
               </table>
             </section>
-          </>
+          </div>
         )
       })}
     </div>
