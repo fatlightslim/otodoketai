@@ -44,7 +44,7 @@ export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
         注文内容を確認してください。
       </h3>
 
-      <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+      <div className="bg-gray-400 overflow-hidden shadow rounded-lg divide-y divide-gray-200">
         <div className="px-4 py-2 sm:p-MongoError: Updating the path '_ts' would create a conflict at 6 grid grid-cols-2">
           <p className="font-semibold text-sm">配送情報</p>
           <a
@@ -70,7 +70,7 @@ export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
         </div>
       </div>
 
-      <div className="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200 mt-4">
+      <div className="bg-gray-400 overflow-hidden shadow rounded-lg divide-y divide-gray-200 mt-4">
         <div className="px-4 py-2 sm:p-6 grid grid-cols-2">
           <p className="font-semibold text-sm">請求情報</p>
           {/* <p className="text-right text-xs text-indigo-600 mt-1">編集</p> */}
