@@ -62,7 +62,7 @@ const Summary = ({ dateNumber }) => {
             key={v.sys.id}
             className={`${
               holidays && holidays.includes(dateNumber) && "border border-red-500"
-            } -m-3 p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150`}
+            } p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150`}
           >
             {holidays.includes(dateNumber) && (
               <>
