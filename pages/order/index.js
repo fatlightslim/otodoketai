@@ -56,7 +56,7 @@ export default function Payment(props) {
     if (items.length === 0) {
       router.replace("/")
     }
-  }, [])
+  }, [items])
 
   // useEffect(() => {
   //   document.body.scrollTop = 0 // For Safari

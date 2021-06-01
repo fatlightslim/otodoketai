@@ -7,11 +7,12 @@ export default class PurchaseOrder extends React.Component {
       {this.props.items.map((v) => {
         var total = 0
         const { shop, orders } = v
+        console.log(orders[0]);
         return (
-          <>
+          <div key={shop}>
             <div className="page-break" />
-            <section key={v.shop} className="py-12 px-8 border-b border-dotted">
-              <div className="px-4 mb-8">
+            <section key={v.shop} className="py-4 px-8  min-h-screen">
+              <div className="px-4">
                 <h2 className="text-xl leading-6 font-medium text-gray-900">
                   発注書
                   <span className="ml-2 uppercase text-sm text-gray-500">
@@ -21,7 +22,8 @@ export default class PurchaseOrder extends React.Component {
                     {new Date(_ts).toLocaleDateString()}
                   </span>
                 </h2>
-                <h3> {shop} 様</h3> 
+                <h3 className="py-2"> {shop} 様</h3> 
+                {orders[0].pickup && <h4 className="text-gray-500 text-sm">引き取り時間 {customer.time === "17:00 ~ 18:00" ? orders[0].pickup.pm : orders[0].pickup.am}</h4> }
                 <p className="mt-4">
                   <span className="text-4xl font-extrabold text-gray-900">
                     {/* &yen;{charge.total.toLocaleString()}&nbsp;- */}
@@ -43,6 +45,7 @@ export default class PurchaseOrder extends React.Component {
                   {orders.map((v) => {
                     const { fields, sys, quantity } = v
                     const { title, price } = fields
+
                     var shop_price = Math.floor(((price * quantity) - (price * quantity) * 0.1))
                     if (shop == '中華料理店 萬福飯店'){
 
@@ -75,18 +78,7 @@ export default class PurchaseOrder extends React.Component {
                     
                   })}
 
-                  <tr className="bg-gray-50 border-t border-gray-200 font-medium text-gray-900 text-left">
-                    <th
-                      className="py-4 px-4 text-sm font-medium text-left"
-                      scope="row"
-                    >
-                      お届け日時
-                    </th>
-                    <td className="py-4 pr-4 text-right">
-                      {/* &yen;{charge.subTotal.toLocaleString()} */}
-                      {new Date(customer.date).toLocaleDateString()}&nbsp;{customer.time}
-                    </td>
-                  </tr>
+
                 </tbody>
               </table>
               <table className="w-full">
@@ -117,7 +109,7 @@ export default class PurchaseOrder extends React.Component {
               </td>
             </tr> */}
 
-                  <tr className="bg-gray-50 border-t border-b border-gray-200 font-medium text-gray-900 text-left">
+                  {/* <tr className="bg-gray-50 border-t border-b border-gray-200 font-medium text-gray-900 text-left">
                     <th
                       className="py-4 px-4 text-sm font-medium text-left"
                       scope="row"
@@ -132,11 +124,24 @@ export default class PurchaseOrder extends React.Component {
                       &yen;{(total).toLocaleString()}
                     
                     </td>
+                  </tr> */}
+
+                  <tr className="bg-white border-t border-gray-200 font-medium text-gray-900 text-left">
+                    <th
+                      className="py-4 px-4 text-sm font-medium text-left"
+                      scope="row"
+                    >
+                      お届け日時
+                    </th>
+                    <td className="py-4 pr-4 text-right">
+                      {/* &yen;{charge.subTotal.toLocaleString()} */}
+                      {new Date(customer.date).toLocaleDateString()}&nbsp;{customer.time}
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </section>
-          </>
+          </div>
         )
       })}
     </div>
