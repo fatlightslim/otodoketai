@@ -7,7 +7,7 @@ export default class PurchaseOrder extends React.Component {
       {this.props.items.map((v) => {
         var total = 0
         const { shop, orders } = v
-        console.log(orders[0]);
+        // console.log(orders[0]);
         return (
           <div key={shop}>
             <div className="page-break" />
@@ -47,7 +47,7 @@ export default class PurchaseOrder extends React.Component {
                     const { title, price } = fields
 
                     var shop_price = Math.floor(((price * quantity) - (price * quantity) * 0.1))
-                    if (shop == '中華料理店 萬福飯店'){
+                    if (shop === '中華料理店 萬福飯店'){
 
                       shop_price = Math.floor((price * quantity) - 50 * quantity )
                     }
@@ -83,7 +83,7 @@ export default class PurchaseOrder extends React.Component {
               </table>
               <table className="w-full">
                 <tbody className="divide-y divide-gray-200">
-                  {charge.discount > 0 && (
+                  {/* {charge.discount > 0 && (
                     <tr className="border-t border-gray-200">
                       <th
                         className="py-5 px-4 text-sm font-normal text-left"
@@ -95,21 +95,9 @@ export default class PurchaseOrder extends React.Component {
                         &yen;{charge.discount.toLocaleString()}
                       </td>
                     </tr>
-                  )}
-                  {/*
-            <tr  className="border-t border-gray-200">
-              <th
-                className="py-5 px-4 text-sm font-normal text-left"
-                scope="row"
-              >
-                配送料
-              </th>
-              <td className="py-5 pr-4 text-right">
-                &yen;{charge.delivery.toLocaleString()}
-              </td>
-            </tr> */}
+                  )} */}
 
-                  {/* <tr className="bg-gray-50 border-t border-b border-gray-200 font-medium text-gray-900 text-left">
+                  <tr className="bg-gray-50 border-t border-b border-gray-200 font-medium text-gray-900 text-left">
                     <th
                       className="py-4 px-4 text-sm font-medium text-left"
                       scope="row"
@@ -124,7 +112,7 @@ export default class PurchaseOrder extends React.Component {
                       &yen;{(total).toLocaleString()}
                     
                     </td>
-                  </tr> */}
+                  </tr> 
 
                   <tr className="bg-white border-t border-gray-200 font-medium text-gray-900 text-left">
                     <th
