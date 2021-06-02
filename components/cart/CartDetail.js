@@ -61,7 +61,9 @@ const Summary = ({ dateNumber }) => {
           <div
             key={v.sys.id}
             className={`${
-              holidays && holidays.includes(dateNumber) && "border border-red-500"
+              holidays &&
+              holidays.includes(dateNumber) &&
+              "border border-red-500"
             } p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150`}
           >
             {holidays.includes(dateNumber) && (
@@ -69,7 +71,10 @@ const Summary = ({ dateNumber }) => {
                 <div className="text-red-500 absolute z-10 -mt-6 font-bold bg-white">
                   定休日
                 </div>
-                <button className="absolute mt-16 text-red-500 bg-white text-sm" onClick={e => removeItem(sys.id)}>
+                <button
+                  className="absolute mt-16 text-red-500 bg-white text-sm"
+                  onClick={(e) => removeItem(sys.id)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-5 h-5 inline-block"
@@ -90,10 +95,15 @@ const Summary = ({ dateNumber }) => {
             )}
             <div className="flex ">
               <div className="flex-shrink-0">
-                {image && (
+                {image && image.fields ? (
                   <div className="inline-flex items-center justify-center h-10 w-10 rounded-md bg-white text-white sm:h-12 sm:w-12">
                     <Image {...getImageFields(image)} />
                   </div>
+                ) : (
+                  <img
+                    className="h-10 w-10"
+                    src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
+                  />
                 )}
               </div>
               <div className="ml-4">
