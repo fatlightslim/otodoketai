@@ -66,7 +66,7 @@ const Summary = ({ dateNumber }) => {
               "border border-red-500"
             } p-3 flex flex-col justify-between rounded-lg hover:bg-gray-50 transition ease-in-out duration-150`}
           >
-            {holidays.includes(dateNumber) && (
+            {holidays && holidays.includes(dateNumber) && (
               <>
                 <div className="text-red-500 absolute z-10 -mt-6 font-bold bg-white">
                   定休日
