@@ -117,6 +117,7 @@ const Body = () => {
 }
 
 const List = ({ brand, image, title, price, id, quantity }) => {
+  console.log(image);
   return (
     <li className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 my-2 relative">
       <div className="w-full flex items-center justify-between p-6 space-x-6">
@@ -135,7 +136,7 @@ const List = ({ brand, image, title, price, id, quantity }) => {
           </p> */}
         </div>
         <div className="w-10 h-10  flex-shrink-0">
-          {image ? (
+          {image && image.fields ? (
             <Image {...getImageFields(image)} />
           ) : (
             <img
