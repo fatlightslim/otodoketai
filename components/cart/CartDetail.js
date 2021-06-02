@@ -57,6 +57,7 @@ const Summary = ({ dateNumber }) => {
       {items.map((v) => {
         const { fields, holidays, sys } = v
         const { title, image, price } = fields
+        console.log(holidays);
         return (
           <div
             key={v.sys.id}
