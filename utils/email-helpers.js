@@ -34,7 +34,7 @@ function getTemplateData(data) {
         title,
         price,
         quantity,
-        image: image && image.fields ? "https:" + image.fields.file.url : headerImage,
+        image: image && image.fields ? "https:" + image.fields.file.url : headerImage
       }
     }),
     price_detail: [{ title: "配送料", amount: charge.delivery }],
