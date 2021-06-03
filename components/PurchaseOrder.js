@@ -46,10 +46,10 @@ export default class PurchaseOrder extends React.Component {
                     const { fields, sys, quantity } = v
                     const { title, price } = fields
 
-                    var shop_price = Math.floor(((price * quantity) - (price * quantity) * 0.1))
+                    var shop_price = Math.round(((price * quantity) - (price * quantity) * 0.1))
                     if (shop === '中華料理店 萬福飯店'){
 
-                      shop_price = Math.floor((price * quantity) - 50 * quantity )
+                      shop_price = Math.round((price * quantity) - 50 * quantity )
                     }
                     total += shop_price
                     return (
