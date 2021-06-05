@@ -1,3 +1,4 @@
+import { Menu } from "@headlessui/react"
 import React from "react"
 
 export default class PurchaseOrder extends React.Component {
@@ -6,7 +7,7 @@ export default class PurchaseOrder extends React.Component {
     return <div className="print-container" style={{ margin: "0", padding: "0" }}>
       {this.props.items.map((v) => {
         var total = 0
-        const { shop, orders } = v
+        const { shop, orders　} = v
         // console.log(orders[0]);
         return (
           <div key={shop}>
@@ -49,9 +50,25 @@ export default class PurchaseOrder extends React.Component {
                     var shop_price = Math.round(((price * quantity) - (price * quantity) * 0.1))
                     if (shop === '中華料理店 萬福飯店'){
 
-                      shop_price = Math.round((price * quantity) - 50 * quantity )
+                      shop_price = Math.round(((price * quantity) - 50 * quantity ))
                     }
+                    
+                    if (shop === 'よみうりギョーザ'){
+
+                      shop_price = Math.round(price * quantity)
+                    }
+                    if (shop === 'YC東金中央　食品事業部' ){
+                      if (title === 'コシヒカリ（白米）（5ｋg）'){
+                        shop_price = Math.round(((price * quantity) - (price * quantity) * 0.1))
+
+                        
+                      } else {
+                        shop_price = Math.round(price * quantity)
+                      }
+                    }
+                    
                     total += shop_price
+
                     return (
                       <tr key={sys.id} className="border-t border-gray-200">
                         <th
@@ -66,6 +83,7 @@ export default class PurchaseOrder extends React.Component {
                             <span className="px-1">x</span>
                             {quantity}
                           </span>
+  
                         </th>
                         <td className="py-5 pr-4 text-right">
                           &yen;{shop_price.toLocaleString()}
@@ -77,8 +95,7 @@ export default class PurchaseOrder extends React.Component {
                     )
                     
                   })}
-
-
+                  
                 </tbody>
               </table>
               <table className="w-full">
