@@ -10,6 +10,7 @@ import {
 export default function Shop(props) {
   const { fields, sys } = props.data.items[0]
   const { image, name, menu, hook, holiday, pickup } = fields
+  console.log(menu)
 
   return (
     <Layout {...props}>
