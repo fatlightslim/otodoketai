@@ -147,6 +147,11 @@ export default function OrderForm(props) {
         setValue("addr1", "")
         setOutArea(true)
       }
+    } else {
+
+        setValue("pref", "")
+        setValue("addr1", "")
+        setOutArea(true)
     }
   }
 
