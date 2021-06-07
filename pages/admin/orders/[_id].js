@@ -284,7 +284,7 @@ const OrderDetails = ({ items, charge }) => (
                     <div>
                       <div className="flex text-sm font-medium text-gray-800 truncate items-center">
                         <div className="w-6 h-6">
-                          {image ? (
+                            {image && image.fields ? (
                             <Image
                               {...getImageFields(image)}
                               className="rounded-sm"
@@ -481,8 +481,8 @@ class ComponentToPrint extends Component {
                       >
                         <div className="w-0 flex-1 flex items-center">
                           <span className="flex-shrink-0 h-5 w-5 text-gray-400">
-                            {image ? (
-                              <img {...getImageFields(image)} />
+                            {image && image.fields ? (
+                              <Image {...getImageFields(image)} />
                             ) : (
                               <img
                                 className="rounded-md"
