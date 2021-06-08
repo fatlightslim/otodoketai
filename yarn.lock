@@ -95,6 +95,11 @@
   "resolved" "https://registry.npmjs.org/@headlessui/react/-/react-0.3.1.tgz"
   "version" "0.3.1"
 
+"@heroicons/react@^1.0.1":
+  "integrity" "sha512-uikw2gKCmqnvjVxitecWfFLMOKyL9BTFcU4VM3hHj9OMwpkCr5Ke+MRMyY2/aQVmsYs4VTq7NCFX05MYwAHi3g=="
+  "resolved" "https://registry.npmjs.org/@heroicons/react/-/react-1.0.1.tgz"
+  "version" "1.0.1"
+
 "@hypnosphi/create-react-context@^0.3.1":
   "integrity" "sha512-V1klUed202XahrWJLLOT3EXNeCpFHCcJntdFGI15ntCwau+jfT386w7OFTMaCqOgXUH1fa0w/I1oZs+i/Rfr0A=="
   "resolved" "https://registry.npmjs.org/@hypnosphi/create-react-context/-/create-react-context-0.3.1.tgz"
@@ -1692,6 +1697,11 @@
   "resolved" "https://registry.npmjs.org/he/-/he-1.2.0.tgz"
   "version" "1.2.0"
 
+"heroicons@^1.0.1":
+  "integrity" "sha512-vPUhWJQlpNOwNzn0WZ1JBzvsU/Gj9cBSgULPp6pF+Ckihk4+yY4JeOcZQn8XirA7S+OkVz2jNqWP7O+r5xapyA=="
+  "resolved" "https://registry.npmjs.org/heroicons/-/heroicons-1.0.1.tgz"
+  "version" "1.0.1"
+
 "hmac-drbg@^1.0.1":
   "integrity" "sha1-0nRXAQJabHdabFRXk+1QL8DGSaE="
   "resolved" "https://registry.npmjs.org/hmac-drbg/-/hmac-drbg-1.0.1.tgz"
@@ -3053,7 +3063,7 @@
   "resolved" "https://registry.npmjs.org/react-use-cart/-/react-use-cart-1.11.1.tgz"
   "version" "1.11.1"
 
-"react@17.0.1":
+"react@>= 16", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
