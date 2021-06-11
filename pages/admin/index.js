@@ -1,16 +1,22 @@
+import { getDataFromContentful } from "../../utils/contentful"
 import Layout from "../../components/admin/AdminLayout"
 import OrderList from "../../components/admin/OrderList"
 import isToday from "date-fns/isToday"
+import PoList from "../../components/admin/PoList"
 
 // stats, seo, orders,
-export default function Admin({ data }) {
+export default function Admin({ data, shops }) {
   return (
     <Layout>
       <Stats data={data} />
-      <h3 className="mt-4 py-4 px-2">
+      {/* <h3 className="mt-4 py-4 px-2">
         {data.length > 0 ? "本日配達の注文一覧" : "本日配達の注文はありません"}
-      </h3>
+      </h3> */}
       <OrderList orders={data} />
+      <h3 className="mt-4 py-4 px-2">本日の発注書一覧</h3>
+      <div className="pb-8">
+        <PoList shops={shops.items} data={data} />
+      </div>
     </Layout>
   )
 }
@@ -21,7 +27,7 @@ const Stats = ({ data }) => {
   data.forEach((v) => {
     v.items.forEach((x) => {
       count += x.quantity
-      sales += (x.quantity * x.fields.price)
+      sales += x.quantity * x.fields.price
     })
   })
   return (
@@ -39,7 +45,9 @@ const Stats = ({ data }) => {
           <dt className="text-sm font-medium text-gray-500 truncate">
             本日の売上
           </dt>
-          <dd className="mt-1 text-3xl font-semibold text-gray-900">&yen;{sales.toLocaleString()}</dd>
+          <dd className="mt-1 text-3xl font-semibold text-gray-900">
+            &yen;{sales.toLocaleString()}
+          </dd>
         </div>
         <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
           <dt className="text-sm font-medium text-gray-500 truncate">
@@ -64,6 +72,6 @@ export async function getServerSideProps() {
       v.log.slice(-1)[0]["status"] !== "draft"
   )
   return {
-    props: { data: today },
+    props: { data: today, shops: await getDataFromContentful("shop") },
   }
 }

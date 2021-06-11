@@ -32,14 +32,12 @@ const labels = {
 
 export default function AdminOrder({ order }) {
   const { items, log, customer, _id, _ts, charge } = order
-  const result = groupBy(items, (item) => item.shopName).map(([shop, items]) => ({
-    shop,
-    orders: items,
-  }))
-  // const data = []
-  // Object.keys(customer).forEach((v) => {
-  //   data.push({ [v]: customer[v] })
-  // })
+  const result = groupBy(items, (item) => item.shopName).map(
+    ([shop, items]) => ({
+      shop,
+      orders: items,
+    })
+  )
   const address = customer.zip + " " + customer.addr1 + customer.addr2
 
   const getPay = (pay) => (pay === "cod" ? "代金引換" : "オンライン決済")
@@ -284,7 +282,7 @@ const OrderDetails = ({ items, charge }) => (
                     <div>
                       <div className="flex text-sm font-medium text-gray-800 truncate items-center">
                         <div className="w-6 h-6">
-                            {image && image.fields ? (
+                          {image && image.fields ? (
                             <Image
                               {...getImageFields(image)}
                               className="rounded-sm"
