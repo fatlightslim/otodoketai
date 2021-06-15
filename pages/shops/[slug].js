@@ -48,21 +48,21 @@ export default function Shop(props) {
   )
 }
 
-export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
-  const shop = await getDataFromContentful("shop")
+// export async function getStaticPaths() {
+//   // Call an external API endpoint to get posts
+//   const shop = await getDataFromContentful("shop")
 
-  // Get the paths we want to pre-render based on posts
-  const paths = shop.items.map((s) => {
-    return { params: { slug: s.fields.slug } }
-  })
+//   // Get the paths we want to pre-render based on posts
+//   const paths = shop.items.map((s) => {
+//     return { params: { slug: s.fields.slug } }
+//   })
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false }
-}
+//   // We'll pre-render only these paths at build time.
+//   // { fallback: false } means other routes should 404.
+//   return { paths, fallback: false }
+// }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   return {
     props: {
       data: await getShopFromContentful(params),
