@@ -59,11 +59,9 @@ export default class PurchaseOrder extends React.Component {
                       var shop_price = Math.round(
                         price * quantity - price * quantity * 0.1
                       )
-                      if (shop === "中華料理店 萬福飯店") {
-                        shop_price = Math.round(
-                          price * quantity - 50 * quantity
-                        )
-                      }
+                      if (shop === "萬福飯店") {
+                        shop_price = Math.round((price * quantity) - 50 * quantity)
+                        }
 
                       if (shop === "よみうりギョーザ") {
                         shop_price = Math.round(price * quantity)
