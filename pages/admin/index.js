@@ -1,21 +1,56 @@
-import { getDataFromContentful } from "../../utils/contentful"
+import { useState, useEffect } from "react"
 import Layout from "../../components/admin/AdminLayout"
 import OrderList from "../../components/admin/OrderList"
-import isToday from "date-fns/isToday"
+import { isToday, addDays, isSameDay, format, subDays } from "date-fns"
 import PoList from "../../components/admin/PoList"
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  LinkIcon,
+} from "@heroicons/react/solid"
 
 // stats, seo, orders,
-export default function Admin({ data, shops }) {
+export default function Admin({ data }) {
+  const [poDate, setPoDate] = useState(new Date())
+  const [orderList, setOrderList] = useState([])
+
+  useEffect(() => {
+    const orderList = data.filter((v) => {
+      return isSameDay(new Date(v.customer.date), poDate)
+    })
+    setOrderList(orderList)
+  }, [poDate])
+
   return (
     <Layout>
-      <Stats data={data} />
+      <Stats data={orderList} />
       {/* <h3 className="mt-4 py-4 px-2">
         {data.length > 0 ? "本日配達の注文一覧" : "本日配達の注文はありません"}
       </h3> */}
-      <OrderList orders={data} />
-      <h3 className="mt-4 py-4 px-2">本日の発注書一覧</h3>
+      <OrderList orders={orderList} />
+      <h3 className="mt-4 py-4 px-2 inline-block text-xl mr-1.5">
+        {format(poDate, "MM/dd (eee)")}の発注書一覧
+      </h3>
+      {!isToday(new Date(poDate)) && (
+        <button
+          onClick={() => setPoDate(subDays(poDate, 1))}
+          type="button"
+          className="mr-2 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          {/* <ChevronLeftIcon className="mr-2 -ml-0.5 h-4 w-4" aria-hidden="true" /> */}
+          前日
+        </button>
+      )}
+      <button
+        onClick={() => setPoDate(addDays(poDate, 1))}
+        type="button"
+        className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        翌日
+        <ChevronRightIcon className="ml-2 -mr-0.5 h-4 w-4" aria-hidden="true" />
+      </button>
       <div className="pb-8">
-        <PoList shops={shops.items} data={data} />
+        <PoList data={orderList} poDate={poDate} />
       </div>
     </Layout>
   )
@@ -68,10 +103,10 @@ export async function getServerSideProps() {
 
   const today = data.filter(
     (v) =>
-      isToday(new Date(v.customer.date)) &&
+      // isToday(new Date(v.customer.date)) &&
       v.log.slice(-1)[0]["status"] !== "draft"
   )
   return {
-    props: { data: today, shops: await getDataFromContentful("shop") },
+    props: { data: today },
   }
 }
