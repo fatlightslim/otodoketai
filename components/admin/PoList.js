@@ -21,7 +21,7 @@ const groupBy = (array, getKey) =>
     }, new Map())
   )
 
-export default function PoList({ shops, data }) {
+export default function PoList({ data, poDate }) {
   const orders = []
   data.forEach((v) => {
     v.items.forEach((x) => {
@@ -39,7 +39,7 @@ export default function PoList({ shops, data }) {
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-md">
       <ul className="divide-y divide-gray-200">
-        {result.map((v) => {
+        {result.map((v, i) => {
           const { shop, orders } = v
           const am = []
           const pm = []
@@ -48,7 +48,7 @@ export default function PoList({ shops, data }) {
           })
           // const { name, pickup, image, slug } = fields
           return (
-            <li key={shop}>
+            <li key={i}>
               <div className="block hover:bg-gray-50">
                 <div className="flex items-center px-4 py-4 sm:px-6">
                   <div className="min-w-0 flex-1 flex items-center">
@@ -60,11 +60,12 @@ export default function PoList({ shops, data }) {
                       </div>
                       <div className="block">
                         <div>
-                          <p className="mt-2 flex items-center text-sm text-gray-500">
+                          <div className="mt-2 flex items-center text-sm text-gray-500">
                             {am.length > 0 && (
                               <PrintAM
                                 name="午前便"
                                 {...v}
+                                poDate={poDate}
                                 data={am}
                                 result={result}
                               />
@@ -74,10 +75,11 @@ export default function PoList({ shops, data }) {
                                 name="午後便"
                                 {...v}
                                 data={pm}
+                                poDate={poDate}
                                 result={result}
                               />
                             )}
-                          </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -92,8 +94,9 @@ export default function PoList({ shops, data }) {
   )
 }
 
-function PrintAM({ name, shop, data }) {
+function PrintAM({ name, shop, data, poDate }) {
   const componentRef = useRef()
+  // console.log(data)
   return (
     <>
       <ReactToPrint
@@ -119,8 +122,8 @@ function PrintAM({ name, shop, data }) {
         )}
         content={() => componentRef.current}
       />
-      <div className="absolute hidden">
-        <MergedPO items={data} shop={shop} ref={componentRef} />
+      <div className="absolute hidden ">
+        <MergedPO items={data} shop={shop} ref={componentRef} poDate={poDate} />
       </div>
     </>
   )
@@ -128,7 +131,7 @@ function PrintAM({ name, shop, data }) {
 
 class MergedPO extends Component {
   render() {
-    const { shop, items } = this.props
+    const { shop, items, poDate } = this.props
     // console.log(items)
     let total = 0
     return (
@@ -144,7 +147,7 @@ class MergedPO extends Component {
                     {/* #{_id.substr(18)} */}
                   </span>
                   <span className="text-sm text-gray-700 float-right">
-                    {new Date().toLocaleDateString()}
+                    {new Date(poDate).toLocaleDateString()}
                   </span>
                 </h2>
                 <h3 className="py-2"> {shop} 様</h3>
@@ -171,7 +174,7 @@ class MergedPO extends Component {
                   注文概要
                 </caption>
                 <tbody className="divide-y divide-gray-200">
-                  {items.map((v) => {
+                  {items.map((v, i) => {
                     const { fields, sys, quantity } = v
                     const { title, price } = fields
                     // const shop_price = price
@@ -200,7 +203,7 @@ class MergedPO extends Component {
                     total += shop_price
 
                     return (
-                      <tr key={sys.id} className="border-t border-gray-200">
+                      <tr key={i} className="border-t border-gray-200">
                         <th
                           className="py-5 px-4 text-sm font-normal text-left"
                           scope="row"
