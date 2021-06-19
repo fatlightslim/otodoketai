@@ -176,15 +176,15 @@ class MergedPO extends Component {
                 <tbody className="divide-y divide-gray-200">
                   {items.map((v, i) => {
                     const { fields, sys, quantity } = v
-                    const { title, price } = fields
+                    const { title, price, supplier, valuePrice } = fields
                     // const shop_price = price
                     // total += price
 
                     var shop_price = Math.round(
                       price * quantity - price * quantity * 0.1
                     )
-                    if (shop === "中華料理店 萬福飯店") {
-                      shop_price = Math.round(price * quantity - 50 * quantity)
+                    if (shop === "萬福飯店") {
+                      shop_price = ( Math.round((price * quantity) - 50 * quantity))
                     }
 
                     if (shop === "よみうりギョーザ") {
@@ -199,6 +199,17 @@ class MergedPO extends Component {
                         shop_price = Math.round(price * quantity)
                       }
                     }
+                    
+                    if (shop === "お買い物サポート") {
+                      if (supplier === "道の駅みのりの郷東金"){
+                        shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
+                        if (price * quantity >= 1000){
+                          shop_price = Math.round (price * quantity - price * quantity * 0.05)
+
+                        }
+                      }
+                    }
+
 
                     total += shop_price
 
@@ -211,7 +222,7 @@ class MergedPO extends Component {
                           {title}
                           <span className="text-gray-500">
                             <span className="ml-2 ">
-                              &yen;{shop_price.toLocaleString()}
+                              &yen;{price.toLocaleString()}
                             </span>
                             <span className="px-1">x</span>
                             {quantity}
