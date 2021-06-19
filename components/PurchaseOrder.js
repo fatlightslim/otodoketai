@@ -1,10 +1,12 @@
 import { Menu } from "@headlessui/react"
 import React from "react"
+//import { getShopFromContentful,getShopFromContentfulByTitle } from "../utils/contentful"
 
 export default class PurchaseOrder extends React.Component {
   render() {
     // cole.log(this.props);
     const { _id, _ts, charge, customer } = this.props.order
+    // const minori = this.props.minori
     return (
       <div className="print-container" style={{ margin: "0", padding: "0" }}>
         {this.props.items.map((v) => {
@@ -54,7 +56,7 @@ export default class PurchaseOrder extends React.Component {
                   <tbody className="divide-y divide-gray-200">
                     {orders.map((v) => {
                       const { fields, sys, quantity } = v
-                      const { title, price } = fields
+                      const { title, price, supplier, valuePrice } = fields
 
                       var shop_price = Math.round(
                         price * quantity - price * quantity * 0.1
@@ -75,6 +77,15 @@ export default class PurchaseOrder extends React.Component {
                           shop_price = Math.round(price * quantity)
                         }
                       }
+                      if (shop === "お買い物サポート") {
+                        if (supplier === "道の駅みのりの郷東金"){
+                          shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
+                          if (price * quantity >= 1000){
+                            shop_price = Math.round (price * quantity - price * quantity * 0.05)
+
+                          }
+                        }
+                      }
 
                       total += shop_price
 
@@ -87,7 +98,7 @@ export default class PurchaseOrder extends React.Component {
                             {title}
                             <span className="text-gray-500">
                               <span className="ml-2 ">
-                                &yen;{shop_price.toLocaleString()}
+                                &yen;{price.toLocaleString()}
                               </span>
                               <span className="px-1">x</span>
                               {quantity}
