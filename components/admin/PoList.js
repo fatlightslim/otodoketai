@@ -203,10 +203,7 @@ class MergedPO extends Component {
                     if (shop === "お買い物サポート") {
                       if (supplier === "道の駅みのりの郷東金"){
                         shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
-                        if (price * quantity >= 1000){
-                          shop_price = Math.round (price * quantity - price * quantity * 0.05)
-
-                        }
+                        
                       }
                     }
 
