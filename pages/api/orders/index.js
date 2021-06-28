@@ -58,14 +58,18 @@ async function handler(req, res) {
       { upsert: true, returnOriginal: false },
       (err, r) => {
         if (err) console.log(err)
-        sendMail(r.value, status, url)
-          .then(() => {
-            res.json(r.value)
-          })
-          .catch((err) => {
-            console.log(err);
-            res.json(err)
-          })
+        if (url) {
+          sendMail(r.value, status, url)
+            .then(() => {
+              res.json(r.value)
+            })
+            .catch((err) => {
+              console.log(err)
+              res.json(err)
+            })
+        } else {
+          res.json(r.value)
+        }
       }
     )
   }

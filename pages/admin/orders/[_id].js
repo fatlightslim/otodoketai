@@ -4,6 +4,8 @@ import Image from "next/image"
 import { useState, useRef, Component } from "react"
 import ReactToPrint from "react-to-print"
 import PurchaseOrder from "../../../components/PurchaseOrder"
+import AdminForm from "../../../components/admin/AdminForm"
+import OrderDetails from "../../../components/admin/OrderDetails"
 
 const groupBy = (array, getKey) =>
   Array.from(
@@ -40,36 +42,6 @@ export default function AdminOrder({ order }) {
   )
   const address = customer.zip + " " + customer.addr1 + customer.addr2
 
-  const getPay = (pay) => (pay === "cod" ? "代金引換" : "オンライン決済")
-
-  const getReceipt = () => (
-    <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-      <Po order={order} result={result} />
-      <Receipt order={order} />
-    </ul>
-  )
-
-  const Field = ({ name }) => {
-    return (
-      <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-        <dt className="text-sm font-medium text-gray-500">{labels[name]}</dt>
-        <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-          <span className="">
-            {name === "addr"
-              ? address
-              : name === "pay"
-              ? getPay(charge.pay)
-              : name === "date"
-              ? new Date(customer[name]).toLocaleDateString()
-              : name === "receipt"
-              ? getReceipt()
-              : customer[name]}
-          </span>
-        </dd>
-      </div>
-    )
-  }
-
   return (
     <Layout order={order}>
       <div className="">
@@ -90,20 +62,9 @@ export default function AdminOrder({ order }) {
           注文日: {new Date(_ts).toLocaleString()}
         </p>
       </div>
-      <div className="mt-5 border-t border-gray-200">
-        <dl className="divide-y divide-gray-200">
-          <Field name="name" />
-          <Field name="addr" />
-          <Field name="email" />
-          <Field name="tel" />
-          <Field name="pay" />
-          <Field name="date" />
-          <Field name="time" />
-          <Field name="receipt" />
-        </dl>
-      </div>
+      <AdminForm order={order} />
 
-      <OrderDetails {...order} />
+      {/* <OrderDetails order={order} /> */}
       <Log {...order} />
     </Layout>
   )
@@ -257,95 +218,6 @@ const Log = ({ log }) => {
     </div>
   )
 }
-const OrderDetails = ({ items, charge }) => (
-  <div className="relative">
-    {/* <div className="absolute inset-0 h-1/2 bg-gray-100" /> */}
-
-    <h3 className="pt-6 font-bold">注文概要</h3>
-    <div className="mx-auto rounded-lg  overflow-hidden ">
-      <div className="flex-1 bg-white py-8 ">
-        <div className="flex items-center">
-          {/* <h4 className="flex-shrink-0 pr-4 bg-white text-sm tracking-wider font-semibold uppercase text-indigo-600">
-            注文概要
-          </h4> */}
-          <div className="flex-1 border-t-2 border-gray-100" />
-        </div>
-
-        <ul className="divide-y divide-gray-200">
-          {items.map((v) => {
-            const { fields, sys, quantity } = v
-            const { title, price, image } = fields
-            return (
-              <li key={sys.id}>
-                <div className="px-4 py-4 flex items-center sm:px-6">
-                  <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                      <div className="flex text-sm font-medium text-gray-800 truncate items-center">
-                        <div className="w-6 h-6">
-                          {image && image.fields ? (
-                            <Image
-                              {...getImageFields(image)}
-                              className="rounded-sm"
-                            />
-                          ) : (
-                            <img
-                              className="rounded-md"
-                              src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
-                            />
-                          )}
-                        </div>
-                        <p className="mx-2">{title}</p>
-                        <p className="font-normal text-gray-500">
-                          x {quantity}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-4 flex-shrink-0 sm:mt-0">
-                      <div className="flex overflow-hidden">
-                        &yen;{(price * quantity).toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            )
-          })}
-
-          <li>
-            <div className="px-4 pt-4 flex items-center sm:px-6">
-              <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                <div>
-                  <div className="flex text-sm font-medium text-gray-800 truncate items-center">
-                    配送料
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 flex-shrink-0 sm:mt-0">
-                <div className="flex overflow-hidden">
-                  &yen;{charge.delivery.toLocaleString()}
-                </div>
-              </div>
-            </div>
-            <div className="px-4 py-4 flex items-center sm:px-6">
-              <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                <div>
-                  <div className="flex text-sm font-medium text-gray-800 truncate items-center">
-                    合計(税込)
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 flex-shrink-0 sm:mt-0">
-                <div className="flex overflow-hidden">
-                  &yen;{charge.total.toLocaleString()}
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-)
 
 const SolidUser = () => (
   <span className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
