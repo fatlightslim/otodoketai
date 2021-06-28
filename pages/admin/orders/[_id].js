@@ -30,6 +30,7 @@ const labels = {
   pay: "決済方法",
   date: "配達日",
   time: "配達時間",
+  cancel: "キャンセル",
 }
 
 export default function AdminOrder({ order }) {
@@ -177,6 +178,7 @@ const Log = ({ log }) => {
                 "awaiting_payment",
                 "sent_order_confirm",
                 "sent_tracking",
+                "cancel",
               ]
               const failure = ["sent_failure", "payment_failed"]
               const thumbsUp = ["done", "sent_tracking", "paid", "done"]

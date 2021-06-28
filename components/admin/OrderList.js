@@ -5,9 +5,11 @@ const labels = {
   sent_order_confirm: "配送待ち",
   cod: "配送待ち",
   draft: "未確定",
+  cancel: "キャンセル",
 }
 
 const List = ({ customer, log, _id, charge }) => {
+  const isCancel = log[log.length - 1].status === 'cancel'
   return (
     <li>
       <a className="block hover:bg-gray-50" href={`/admin/orders/${_id}`}>
@@ -17,7 +19,7 @@ const List = ({ customer, log, _id, charge }) => {
               {customer.name}
             </p>
             <div className="ml-2 flex-shrink-0 flex">
-              <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+              <p className={`${isCancel ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"} px-2 inline-flex text-xs leading-5 font-semibold rounded-full`}>
                 {labels[log[log.length - 1].status]}
               </p>
             </div>

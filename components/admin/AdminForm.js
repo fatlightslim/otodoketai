@@ -64,7 +64,19 @@ export default function AdminForm({ name, order }) {
     }).then((value) => {
       setShow(true)
       setTimeout(() => {
-      setShow(false)
+        setShow(false)
+      }, 3000)
+    })
+  }
+
+  const onCancel = (data) => {
+    fetchPostJSON("/api/orders", {
+      _id,
+      status: "cancel",
+    }).then((value) => {
+      setShow(true)
+      setTimeout(() => {
+        setShow(false)
       }, 3000)
     })
   }
@@ -75,12 +87,25 @@ export default function AdminForm({ name, order }) {
         onSubmit={handleSubmit(onSubmit)}
         className="mt-5 border-t border-gray-200"
       >
-        <button
-          type="submit"
-          className="absolute top-1 right-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          更新する
-        </button>
+        <div className="absolute top-1 right-4 ">
+          <button
+            type="submit"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            更新する
+          </button>
+          <button
+            type="button"
+            className="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={() => {
+              if (window.confirm("are you sure?")) {
+                onCancel()
+              }
+            }}
+          >
+            キャンセル
+          </button>
+        </div>
         <dl className="divide-y divide-gray-200">
           <Field ref={register({ required: true })} name="name" order={order} />
           <Field name="zip" order={order} ref={register({ required: true })} />
@@ -172,4 +197,3 @@ const getReceipt = () => (
     </li>
   </ul>
 )
-
