@@ -255,6 +255,7 @@ export default function OrderForm(props) {
               />
             </div>
           </fieldset>
+
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
@@ -306,6 +307,24 @@ export default function OrderForm(props) {
             </div>
           </fieldset>
 
+          <fieldset className="mt-6">
+            <legend
+              className="block text-sm font-medium text-gray-700"
+              children="備考"
+            />
+            <div className="mt-1 rounded-md shadow-sm -space-y-px">
+              <FieldArea
+                name="remark"
+                label="配達に関して気になる事などございましたら、ご記入お願いします。(置き場所・入り口がわかりにくい etc...)"
+                round="rounded-b-md"
+                ref={register}
+              />
+            </div>
+          </fieldset>
+
+
+
+
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
@@ -332,6 +351,33 @@ export default function OrderForm(props) {
     </div>
   )
 }
+
+
+const FieldArea = React.forwardRef(
+  ({ name, label, register, round = "rounded-none", ...rest }, ref) => {
+    const { errors } = useForm()
+    return (
+      <div>
+        <label htmlFor="tel" className="sr-only">
+          {label}
+        </label>
+        <div className="relative rounded-md shadow-sm">
+          <textarea 
+            id={name} 
+            name={name} 
+            ref={ref}
+            placeholder={label}
+            {...rest}
+            rows="4" cols="40"
+          >
+            
+          </textarea>
+        </div>
+      </div>
+    )
+  }
+)
+
 
 const Field = React.forwardRef(
   ({ name, label, register, round = "rounded-none", ...rest }, ref) => {

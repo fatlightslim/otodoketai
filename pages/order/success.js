@@ -43,6 +43,9 @@ const ResultPage = (props) => {
               <p className="mt-4 text-xl text-gray-600">
                 正常に注文が完了いたしました
               </p>
+              <p className="mt-4 text-xl text-gray-600">
+                お届け時間には指定場所に必ず居て下さい
+              </p>
             </div>
           </div>
         </div>
