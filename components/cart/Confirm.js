@@ -7,7 +7,7 @@ import { useCart } from "react-use-cart"
 export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
   const router = useRouter()
   const { items } = useCart()
-  const { addr1, addr2, pref, name, tel, zip, email } = form.value.customer
+  const { addr1, addr2, pref, name, tel, zip, email, remark } = form.value.customer
   const [loading, setLoading] = useState(false)
   const { fee, total, discount, delivery, subTotal } = charge
 
@@ -67,6 +67,8 @@ export default function Confirm({pay, setForm, form, charge, setCartOpen }) {
           {name}
           <br />
           {tel}
+          <br />
+          {remark}
         </div>
       </div>
 

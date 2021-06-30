@@ -310,13 +310,13 @@ export default function OrderForm(props) {
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
-              children="備考"
+              children="注意事項"
             />
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <FieldArea
                 name="remark"
-                label="配達に関して気になる事などございましたら、ご記入お願いします。(置き場所・入り口がわかりにくい etc...)"
-                round="rounded-b-md"
+                label="配達に関して気になる事などございましたら、ご記入お願いします。"
+                round="rounded-md"
                 ref={register}
               />
             </div>
@@ -369,6 +369,7 @@ const FieldArea = React.forwardRef(
             placeholder={label}
             {...rest}
             rows="4" cols="40"
+            className={`${round} focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 relative block w-full rounded-none  bg-transparent focus:z-10 sm:text-sm`}
           >
             
           </textarea>
