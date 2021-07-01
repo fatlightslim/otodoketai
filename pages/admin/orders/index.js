@@ -15,6 +15,14 @@ export async function getServerSideProps() {
   const res = await fetch(`${url}/api/orders`)
   const data = await res.json()
 
-  // Pass data to the page via props
-  return { props: { data } }
+  const filtered = data.filter(
+    (v) => {
+      const status = v.log.slice(-1)[0]["status"] 
+      const blacklist = ['draft', 'cancel']
+      return  !blacklist.includes(status)
+    }
+  )
+  return {
+    props: { data: filtered },
+  }
 }

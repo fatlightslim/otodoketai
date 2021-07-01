@@ -19,6 +19,7 @@ export default function Admin({ data }) {
       return isSameDay(new Date(v.customer.date), poDate)
     })
     setOrderList(orderList)
+    console.log(orderList);
   }, [poDate])
 
   return (
@@ -101,12 +102,14 @@ export async function getServerSideProps() {
   const res = await fetch(`${url}/api/orders`)
   const data = await res.json()
 
-  const today = data.filter(
-    (v) =>
-      // isToday(new Date(v.customer.date)) &&
-      v.log.slice(-1)[0]["status"] !== "draft"
+  const filtered = data.filter(
+    (v) => {
+      const status = v.log.slice(-1)[0]["status"] 
+      const blacklist = ['draft', 'cancel']
+      return  !blacklist.includes(status)
+    }
   )
   return {
-    props: { data: today },
+    props: { data: filtered },
   }
 }
