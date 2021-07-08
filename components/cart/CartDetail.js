@@ -7,7 +7,7 @@ import { useCart } from "react-use-cart"
 export default function CartDetail(props) {
   return (
     <div className="max-w-md mx-auto">
-      <h3 className="text-center py-6 font-bold">注文概要</h3>
+      <h3 className="text-center py-6 font-bold"></h3>
       <Summary {...props} />
       {/* <Coupon {...props} /> */}
       <Total {...props} />

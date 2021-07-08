@@ -335,13 +335,17 @@ class ComponentToPrint extends Component {
                           </span>
                           <span className="ml-2 flex-1 w-0 truncate">
                             {title}
+                            <span className="ml-2 ">
+                                &yen;{price.toLocaleString()}
+                            </span>
                             <span className="px-2">x</span> {quantity}
                           </span>
                         </div>
                         <div className="ml-4 flex-shrink-0 flex space-x-4">
                           <span className="text-gray-900" aria-hidden="true">
-                            &yen;{price.toLocaleString()}
+                            &yen;{(price * quantity).toLocaleString()}
                           </span>
+                          
                         </div>
                       </li>
                     )
