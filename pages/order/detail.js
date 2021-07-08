@@ -50,7 +50,7 @@ export default function Detail(props) {
                 <div className="flex-1 bg-white px-6 py-8 lg:p-12">
                   <div className="flex items-center">
                     <h4 className="flex-shrink-0 pr-4 bg-white text-sm tracking-wider font-semibold uppercase text-indigo-600">
-                      注文概要
+                      
                     </h4>
                     <div className="flex-1 border-t-2 border-gray-200" />
                   </div>
