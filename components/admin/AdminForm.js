@@ -19,6 +19,7 @@ const labels = {
   addr: "住所",
   email: "メール",
   tel: "TEL",
+  remark: "注意事項",
   pay: "決済方法",
   addr1: "住所1",
   addr2: "住所2",
@@ -122,7 +123,7 @@ export default function AdminForm({ name, order, result }) {
           <Field
             name="addr2"
             order={order}
-            ref={register({ required: true })}
+            ref={register()}
           />
           <Field
             ref={register({ required: true })}
@@ -130,6 +131,7 @@ export default function AdminForm({ name, order, result }) {
             order={order}
           />
           <Field ref={register({ required: true })} name="tel" order={order} />
+          <Field ref={register()} name="remark" order={order} />
           <Field name="pay" order={order} />
           <Field name="receipt" order={order} result={result}/>
         </dl>
@@ -162,6 +164,16 @@ const Field = React.forwardRef(
             <span className="">{getPay(charge.pay)}</span>
           ) : name === "receipt" ? (
             <span>{getReceipt()}</span>
+          ) : name === "remark" ? (
+            <textarea 
+              id={name} 
+              name={name} 
+              ref={ref}
+              {...rest}
+              rows="4" cols="40"
+              className="block w-full shadow-sm focus:ring-sky-500 focus:border-sky-500 sm:text-sm border-gray-300 rounded-md"
+              defaultValue={customer[name]}
+            />
           ) : (
             <input
               type="text"
@@ -179,6 +191,8 @@ const Field = React.forwardRef(
 )
 
 const getPay = (pay) => (pay === "cod" ? "代金引換" : "オンライン決済")
+
+
 
 const Receipt = ({ order }) => {
   const componentRef = useRef()
