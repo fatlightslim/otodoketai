@@ -31,25 +31,98 @@ export default function Cart(props) {
     </div>
   )
 
-  const Actions = () => (
-    <div className="flex-shrink-0 px-4 py-4 flex justify-center">
-      <button
-        onClick={() => setCartOpen(false)}
-        type="button"
-        className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        買い物を続ける
-      </button>
-      <Link href="/order">
-        <a
-          // onClick={() => setForm({ key: "ORDER", value: form.value })}
-          className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          ご購入手続き
-        </a>
-      </Link>
-    </div>
-  )
+
+  const Actions = () => {
+    const { items, isEmpty } = useCart()
+      
+    var  errmsg = ""
+    var  hasErr = false
+    items.map((v) => {
+      const name = v.fields.title
+      const quantity = v.quantity
+      if (name === '活けあわびの鉄板焼きと特選牛のお弁当'){
+        if (quantity <= 1){
+          hasErr = true
+          errmsg = "活けあわびの鉄板焼きと特選牛のお弁当は２個からの注文を承ります。"
+        }
+      }
+    })
+  
+    // console.log("hasErr")
+    // console.log(hasErr)
+
+    return(
+      <div>
+        <div className="flex-shrink-0 px-4 py-4 flex justify-center">
+          <button
+            onClick={() => setCartOpen(false)}
+            type="button"
+            className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            買い物を続ける
+          </button>
+
+          {hasErr ? (
+              <button
+                disabled={true}
+                className="disabled:opacity-50 text-white bg-indigo-600 ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                ご購入手続き
+              </button>     
+          ) : (
+            <Link href="/order">
+              <a
+                // onClick={() => setForm({ key: "ORDER", value: form.value })}
+                className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                ご購入手続き
+              </a>
+            </Link>
+      
+          )}
+
+        </div>
+
+        <div>
+          <p className="p-4">
+            {errmsg}
+          </p>
+        </div>
+      </div>
+    )
+
+  }
+
+
+
+  // const Actions = () => (
+
+  //   <div className="flex-shrink-0 px-4 py-4 flex justify-center">
+  //     <button
+  //       onClick={() => setCartOpen(false)}
+  //       type="button"
+  //       className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  //     >
+  //       買い物を続ける
+  //     </button>
+  //     <Link href="/order">
+  //       <a
+  //         // onClick={() => setForm({ key: "ORDER", value: form.value })}
+  //         className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  //       >
+  //         ご購入手続き
+  //       </a>
+  //     </Link>
+  //     {/* <Link href="/order">
+  //       <a
+  //         // onClick={() => setForm({ key: "ORDER", value: form.value })}
+  //         className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+  //       >
+  //         ご購入手続き
+  //       </a>
+  //     </Link> */}
+  //   </div>
+  // )
 
   const Card = () => (
     <div className="bg-gray-50 overflow-hidden shadow rounded-lg mx-4 relative mb-4">
