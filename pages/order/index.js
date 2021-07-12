@@ -30,6 +30,7 @@ export default function Payment(props) {
   const [charge, setCharge] = useState(getCharge())
   const [dateNumber, setDateNumber] = useState(getDay(new Date()))
   const [hasHoliday, setHasHoliday] = useState(false)
+  // const [countError, setCountError] = useState(false)
 
   function getCharge() {
     const discount = 0
@@ -58,6 +59,7 @@ export default function Payment(props) {
     }
   }, [items])
 
+  
   // useEffect(() => {
   //   document.body.scrollTop = 0 // For Safari
   //   document.documentElement.scrollTop = 0 // For Chrome, Firefox, IE and Opera
@@ -78,7 +80,7 @@ export default function Payment(props) {
     setDelivery,
     dateNumber,
     setDateNumber,
-    hasHoliday
+    hasHoliday,
   }
 
   return (

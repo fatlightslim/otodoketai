@@ -15,6 +15,7 @@ import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { isTomorrow, getDay, isToday, getHours } from "date-fns"
 import ja from "date-fns/locale/ja"
+import { tr } from "date-fns/locale"
 registerLocale("ja", ja)
 
 function isEmpty(obj) {
@@ -39,6 +40,7 @@ export default function OrderForm(props) {
   const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
   const [disableButton, setDisableButton] = useState(false)
   const [closeToday, setCloseToday] = useState(false)
+
 
   useEffect(() => {
     const { customer } = form.value
@@ -155,6 +157,20 @@ export default function OrderForm(props) {
     }
   }
 
+        
+  var  errmsg = ""
+  var  hasErr = false
+  items.map((v) => {
+    const name = v.fields.title
+    const quantity = v.quantity
+    if (name === '活けあわびの鉄板焼きと特選牛のお弁当'){
+      if (quantity <= 1){
+        hasErr = true
+        errmsg = "活けあわびの鉄板焼きと特選牛のお弁当は２個からの注文を承ります。"
+      }
+    }
+  })
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 ">
       <div className="relative hidden sm:block border-r p-8">
@@ -162,7 +178,13 @@ export default function OrderForm(props) {
       </div>
 
       <div className="px-4 max-w-xl mx-auto">
-        {outArea ? (
+        {
+        hasErr ? (
+          <h3 className="text-center pt-12 pb-6 font-bold text-red-500">
+            {errmsg}
+          </h3>
+        ) : 
+        outArea ? (
           <h3 className="text-center pt-12 pb-6 font-bold text-red-500">
             配達対象エリア外の地域です
           </h3>
@@ -173,7 +195,8 @@ export default function OrderForm(props) {
             } text-center pt-12 pb-6 font-bold`}
             children="配送情報を入力してください。"
           />
-        )}
+        )
+        }
 
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <fieldset className="mt-6">
@@ -328,7 +351,7 @@ export default function OrderForm(props) {
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
-                disabled={outArea || disableButton}
+                disabled={(hasErr || disableButton) || (outArea || disableButton)}
                 type="submit"
                 className="disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >
