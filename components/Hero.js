@@ -8,7 +8,8 @@ export default function Hero() {
           <div className=" inset-0">
             <Image
               className="h-full w-full "
-              src="/img/cover.png"
+              src="/img/cover.jpg"
+              // src="/img/cover.png"
               alt="People working on laptops"
               width={2467}
               height={1565}
