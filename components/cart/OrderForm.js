@@ -13,7 +13,7 @@ import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
 import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { isTomorrow, getDay, isToday, getHours, addDays } from "date-fns"
+import { isTomorrow, getDay, isToday, getHours } from "date-fns"
 import ja from "date-fns/locale/ja"
 import { tr } from "date-fns/locale"
 registerLocale("ja", ja)
@@ -32,7 +32,6 @@ export default function OrderForm(props) {
     setDateNumber,
     dateNumber,
     setSelDate,
-    selDate,
     hasHoliday,
     hasCantDeliverToday,
   } = props
@@ -43,11 +42,6 @@ export default function OrderForm(props) {
   const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
   const [disableButton, setDisableButton] = useState(false)
   const [closeToday, setCloseToday] = useState(false)
-
-  // console.log("props")
-  // console.log(props)
-  // console.log(items)
-
 
   useEffect(() => {
     const { customer } = form.value
@@ -68,29 +62,9 @@ export default function OrderForm(props) {
     setDisableButton(hasCantDeliverToday)
   }, [hasCantDeliverToday])
 
-
   useEffect(() => {
     getTime()
   }, [dateNumber])
-  
-  // var errAjiyosi = false
-  // useEffect(() => {
-  //   getTime()
-  //   console.log("dateNumber Changed")
-  //   console.log(selDate)
-  //   if (hasAjiyosi === true) {
-
-  //     if (isToday(selDate) === true) {
-  //       errAjiyosi = true
-  //       console.log("err ajiyosi")
-  //     }else{
-  //       console.log("OK  ajiyosi")
-  //       errAjiyosi = false
-  //     }
-  //     setDisableButton(errAjiyosi)
-
-  //   }
-  // }, [dateNumber])
 
   const getFilterDate = (date) => {
     const now = new Date()
@@ -202,17 +176,6 @@ export default function OrderForm(props) {
       }
     }
   })
-
-
-  // var hasAjiyosi = false
-  // //味よしチェック
-  // items.map((v) => {
-  //   const shop = v.shopName
-  //   if (shop === '郷土の味 味良'){
-  //     hasAjiyosi = true
-  //   }
-  // })
-  
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 ">
