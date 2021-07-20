@@ -44,6 +44,7 @@ export default function OrderForm(props) {
 
   useEffect(() => {
     const { customer } = form.value
+
     if (customer) {
       Object.keys(customer).forEach((v) => {
         setValue(v, customer[v])
@@ -90,6 +91,7 @@ export default function OrderForm(props) {
   }
 
   const onSubmit = (customer) => {
+
     fetchPostJSON("/api/orders", {
       _id: form.value._id,
       customer,
@@ -121,9 +123,24 @@ export default function OrderForm(props) {
     const right4 = value.slice(3)
     const o = outOfScope.map((v) => v.zip)
 
+
     if (left3 === "283" && !o.includes(value) && right4.length === 4) {
       setOutArea(false)
-      setDelivery(150)
+      
+
+
+    console.log("register")
+    console.log(addr1.value)
+  
+
+      if (right4 === "0000"){
+        console.log("zero")
+        setDelivery(0)
+      }else{
+        console.log("hyakugojuu")
+        setDelivery(150)
+      }
+
       try {
         let r = await fetch(
           `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
@@ -143,18 +160,21 @@ export default function OrderForm(props) {
             setDelivery(250)
           }
         }
+        
       } catch (error) {
         // console.log(error)
         setValue("pref", "")
         setValue("addr1", "")
         setOutArea(true)
       }
+
     } else {
 
         setValue("pref", "")
         setValue("addr1", "")
         setOutArea(true)
     }
+
   }
 
         

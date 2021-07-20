@@ -36,7 +36,7 @@ export default function Payment(props) {
     const discount = 0
     const total = cartTotal + delivery - discount
     return {
-      delivery: delivery || 150,
+      delivery: delivery,
       discount,
       total,
       subTotal: cartTotal,
