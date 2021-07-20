@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Ticker from "react-ticker"
+// import Ticker from "react-ticker"
 import { getImageFields } from "../utils/contentful"
 import Image from "next/image"
 
