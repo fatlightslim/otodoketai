@@ -29,7 +29,8 @@ export default class PurchaseOrder extends React.Component {
                   </h2>
                   <h3 className="py-2"> {shop} 様</h3>
                   {orders[0].pickup && (
-                    <h4 className="text-gray-500 text-sm">
+                    <h4 className="text-gray-500 text-xl">
+                    {/* <h4 className="text-gray-500 text-sm"> */}
                       引き取り時間{" "}
                       {customer.time === "17:00 ~ 18:00"
                         ? orders[0].pickup.pm
