@@ -152,7 +152,8 @@ class MergedPO extends Component {
                 </h2>
                 <h3 className="py-2"> {shop} 様</h3>
                 {items[0].pickup && (
-                  <h4 className="text-gray-500 text-sm">
+                  <h4 className="text-gray-500 text-xl">
+                  {/* <h4 className="text-gray-500 text-sm"> */}
                     引き取り時間
                     {items[0].time === "17:00 ~ 18:00"
                       ? items[0].pickup.pm
