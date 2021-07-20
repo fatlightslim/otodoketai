@@ -31,7 +31,9 @@ export default function OrderForm(props) {
     setDelivery,
     setDateNumber,
     dateNumber,
+    setSelDate,
     hasHoliday,
+    hasCantDeliverToday,
   } = props
   const { handleSubmit, errors, control, register, setValue, getValues } =
     useForm()
@@ -41,7 +43,6 @@ export default function OrderForm(props) {
   const [disableButton, setDisableButton] = useState(false)
   const [closeToday, setCloseToday] = useState(false)
 
-
   useEffect(() => {
     const { customer } = form.value
     if (customer) {
@@ -49,13 +50,17 @@ export default function OrderForm(props) {
         setValue(v, customer[v])
       })
     }
-
     setStartDate(new Date())
   }, [])
 
+  
   useEffect(() => {
     setDisableButton(hasHoliday)
   }, [hasHoliday])
+
+  useEffect(() => {
+    setDisableButton(hasCantDeliverToday)
+  }, [hasCantDeliverToday])
 
   useEffect(() => {
     getTime()
@@ -90,6 +95,7 @@ export default function OrderForm(props) {
   }
 
   const onSubmit = (customer) => {
+
     fetchPostJSON("/api/orders", {
       _id: form.value._id,
       customer,
@@ -159,14 +165,14 @@ export default function OrderForm(props) {
 
         
   var  errmsg = ""
-  var  hasErr = false
+  var  hasCountErr = false
   items.map((v) => {
     const name = v.fields.title
     const quantity = v.quantity
     if (name === '活けあわびの鉄板焼きと特選牛のお弁当'){
       if (quantity <= 1){
-        hasErr = true
-        errmsg = "活けあわびの鉄板焼きと特選牛のお弁当は２個からの注文を承ります。"
+        hasCountErr = true
+        errmsg += "活けあわびの鉄板焼きと特選牛のお弁当は２個からの注文を承ります。"
       }
     }
   })
@@ -179,7 +185,7 @@ export default function OrderForm(props) {
 
       <div className="px-4 max-w-xl mx-auto">
         {
-        hasErr ? (
+        hasCountErr ? (
           <h3 className="text-center pt-12 pb-6 font-bold text-red-500">
             {errmsg}
           </h3>
@@ -290,6 +296,20 @@ export default function OrderForm(props) {
                       ご指定の曜日に定休日の店舗があります
                     </span>
                   </p>
+                ) : hasCantDeliverToday ? (
+                  <>
+                  <p>
+                    お届け日時{" "}
+                    <span className="text-red-400">
+                      当日配達できない店舗があります。
+                    </span>
+                  </p>
+                  <p>
+                    <span className="text-red-400">
+                    （郷土の味 味良）
+                    </span>  
+                  </p>
+                  </>
                 ) : (
                   <p>
                     お届け日時{" "}
@@ -312,6 +332,7 @@ export default function OrderForm(props) {
                     selected={new Date(value)}
                     onChange={(date) => {
                       setDateNumber(getDay(date))
+                      setSelDate(date)
                       onChange(date)
                     }}
                     filterDate={getFilterDate}
@@ -351,7 +372,7 @@ export default function OrderForm(props) {
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
-                disabled={(hasErr || disableButton) || (outArea || disableButton)}
+                disabled={(hasCountErr || disableButton) || (outArea || disableButton)}
                 type="submit"
                 className="disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >
