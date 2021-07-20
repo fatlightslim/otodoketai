@@ -13,7 +13,7 @@ import CartDetail from "./CartDetail"
 import { useCart } from "react-use-cart"
 import DatePicker, { registerLocale } from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { isTomorrow, getDay, isToday, getHours } from "date-fns"
+import { isTomorrow, getDay, isToday, getHours, addDays } from "date-fns"
 import ja from "date-fns/locale/ja"
 import { tr } from "date-fns/locale"
 registerLocale("ja", ja)
@@ -31,7 +31,10 @@ export default function OrderForm(props) {
     setDelivery,
     setDateNumber,
     dateNumber,
+    setSelDate,
+    selDate,
     hasHoliday,
+    hasCantDeliverToday,
   } = props
   const { handleSubmit, errors, control, register, setValue, getValues } =
     useForm()
@@ -41,6 +44,10 @@ export default function OrderForm(props) {
   const [disableButton, setDisableButton] = useState(false)
   const [closeToday, setCloseToday] = useState(false)
 
+  // console.log("props")
+  // console.log(props)
+  // console.log(items)
+
 
   useEffect(() => {
     const { customer } = form.value
@@ -49,17 +56,41 @@ export default function OrderForm(props) {
         setValue(v, customer[v])
       })
     }
-
     setStartDate(new Date())
   }, [])
 
+  
   useEffect(() => {
     setDisableButton(hasHoliday)
   }, [hasHoliday])
 
   useEffect(() => {
+    setDisableButton(hasCantDeliverToday)
+  }, [hasCantDeliverToday])
+
+
+  useEffect(() => {
     getTime()
   }, [dateNumber])
+  
+  // var errAjiyosi = false
+  // useEffect(() => {
+  //   getTime()
+  //   console.log("dateNumber Changed")
+  //   console.log(selDate)
+  //   if (hasAjiyosi === true) {
+
+  //     if (isToday(selDate) === true) {
+  //       errAjiyosi = true
+  //       console.log("err ajiyosi")
+  //     }else{
+  //       console.log("OK  ajiyosi")
+  //       errAjiyosi = false
+  //     }
+  //     setDisableButton(errAjiyosi)
+
+  //   }
+  // }, [dateNumber])
 
   const getFilterDate = (date) => {
     const now = new Date()
@@ -90,6 +121,7 @@ export default function OrderForm(props) {
   }
 
   const onSubmit = (customer) => {
+
     fetchPostJSON("/api/orders", {
       _id: form.value._id,
       customer,
@@ -159,17 +191,28 @@ export default function OrderForm(props) {
 
         
   var  errmsg = ""
-  var  hasErr = false
+  var  hasCountErr = false
   items.map((v) => {
     const name = v.fields.title
     const quantity = v.quantity
     if (name === '活けあわびの鉄板焼きと特選牛のお弁当'){
       if (quantity <= 1){
-        hasErr = true
-        errmsg = "活けあわびの鉄板焼きと特選牛のお弁当は２個からの注文を承ります。"
+        hasCountErr = true
+        errmsg += "活けあわびの鉄板焼きと特選牛のお弁当は２個からの注文を承ります。"
       }
     }
   })
+
+
+  // var hasAjiyosi = false
+  // //味よしチェック
+  // items.map((v) => {
+  //   const shop = v.shopName
+  //   if (shop === '郷土の味 味良'){
+  //     hasAjiyosi = true
+  //   }
+  // })
+  
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-4 ">
@@ -179,7 +222,7 @@ export default function OrderForm(props) {
 
       <div className="px-4 max-w-xl mx-auto">
         {
-        hasErr ? (
+        hasCountErr ? (
           <h3 className="text-center pt-12 pb-6 font-bold text-red-500">
             {errmsg}
           </h3>
@@ -290,6 +333,20 @@ export default function OrderForm(props) {
                       ご指定の曜日に定休日の店舗があります
                     </span>
                   </p>
+                ) : hasCantDeliverToday ? (
+                  <>
+                  <p>
+                    お届け日時{" "}
+                    <span className="text-red-400">
+                      当日配達できない店舗があります。
+                    </span>
+                  </p>
+                  <p>
+                    <span className="text-red-400">
+                    （郷土の味 味良）
+                    </span>  
+                  </p>
+                  </>
                 ) : (
                   <p>
                     お届け日時{" "}
@@ -312,6 +369,7 @@ export default function OrderForm(props) {
                     selected={new Date(value)}
                     onChange={(date) => {
                       setDateNumber(getDay(date))
+                      setSelDate(date)
                       onChange(date)
                     }}
                     filterDate={getFilterDate}
@@ -351,7 +409,7 @@ export default function OrderForm(props) {
           <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
             <div className="rounded-md shadow">
               <button
-                disabled={(hasErr || disableButton) || (outArea || disableButton)}
+                disabled={(hasCountErr || disableButton) || (outArea || disableButton)}
                 type="submit"
                 className="disabled:opacity-50 text-white bg-indigo-600 hover:bg-indigo-700 w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md md:py-4 md:text-lg md:px-10"
               >

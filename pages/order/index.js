@@ -6,7 +6,8 @@ import CartBar from "../../components/cart/CartBar"
 import { useCart } from "react-use-cart"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import { getDay} from "date-fns"
+import { isToday, getDay} from "date-fns"
+import { tr } from "date-fns/locale"
 
 const labels = [
   {
@@ -29,7 +30,11 @@ export default function Payment(props) {
   const [form, setForm] = useState({ key: "ORDER", value: {} })
   const [charge, setCharge] = useState(getCharge())
   const [dateNumber, setDateNumber] = useState(getDay(new Date()))
+  const [selDate, setSelDate] = useState(new Date())
+
   const [hasHoliday, setHasHoliday] = useState(false)
+  const [hasCantDeliverToday, setHasCantDeliverToday] = useState(false)
+
   // const [countError, setCountError] = useState(false)
 
   function getCharge() {
@@ -47,7 +52,30 @@ export default function Payment(props) {
   useEffect(() => {
     const holidayList = items.filter(v => v.holidays ? v.holidays.includes(dateNumber) : [])
     holidayList.length > 0 ? setHasHoliday(true) : setHasHoliday(false)
-  }, [dateNumber, items])
+
+
+    // if (hasHoliday === false){
+      //味よしチェック
+      var hasAjiyosi = false
+      items.map((v) => {
+        const shop = v.shopName
+        if (shop === '郷土の味 味良'){
+          hasAjiyosi = true
+        }
+      })
+      
+      if (hasAjiyosi === true){
+        if ( isToday(selDate) === true){
+          setHasCantDeliverToday(true)
+        } else {
+          setHasCantDeliverToday(false)          
+        }
+      }
+
+    // }
+ 
+  
+  }, [dateNumber, items, selDate])
 
   useEffect(() => {
     setCharge(getCharge())
@@ -80,7 +108,10 @@ export default function Payment(props) {
     setDelivery,
     dateNumber,
     setDateNumber,
+    selDate, 
+    setSelDate,
     hasHoliday,
+    hasCantDeliverToday,
   }
 
   return (
