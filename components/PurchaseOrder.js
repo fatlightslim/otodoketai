@@ -161,6 +161,39 @@ export default class PurchaseOrder extends React.Component {
                     </tr>
                   </tbody>
                 </table>
+                
+                <div className="my-20">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p>
+                          &yen;{total.toLocaleString()}
+                          </p>
+                          <p>
+                          上記金額を受領いたしました。
+                          </p>
+                        </td>
+                        <td>
+                          <p>
+                          　　　　　年　　　　月　　　日(　　)
+                          </p>
+                          <p className="border-gray-200 border">
+                          ご署名または印
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          </p>
+                          <p>
+                          {shop}様
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </section>
             </div>
           )
