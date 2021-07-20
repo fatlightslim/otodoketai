@@ -70,7 +70,7 @@ function buildEmail(data, s) {
         subject: templates[s].subject,
         to: [{ email: customer.email }],
         bcc: [
-          { email: "fatlightslim@gmail.com" },
+          // { email: "fatlightslim@gmail.com" },
           { email: "touganechuuou@ycmail.jp" },
         ],
       },
