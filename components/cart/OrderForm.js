@@ -29,6 +29,7 @@ export default function OrderForm(props) {
     form,
     charge,
     setDelivery,
+    delivery,
     setDateNumber,
     dateNumber,
     setSelDate,
@@ -45,6 +46,7 @@ export default function OrderForm(props) {
 
   useEffect(() => {
     const { customer } = form.value
+
     if (customer) {
       Object.keys(customer).forEach((v) => {
         setValue(v, customer[v])
@@ -96,6 +98,20 @@ export default function OrderForm(props) {
 
   const onSubmit = (customer) => {
 
+    const zip = customer.zip.replace("-", "")
+    if (zip.length === 7) {
+      const left3 = zip.slice(0, 3)
+      const right4 = zip.slice(3)
+      if (left3 === "283"  && right4 === "0000") {  
+        if (pref.value === "千葉県"){
+          if (addr1.value === "山式郡九十九里町田中田中荒生"){
+            setDelivery(0)
+          }
+        }
+      }
+    }
+
+    
     fetchPostJSON("/api/orders", {
       _id: form.value._id,
       customer,
@@ -108,6 +124,7 @@ export default function OrderForm(props) {
   }
 
   const onError = (errors, e) => {
+    console.log("errors")
     console.log(errors)
     // Object.keys(values).forEach((v) => {
     //   console.log(values[v]);
@@ -127,9 +144,21 @@ export default function OrderForm(props) {
     const right4 = value.slice(3)
     const o = outOfScope.map((v) => v.zip)
 
+
     if (left3 === "283" && !o.includes(value) && right4.length === 4) {
       setOutArea(false)
       setDelivery(150)
+      
+      // console.log("register")
+      // console.log(addr1.value)
+      // if (right4 === "0000"){
+      //   console.log("zero")
+      //   setDelivery(0)
+      // }else{
+      //   console.log("hyakugojuu")
+      //   setDelivery(150)
+      // }
+
       try {
         let r = await fetch(
           `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
@@ -139,9 +168,14 @@ export default function OrderForm(props) {
 
         const data = r.data[0].ja
         if (r.data) {
+          // console.log("koko")
+          // console.log(value)
           setValue("zip", value)
           setValue("pref", data["prefecture"])
           setValue("addr1", data["address1"] + data["address2"])
+          // console.log("zip")
+          // console.log(zip)
+          // console.log(zip.value)
 
           const e = extraDeliveryFee.map((v) => v.zip)
           const i = inScope99.map((v) => v.zip)
@@ -149,18 +183,23 @@ export default function OrderForm(props) {
             setDelivery(250)
           }
         }
+        
       } catch (error) {
-        // console.log(error)
+          console.log("kotti")
+          // console.log(error)
         setValue("pref", "")
         setValue("addr1", "")
         setOutArea(true)
       }
+
     } else {
+      console.log("dore")
 
         setValue("pref", "")
         setValue("addr1", "")
         setOutArea(true)
     }
+
   }
 
         

@@ -41,7 +41,7 @@ export default function Payment(props) {
     const discount = 0
     const total = cartTotal + delivery - discount
     return {
-      delivery: delivery || 150,
+      delivery: delivery,
       discount,
       total,
       subTotal: cartTotal,
@@ -51,28 +51,20 @@ export default function Payment(props) {
 
   useEffect(() => {
     
-    console.log("items")
-    console.log(items)
     
     const holidayList = items.filter(v => v.holidays ? v.holidays.includes(dateNumber) : [])
     holidayList.length > 0 ? setHasHoliday(true) : setHasHoliday(false)
 
-    console.log("hasHoliday=" + hasHoliday)
 
-    // if (hasHoliday === true){
       //味よしチェック
-      console.log("味よしチェック")
       var hasAjiyosi = false
       items.map((v) => {
         const shop = v.shopName
-      console.log("shop=" + shop)
         if (shop === '郷土の味 味良'){
           hasAjiyosi = true
         }
       })
       
-      console.log("hasAjiyosi=" + hasAjiyosi)
-      console.log("isToday(selDate)=" + isToday(selDate))
 
       if (hasAjiyosi === true){
         if ( isToday(selDate) === true){
@@ -82,9 +74,6 @@ export default function Payment(props) {
         }
       }
 
-    // }
- 
-  
   }, [dateNumber, items, selDate])
 
   useEffect(() => {
@@ -116,6 +105,7 @@ export default function Payment(props) {
     setForm,
     charge,
     setDelivery,
+    delivery,
     dateNumber,
     setDateNumber,
     selDate, 
