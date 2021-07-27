@@ -263,6 +263,37 @@ class MergedPO extends Component {
                   </tr>
                 </tbody>
               </table>
+              <div className="my-20">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p className="mt-5">
+                            <span className="text-2xl ">
+
+                              合計(税込)
+                              &yen;{total.toLocaleString()}
+                            </span>
+                          </p>
+                          <p>
+                          上記金額を受領いたしました。
+                          </p>
+                        </td>
+                        <td>
+                          <p>
+                          　　　　　年　　　　月　　　日(　　)
+                          </p>
+                          <div className=" border-gray-200 border rounded p-16 pt-0 my-8 pl-2 text-left ">
+                            ご署名または印
+                          </div>
+                          <p className=" text-center">
+                          {shop}様
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
             </section>
           </div>
         </div>
