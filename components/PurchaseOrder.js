@@ -182,6 +182,7 @@ export default class PurchaseOrder extends React.Component {
                           　　　　　年　　　　月　　　日(　　)
                           </p>
                           <div className=" border-gray-200 border rounded p-20 pt-0 pl-2 text-left ">
+                            
                             ご署名または印
                           </div>
                           <p className=" text-center">
