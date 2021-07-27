@@ -149,16 +149,6 @@ export default function OrderForm(props) {
       setOutArea(false)
       setDelivery(150)
       
-      // console.log("register")
-      // console.log(addr1.value)
-      // if (right4 === "0000"){
-      //   console.log("zero")
-      //   setDelivery(0)
-      // }else{
-      //   console.log("hyakugojuu")
-      //   setDelivery(150)
-      // }
-
       try {
         let r = await fetch(
           `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
@@ -168,15 +158,10 @@ export default function OrderForm(props) {
 
         const data = r.data[0].ja
         if (r.data) {
-          // console.log("koko")
-          // console.log(value)
           setValue("zip", value)
           setValue("pref", data["prefecture"])
           setValue("addr1", data["address1"] + data["address2"])
-          // console.log("zip")
-          // console.log(zip)
-          // console.log(zip.value)
-
+      
           const e = extraDeliveryFee.map((v) => v.zip)
           const i = inScope99.map((v) => v.zip)
           if (e.includes(value) || i.includes(value)) {
@@ -185,19 +170,15 @@ export default function OrderForm(props) {
         }
         
       } catch (error) {
-          console.log("kotti")
-          // console.log(error)
         setValue("pref", "")
         setValue("addr1", "")
         setOutArea(true)
       }
 
     } else {
-      console.log("dore")
-
-        setValue("pref", "")
-        setValue("addr1", "")
-        setOutArea(true)
+      setValue("pref", "")
+      setValue("addr1", "")
+      setOutArea(true)
     }
 
   }

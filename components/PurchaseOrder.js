@@ -1,18 +1,21 @@
 import { Menu } from "@headlessui/react"
 import React from "react"
+import OrderForm from "./cart/OrderForm"
 //import { getShopFromContentful,getShopFromContentfulByTitle } from "../utils/contentful"
 
 export default class PurchaseOrder extends React.Component {
   render() {
-    // cole.log(this.props);
+
     const { _id, _ts, charge, customer } = this.props.order
-    // const minori = this.props.minori
+    
+    console.log(this.props.items)
+
     return (
       <div className="print-container" style={{ margin: "0", padding: "0" }}>
         {this.props.items.map((v) => {
           var total = 0
           const { shop, orders } = v
-          // console.log(orders[0]);
+
           return (
             <div key={shop}>
               <div className="page-break" />
@@ -27,7 +30,11 @@ export default class PurchaseOrder extends React.Component {
                       {new Date(_ts).toLocaleDateString()}
                     </span>
                   </h2>
-                  <h3 className="py-2"> {shop} 様</h3>
+                  <h3 className="py-2"> {
+                    orders[0].poName
+                    ? orders[0].poName
+                    : shop
+                  } 様</h3>
                   {orders[0].pickup && (
                     <h4 className="text-gray-500 text-xl">
                     {/* <h4 className="text-gray-500 text-sm"> */}
