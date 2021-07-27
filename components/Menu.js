@@ -3,8 +3,9 @@ import { getImageFields } from "../utils/contentful"
 import { Plus, Minus } from "./Svg"
 import { useCart } from "react-use-cart"
 
-export default function Menu({pickup, menu, setCartOpen, name, holiday }) {
+export default function Menu({pickup, menu, setCartOpen, name, holiday, poname }) {
   const shopName = name
+  const poName = poname
   const { addItem } = useCart()
 
   let holidays = []
@@ -92,6 +93,7 @@ export default function Menu({pickup, menu, setCartOpen, name, holiday }) {
                               fields, // for DB
                               sys, // for DB
                               shopName,
+                              poName,
                               holidays,
                               pickup
                             },

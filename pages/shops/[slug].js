@@ -1,3 +1,4 @@
+import { fi } from "date-fns/locale"
 import Image from "next/image"
 import Layout from "../../components/Layout"
 import Menu from "../../components/Menu"
@@ -9,7 +10,7 @@ import {
 
 export default function Shop(props) {
   const { fields, sys } = props.data.items[0]
-  const { image, name, menu, hook, holiday, pickup } = fields
+  const { image, name, menu, hook, holiday, pickup, poName } = fields
 
   return (
     <Layout {...props}>
@@ -41,7 +42,7 @@ export default function Shop(props) {
             </div>
           </div>
           {/* More main page content here... */}
-          <Menu holiday={holiday} menu={menu} name={name} pickup={pickup} {...props} />
+          <Menu holiday={holiday} menu={menu} name={name} poname={poName} pickup={pickup} {...props} />
         </main>
       </div>
     </Layout>

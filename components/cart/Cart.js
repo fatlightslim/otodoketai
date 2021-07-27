@@ -48,9 +48,6 @@ export default function Cart(props) {
       }
     })
   
-    // console.log("hasErr")
-    // console.log(hasErr)
-
     return(
       <div>
         <div className="flex-shrink-0 px-4 py-4 flex justify-center">
