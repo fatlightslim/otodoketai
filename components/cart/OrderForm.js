@@ -371,6 +371,27 @@ export default function OrderForm(props) {
             </div>
           </fieldset>
 
+
+
+              
+          <fieldset className="mt-6">
+
+            <div className="flex items-center h-5">
+              <legend
+                className="block text-sm font-medium mr-5 text-gray-700"
+                children="アレルギーがある方はチェックを入れてください。"
+              />
+              <input
+                id="allergy"
+                name="allergy"
+                type="checkbox"
+                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 cursor-pointer border-gray-300"
+                ref={register}
+              />
+            </div>
+          </fieldset>
+
+
           <fieldset className="mt-6">
             <legend
               className="block text-sm font-medium text-gray-700"
@@ -379,7 +400,7 @@ export default function OrderForm(props) {
             <div className="mt-1 rounded-md shadow-sm -space-y-px">
               <FieldArea
                 name="remark"
-                label="配達に関して気になる事などございましたら、ご記入お願いします。"
+                label="アレルギーや配達に関して気になる事などございましたら、ご記入お願いします。"
                 round="rounded-md"
                 ref={register}
               />
