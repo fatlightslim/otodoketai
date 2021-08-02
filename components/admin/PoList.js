@@ -22,13 +22,18 @@ const groupBy = (array, getKey) =>
   )
 
 export default function PoList({ data, poDate }) {
+
+
   const orders = []
   data.forEach((v) => {
     v.items.forEach((x) => {
       x.time = v.customer.time
+      x.customerName = v.customer.name
     })
     orders.push(v.items)
   })
+
+
 
   const result = groupBy(orders.flat(), (item) => item.shopName).map(
     ([shop, items]) => ({
@@ -41,6 +46,8 @@ export default function PoList({ data, poDate }) {
       <ul className="divide-y divide-gray-200">
         {result.map((v, i) => {
           const { shop, orders } = v
+          
+
           const am = []
           const pm = []
           orders.forEach((v) => {
@@ -96,7 +103,7 @@ export default function PoList({ data, poDate }) {
 
 function PrintAM({ name, shop, data, poDate }) {
   const componentRef = useRef()
-  // console.log(data)
+  
   return (
     <>
       <ReactToPrint
@@ -132,7 +139,8 @@ function PrintAM({ name, shop, data, poDate }) {
 class MergedPO extends Component {
   render() {
     const { shop, items, poDate } = this.props
-    // console.log(items)
+    console.log("items")
+    console.log(items)
     let total = 0
     return (
       items.length > 0 && (
@@ -150,7 +158,12 @@ class MergedPO extends Component {
                     {new Date(poDate).toLocaleDateString()}
                   </span>
                 </h2>
-                <h3 className="py-2"> {shop} 様</h3>
+                {/* <h3 className="py-2"> {shop} 様</h3> */}
+                <h3 className="py-2"> {
+                    items[0].poName
+                    ? items[0].poName
+                    : shop
+                } 様</h3>
                 {items[0].pickup && (
                   <h4 className="text-gray-500 text-xl">
                   {/* <h4 className="text-gray-500 text-sm"> */}
@@ -178,8 +191,6 @@ class MergedPO extends Component {
                   {items.map((v, i) => {
                     const { fields, sys, quantity } = v
                     const { title, price, supplier, valuePrice } = fields
-                    // const shop_price = price
-                    // total += price
 
                     var shop_price = Math.round(
                       price * quantity - price * quantity * 0.1
@@ -204,14 +215,11 @@ class MergedPO extends Component {
                     if (shop === "お買い物サポート") {
                       if (supplier === "道の駅みのりの郷東金"){
                         shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
-                        
                       }
                     }
                     if (shop === "塩田水産") {
                       shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
-
                     }
-
 
                     total += shop_price
 
@@ -229,6 +237,7 @@ class MergedPO extends Component {
                             <span className="px-1">x</span>
                             {quantity}
                           </span>
+                          <p>{items[i].customerName} 様にお届け</p>
                         </th>
                         <td className="py-5 pr-4 text-right">
                           &yen;{shop_price.toLocaleString()}
@@ -288,7 +297,12 @@ class MergedPO extends Component {
                             ご署名または印
                           </div>
                           <p className=" text-center">
-                          {shop}様
+                          {/* {shop}様 */}
+                          {
+                            items[0].poName
+                            ? items[0].poName
+                            : shop
+                          } 様
                           </p>
                         </td>
                       </tr>

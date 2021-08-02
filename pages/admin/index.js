@@ -24,11 +24,14 @@ export default function Admin({ data }) {
 
   return (
     <Layout>
+      
       <Stats data={orderList} />
       {/* <h3 className="mt-4 py-4 px-2">
         {data.length > 0 ? "本日配達の注文一覧" : "本日配達の注文はありません"}
       </h3> */}
+      
       <OrderList orders={orderList} />
+
       <h3 className="mt-4 py-4 px-2 inline-block text-xl mr-1.5">
         {format(poDate, "MM/dd (eee)")}の発注書一覧
       </h3>

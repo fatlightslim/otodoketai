@@ -193,7 +193,12 @@ export default class PurchaseOrder extends React.Component {
                             ご署名または印
                           </div>
                           <p className=" text-center">
-                          {shop}様
+                          {/* {shop}様 */}
+                          {
+                            orders[0].poName
+                            ? orders[0].poName
+                            : shop
+                          } 様
                           </p>
                         </td>
                       </tr>
