@@ -54,6 +54,9 @@ export default function PoList({ data, poDate }) {
             v.time === "17:00 ~ 18:00" ? pm.push(v) : am.push(v)
           })
           // const { name, pickup, image, slug } = fields
+
+          var hasAM
+          var hasPM
           return (
             <li key={i}>
               <div className="block hover:bg-gray-50">
@@ -68,7 +71,31 @@ export default function PoList({ data, poDate }) {
                       <div className="block">
                         <div>
                           <div className="mt-2 flex items-center text-sm text-gray-500">
-                            {am.length > 0 && (
+                            {am.length > 0 
+                              ?hasAM = true
+                              :hasAM = false
+                            }
+                            {pm.length > 0 
+                              ?hasPM = true
+                              :hasPM = false
+                            }
+                            <PrintAM
+                              name="午前便"
+                              {...v}
+                              poDate={poDate}
+                              data={am}
+                              result={result}
+                              hasData={hasAM}
+                            />
+                            <PrintAM
+                              name="午後便"
+                              {...v}
+                              data={pm}
+                              poDate={poDate}
+                              result={result}
+                              hasData={hasPM}
+                            />
+                            {/* {am.length > 0 && (
                               <PrintAM
                                 name="午前便"
                                 {...v}
@@ -85,7 +112,7 @@ export default function PoList({ data, poDate }) {
                                 poDate={poDate}
                                 result={result}
                               />
-                            )}
+                            )} */}
                           </div>
                         </div>
                       </div>
@@ -101,7 +128,7 @@ export default function PoList({ data, poDate }) {
   )
 }
 
-function PrintAM({ name, shop, data, poDate }) {
+function PrintAM({ name, shop, data, poDate, hasData }) {
   const componentRef = useRef()
   
   return (
@@ -110,7 +137,8 @@ function PrintAM({ name, shop, data, poDate }) {
         trigger={() => (
           <button
             type="button"
-            className="mr-4 bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="disabled:opacity-20 mr-4 bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            disabled={!hasData}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
