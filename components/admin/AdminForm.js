@@ -335,6 +335,21 @@ class ComponentToPrint extends Component {
                 <span className="flex-grow">{customer.tel}</span>
               </dd>
             </div>
+
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">決済方法</dt>
+              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="flex-grow">{getPay(charge.pay)}</span>
+              </dd>
+            </div>
+            <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
+              <dt className="text-sm font-medium text-gray-500">注意事項</dt>
+              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <span className="flex-grow">{customer.remark}</span>
+                
+              </dd>
+            </div>
+
             <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
               <dt className="text-sm font-medium text-gray-500">注文概要</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
