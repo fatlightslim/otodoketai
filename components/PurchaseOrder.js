@@ -165,7 +165,20 @@ export default class PurchaseOrder extends React.Component {
                         {new Date(customer.date).toLocaleDateString()}&nbsp;
                         {customer.time}
                       </td>
+                    </tr>        
+                    <tr className="bg-white border-t border-gray-200 font-medium text-gray-900 text-left">
+                      <th
+                        className="py-4 px-4 text-sm font-medium text-left"
+                        scope="row"
+                      >
+                        注意事項
+                      </th>
+                      <td className="py-4 pr-4 text-right">
+                        
+                        {customer.remark}
+                      </td>
                     </tr>
+
                   </tbody>
                 </table>
                 <div className="my-20">
