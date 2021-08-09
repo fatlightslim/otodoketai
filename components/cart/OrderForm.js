@@ -110,7 +110,6 @@ export default function OrderForm(props) {
         }
       }
     }
-
     
     fetchPostJSON("/api/orders", {
       _id: form.value._id,
@@ -145,10 +144,10 @@ export default function OrderForm(props) {
     const o = outOfScope.map((v) => v.zip)
 
 
-    if (left3 === "283" && !o.includes(value) && right4.length === 4) {
+    if (left3 === "283","299" && !o.includes(value) && right4.length === 4) {
       setOutArea(false)
       setDelivery(150)
-      
+
       try {
         let r = await fetch(
           `https://madefor.github.io/postal-code-api/api/v1/${left3}/${right4}.json`
@@ -180,6 +179,7 @@ export default function OrderForm(props) {
       setValue("addr1", "")
       setOutArea(true)
     }
+  
 
   }
 
