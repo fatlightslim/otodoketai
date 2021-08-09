@@ -248,6 +248,10 @@ class MergedPO extends Component {
                     if (shop === "塩田水産") {
                       shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
                     }
+                  
+                    if (shop === "唐揚げ本舗だるま") {
+                    shop_price = Math.round(price * quantity + valuePrice * quantity - price * quantity)
+                    }
 
                     total += shop_price
 
