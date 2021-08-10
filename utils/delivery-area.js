@@ -15,7 +15,7 @@ export const extraDeliveryFee = [
   {zip: "2830824", name: "丹尾"},
   {zip: "2830826", name: "丘山台"},
   {zip: "2830024", name: "御門"},
-  {zip: "2830025", name: "滝"},
+  // {zip: "2830025", name: "殿廻"},
 ]
 
 export const outOfScope = [
