@@ -368,9 +368,16 @@ class ComponentToPrint extends Component {
                     return (
                       <div className="border-t border-l border-r ">
                         <li
+                          key={sys.id + v.shopName}
+                          className="pl-10 pr-4 pt-3 flex items-center justify-between text-sm"
+                          // className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                        >
+                            {v.shopName}
+                        </li>
+                        <li
                           key={sys.id}
                           // className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
-                          className="pl-3 pr-4 pt-3 flex items-center justify-between text-sm"
+                          className="pl-3 pr-4 pb-3 flex items-center justify-between text-sm"
                         >
                           <div className="w-0 flex-1 flex items-center">
                             <span className="flex-shrink-0 h-5 w-5 text-gray-400">
@@ -396,13 +403,6 @@ class ComponentToPrint extends Component {
                               &yen;{(price * quantity).toLocaleString()}  
                             </span>
                           </div>
-                        </li>
-                        <li
-                          key={sys.id + v.shopName}
-                          className="pl-10 pr-4 pb-3 flex items-center justify-between text-sm"
-                          // className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
-                        >
-                            {v.shopName}
                         </li>
                       </div>
                     )
