@@ -35,6 +35,13 @@ export default function AdminForm({ name, order, result }) {
   const [charge, setCharge] = useState(getCharge())
   const [show, setShow] = useState(false)
 
+  console.log("AdminForm_name")
+  console.log(name)
+  console.log("AdminForm_order")
+  console.log(order)
+  console.log("AdminForm_result")
+  console.log(result)
+
   useEffect(() => {
     const newItems = order.items.map((v) => {
       return {
@@ -207,7 +214,8 @@ const getPay = (pay) => (pay === "cod" ? "代金引換" : "オンライン決済
 
 const Receipt = ({ order }) => {
   const componentRef = useRef()
-
+  console.log("Receipt_order")
+  console.log(order)
   return (
     <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
       <div className="w-0 flex-1 flex items-center">
@@ -353,43 +361,53 @@ class ComponentToPrint extends Component {
             <div className="py-4 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
               <dt className="text-sm font-medium text-gray-500">注文概要</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
+                <ul className="border-b border-gray-200 rounded-md divide-y divide-gray-200">
                   {items.map((v) => {
                     const { fields, sys, quantity } = v
                     const { image, title, price } = fields
                     return (
-                      <li
-                        key={sys.id}
-                        className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
-                      >
-                        <div className="w-0 flex-1 flex items-center">
-                          <span className="flex-shrink-0 h-5 w-5 text-gray-400">
-                            {image && image.fields ? (
-                              <Image {...getImageFields(image)} />
-                            ) : (
-                              <img
-                                className="rounded-md"
-                                src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
-                              />
-                            )}
-                          </span>
-                          <span className="ml-2 flex-1 w-0 truncate">
-                            {title}
-                            <span className="ml-2 ">
-                                &yen;{price.toLocaleString()}
+                      <div className="border-t border-l border-r ">
+                        <li
+                          key={sys.id + v.shopName}
+                          className="pl-10 pr-4 pt-3 flex items-center justify-between text-sm"
+                          // className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                        >
+                            {v.shopName}
+                        </li>
+                        <li
+                          key={sys.id}
+                          // className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                          className="pl-3 pr-4 pb-3 flex items-center justify-between text-sm"
+                        >
+                          <div className="w-0 flex-1 flex items-center">
+                            <span className="flex-shrink-0 h-5 w-5 text-gray-400">
+                              {image && image.fields ? (
+                                <Image {...getImageFields(image)} />
+                              ) : (
+                                <img
+                                  className="rounded-md"
+                                  src="http://placehold.jp/24/cccccc/ffffff/200x200.png?text=撮影中"
+                                />
+                              )}
                             </span>
-                            <span className="px-2">x</span> {quantity}
-                          </span>
-                        </div>
-                        <div className="ml-4 flex-shrink-0 flex space-x-4">
-                          <span className="text-gray-900" aria-hidden="true">
-                            &yen;{(price * quantity).toLocaleString()}  
-                          </span>
-                        </div>
-                      </li>
+                            <span className="ml-2 flex-1 w-0 truncate">
+                              {title}
+                              <span className="ml-2 ">
+                                  &yen;{price.toLocaleString()}
+                              </span>
+                              <span className="px-2">x</span> {quantity}
+                            </span>
+                          </div>
+                          <div className="ml-4 flex-shrink-0 flex space-x-4">
+                            <span className="text-gray-900" aria-hidden="true">
+                              &yen;{(price * quantity).toLocaleString()}  
+                            </span>
+                          </div>
+                        </li>
+                      </div>
                     )
                   })}
-                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                  <li className="border pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                     <div className="w-0 flex-1 flex items-center">
                       <span className="ml-2 flex-1 w-0 truncate">配送料</span>
                     </div>
@@ -399,7 +417,7 @@ class ComponentToPrint extends Component {
                       </span>
                     </div>
                   </li>
-                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                  <li className="border pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                     <div className="w-0 flex-1 flex items-center">
                       <span className="ml-2 flex-1 w-0 truncate">合計</span>
                     </div>
