@@ -85,8 +85,7 @@ export default function OrderForm(props) {
         // if (hour <= 11) {
         setHours([" 17:00 ~ 18:00 "])
       } else {
-        setHours(["  "])
-        // setCloseToday(true)
+        setCloseToday(true)
       }
     } else if (isTomorrow(getValues("date"))) {
       if (hour >= 16 , minute >= 10) {
