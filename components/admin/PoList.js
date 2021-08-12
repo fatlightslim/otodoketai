@@ -166,9 +166,11 @@ function PrintAM({ name, shop, data, poDate, hasData }) {
 
 class MergedPO extends Component {
   render() {
-    const { shop, items, poDate } = this.props
+    const { shop, items, poDate, remark } = this.props
     console.log("items")
     console.log(items)
+    console.log("remark")
+    console.log(remark)
     let total = 0
     return (
       items.length > 0 && (
@@ -269,7 +271,9 @@ class MergedPO extends Component {
                             <span className="px-1">x</span>
                             {quantity}
                           </span>
-                          <p>{items[i].customerName} 様にお届け</p>
+                          <p>{items[i].customerName} 様にお届け {remark}</p>
+                          
+
                         </th>
                         <td className="py-5 pr-4 text-right">
                           &yen;{shop_price.toLocaleString()}
@@ -292,7 +296,7 @@ class MergedPO extends Component {
                       &yen;{total.toLocaleString()}
                     </td>
                   </tr>
-
+                  
                   <tr className="bg-white border-t border-gray-200 font-medium text-gray-900 text-left">
                     <th
                       className="py-4 px-4 text-sm font-medium text-left"
