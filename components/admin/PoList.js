@@ -30,6 +30,7 @@ export default function PoList({ data, poDate }) {
       x.time = v.customer.time
       x.customerName = v.customer.name
       x.customerRemark = v.customer.remark
+      
     })
     orders.push(v.items)
   })
