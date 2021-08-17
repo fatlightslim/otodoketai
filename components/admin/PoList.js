@@ -30,6 +30,7 @@ export default function PoList({ data, poDate }) {
       x.time = v.customer.time
       x.customerName = v.customer.name
       x.customerRemark = v.customer.remark
+      
     })
     orders.push(v.items)
   })
@@ -271,7 +272,8 @@ class MergedPO extends Component {
                             {quantity}
                           </span>
                           <p>{items[i].customerName} 様にお届け</p>
-                          <p>注意事項 {items[i].customerRemark}</p>                                              
+                          <p>注意事項 {items[i].customerRemark}</p>      
+
                         </th>
                         <td className="py-5 pr-4 text-right">
                           &yen;{shop_price.toLocaleString()}
