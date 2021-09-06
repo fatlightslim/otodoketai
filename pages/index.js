@@ -23,7 +23,7 @@ export default function Home(props) {
             width={1200}
             height={606}
           />
-          <Image
+          {/* <Image
             className="h-full w-full "
             src="/img/banner1.jpg"
             alt=""
@@ -36,7 +36,7 @@ export default function Home(props) {
             alt=""
             width={290}
             height={102}
-          />
+          /> */}
         </div>
         {/* <InstagramFeed {...props} /> */}
       </main>
