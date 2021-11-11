@@ -11,6 +11,7 @@ import {
 
 // stats, seo, orders,
 export default function Admin({ data }) {
+  console.log(data);
   const [poDate, setPoDate] = useState(new Date())
   const [orderList, setOrderList] = useState([])
 
@@ -104,7 +105,6 @@ export async function getServerSideProps() {
   const url = process.env.URL || "http://localhost:3000"
   const res = await fetch(`${url}/api/orders`)
   const data = await res.json()
-  console.log(data);
 
   const filtered = data.filter(
     (v) => {
