@@ -12,7 +12,7 @@ async function handler(req, res) {
   switch (req.method) {
     case "GET":
       return res.json(
-        await db.collection("orders").find({}).sort({ _ts: -1 }).toArray()
+        await db.collection("orders").find({}).limit(30).sort({ _ts: -1 }).toArray()
       )
     case "POST":
       return await post()
