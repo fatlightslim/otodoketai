@@ -11,7 +11,7 @@ import {
 
 // stats, seo, orders,
 export default function Admin({ data }) {
-  console.log(data);
+  // console.log(data);
   const [poDate, setPoDate] = useState(new Date())
   const [orderList, setOrderList] = useState([])
 
@@ -103,17 +103,17 @@ const Stats = ({ data }) => {
 export async function getServerSideProps() {
   // Fetch data from external API
   const url = process.env.URL || "http://localhost:3000"
-  // const res = await fetch(`${url}/api/orders`)
-  // const data = await res.json()
+  const res = await fetch(`${url}/api/orders`)
+  const data = await res.json()
 
-  // const filtered = data.filter(
-  //   (v) => {
-  //     const status = v.log.slice(-1)[0]["status"] 
-  //     const blacklist = ['draft', 'cancel']
-  //     return  !blacklist.includes(status)
-  //   }
-  // )
-  const filtered = []
+  const filtered = data.filter(
+    (v) => {
+      const status = v.log.slice(-1)[0]["status"] 
+      const blacklist = ['draft', 'cancel']
+      return  !blacklist.includes(status)
+    }
+  )
+  // const filtered = []
   return {
     props: { data: filtered },
   }
