@@ -79,14 +79,16 @@ export default function OrderForm(props) {
 
   const getTime = () => {
     const hour = getHours(new Date())
-    if (isToday(getValues("date"))) {
-      if (hour <= 11) {
-        setHours(["17:00 ~ 18:00"])
-      } else {
+    if (isTomorrow(getValues("date"))) {
+    // if (isToday(getValues("date"))) {
+      // if (hour <= 11) {
+      if (hour >= 16) {
+      //   setHours(["17:00 ~ 18:00"])
+      // } else {
         setCloseToday(true)
       }
     } else if (isTomorrow(getValues("date"))) {
-      if (hour >= 16) {
+      if (hour <= 16) {
         setHours(["17:00 ~ 18:00"])
       } else {
         setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
@@ -334,7 +336,7 @@ export default function OrderForm(props) {
                   <p>
                     お届け日時{" "}
                     <span className="text-gray-400">
-                      当日配達は夕方のお届けになります
+                     お届けは明日以降でお選びいただけます
                     </span>
                   </p>
                 )
