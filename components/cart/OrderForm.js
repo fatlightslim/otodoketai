@@ -337,6 +337,7 @@ export default function OrderForm(props) {
                     お届け日時{" "}
                     <span className="text-gray-400">
                      お届けは明日以降でお選びいただけます
+                     <p>年末年始のお休み：12月29日～1月4日</p>
                     </span>
                   </p>
                 )
