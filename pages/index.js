@@ -16,13 +16,13 @@ export default function Home(props) {
         <List {...props} />
 
         <div className="py-8 mx-auto text-center">
-          <Image
+          {/* <Image
             className="h-full w-full "
             src="/img/michinoeki.png"
             alt=""
             width={1200}
             height={606}
-          />
+          /> */}
           {/* <Image
             className="h-full w-full "
             src="/img/banner1.jpg"
