@@ -198,7 +198,7 @@ class MergedPO extends Component {
                   <h4 className="text-gray-500 text-xl">
                   {/* <h4 className="text-gray-500 text-sm"> */}
                     引き取り時間
-                    {items[0].time === "17:00 ~ 18:00"
+                    {items[0].time === "14:00 ~ 15:00"
                       ? items[0].pickup.pm
                       : items[0].pickup.am}
                   </h4>

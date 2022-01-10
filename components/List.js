@@ -41,9 +41,9 @@ export default function List({ data, copies }) {
       <div className=" max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
         {data.items.map((v) => {
           const { fields, sys } = v
-          const { image, address, name, slug, hook, comment, holiday } = fields
+          const { image, address, name, slug, hook, comment,  } = fields
           // const today = getDay(new Date())
-          // let holidays = []
+          // let s = []
           // if (holiday) {
           //   holidays = holiday.map((v) => parseInt(v.slice(0, 1)))
           // }
@@ -58,7 +58,7 @@ export default function List({ data, copies }) {
               <div className={`flex-shrink-0`}>
                 <div className="h-48 w-full overflow-hidden">
                   <Image {...getImageFields(image)} />
-                  {/* {isHoliday && <p className="text-center text-gray-50 py-4 font-bold bg-gray-500 bg-opacity-80 text-2xl -mt-40 relative">定休日</p>} */}
+                  {/* {isHoliday && <p className="text-center text-gray-50 py-4 font-bold bg-gray-500 bg-opacity-80 text-2xl -mt-40 relative"></p>} */}
                 </div>
               </div>
               <div className="flex-1 bg-white p-6 flex flex-col justify-between">

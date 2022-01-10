@@ -40,7 +40,8 @@ export default function OrderForm(props) {
     useForm()
   const [startDate, setStartDate] = useState(new Date())
   const [outArea, setOutArea] = useState(false)
-  const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+  // const [hours, setHours] = useState(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+  const [hours, setHours] = useState(["15:00 ~ 18:00"])
   const [disableButton, setDisableButton] = useState(false)
   const [closeToday, setCloseToday] = useState(false)
 
@@ -82,20 +83,26 @@ export default function OrderForm(props) {
     if (isTomorrow(getValues("date"))) {
     // if (isToday(getValues("date"))) {
       // if (hour <= 11) {
-      if (hour >= 16) {
+      // if (hour >= 16) {
+      if (hour >= 14) {
+      
       //   setHours(["17:00 ~ 18:00"])
       // } else {
         setCloseToday(true)
       }
     } else if (isTomorrow(getValues("date"))) {
-      if (hour <= 16) {
-        setHours(["17:00 ~ 18:00"])
+      // if (hour <= 16) {
+      if (hour <= 14) {
+      
+        setHours(["15:00 ~ 18:00"])
       } else {
-        setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+        // setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+        setHours(["15:00 ~ 18:00"])
       }
-    } else {
-      setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
     }
+    // } else {
+    //   setHours(["11:00 ~ 12:00", "17:00 ~ 18:00"])
+    // }
   }
 
   const onSubmit = (customer) => {
