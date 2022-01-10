@@ -69,7 +69,7 @@ const Summary = ({ dateNumber }) => {
             {holidays && holidays.includes(dateNumber) && (
               <>
                 <div className="text-red-500 absolute z-10 -mt-6 font-bold bg-white">
-                  定休日
+                  
                 </div>
                 <button
                   className="absolute mt-16 text-red-500 bg-white text-sm"
