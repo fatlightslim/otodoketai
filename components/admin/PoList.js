@@ -53,7 +53,8 @@ export default function PoList({ data, poDate }) {
           const am = []
           const pm = []
           orders.forEach((v) => {
-            v.time === "17:00 ~ 18:00" ? pm.push(v) : am.push(v)
+            // v.time === "17:00 ~ 18:00" ? pm.push(v) : am.push(v)
+            v.time === "15:00 ~ 18:00" ? pm.push(v) : am.push(v)
           })
           // const { name, pickup, image, slug } = fields
 
