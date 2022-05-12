@@ -20,7 +20,6 @@ export default function Admin({ data }) {
       return isSameDay(new Date(v.customer.date), poDate)
     })
     setOrderList(orderList)
-    console.log(orderList);
   }, [poDate])
 
   return (

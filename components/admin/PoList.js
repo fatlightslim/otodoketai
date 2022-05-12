@@ -170,8 +170,6 @@ function PrintAM({ name, shop, data, poDate, hasData }) {
 class MergedPO extends Component {
   render() {
     const { shop, items, poDate } = this.props
-    console.log("items")
-    console.log(items)
     let total = 0
     return (
       items.length > 0 && (
