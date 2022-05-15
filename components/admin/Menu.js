@@ -222,13 +222,13 @@ export const DesktopMenu = () => (
           </div>
         </div>
         <div className="flex-shrink-0 block w-full">
-          <a
+          {/* <a
             href="#"
             className="group py-2 px-4 flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50"
           >
             <Question className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" />
             ヘルプ
-          </a>
+          </a> */}
           <a
             href="/api/auth/logout"
             className="group py-2 px-4 flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50"
